@@ -413,7 +413,12 @@ render();
   if(!codeParam) return;
   /* tolerant wie die Suche: Groß/klein egal, Bindestriche/Leerzeichen optional */
   const key=codeParam.toLowerCase().replace(/[\s\-]/g,"");
-  const entry=DATA.find(e=>(e.codes||[]).some(c=>c.toLowerCase().replace(/[\s\-]/g,"")===key));
+  /* Die Lagerkarte schneidet Codes ab "-10" ab ("9557-PH41-04" statt
+     "9557-PH41-04-10") — deshalb zählt auch ein Präfix-Treffer, exakter
+     Treffer hat Vorrang. */
+  const codeMatch=c=>{const n=c.toLowerCase().replace(/[\s\-]/g,"");return n===key||(key.length>=8&&n.startsWith(key));};
+  const entry=DATA.find(e=>(e.codes||[]).some(c=>c.toLowerCase().replace(/[\s\-]/g,"")===key))
+             ||DATA.find(e=>(e.codes||[]).some(codeMatch));
   if(!entry){
     const b=el("div","",`Code <b>${esc(codeParam)}</b> ist nicht im Katalog.`);
     b.id="codebanner";
@@ -422,7 +427,7 @@ render();
     document.querySelector("main").prepend(b);
     return;
   }
-  const canon=entry.codes.find(c=>c.toLowerCase().replace(/[\s\-]/g,"")===key)||codeParam;
+  const canon=entry.codes.find(c=>c.toLowerCase().replace(/[\s\-]/g,"")===key)||entry.codes.find(codeMatch)||codeParam;
   const s=document.getElementById("search");
   s.value=canon; q=norm(canon);
   document.getElementById("clearBtn").style.display="block";
