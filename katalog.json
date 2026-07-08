@@ -1,5 +1,5 @@
 {
- "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281)",
+ "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281) | Seiten 62+100 ersetzt durch Einzelblatt-PDFs 9555-9585-9557-MW21/-EJ26 (Textlayer, 07/2026)",
  "einträge": [
   {
    "id": "p002_9555IR210410",
@@ -4088,10 +4088,10 @@
     "+ Ambientebild auf Rückseite"
    ],
    "board_px200": [
-    232,
-    355,
-    581,
-    685
+    190,
+    273,
+    625,
+    714
    ],
    "display": false
   },
@@ -4124,10 +4124,10 @@
     "+Ambientebild auf Rückseite"
    ],
    "board_px200": [
-    790,
-    355,
-    1138,
-    685
+    748,
+    273,
+    1183,
+    714
    ],
    "display": false
   },
@@ -4158,10 +4158,10 @@
    "label": "Poster 91E0-MIW1-00-10",
    "notizen": [],
    "board_px200": [
-    212,
-    1330,
-    589,
-    1880
+    188,
+    1116,
+    612,
+    1914
    ],
    "display": false
   },
@@ -4192,10 +4192,10 @@
    "label": "Poster 91E0-MIW1-00-10",
    "notizen": [],
    "board_px200": [
-    763,
-    1138,
-    1322,
-    1870
+    748,
+    1092,
+    1334,
+    1913
    ],
    "display": false
   },
@@ -6663,10 +6663,10 @@
     "+Ambientebild auf Rückseite"
    ],
    "board_px200": [
-    232,
-    355,
-    581,
-    685
+    190,
+    273,
+    625,
+    714
    ],
    "display": false
   },
@@ -6705,10 +6705,10 @@
     "+Ambientebild auf Rückseite"
    ],
    "board_px200": [
-    790,
-    406,
-    1139,
-    685
+    748,
+    273,
+    1183,
+    714
    ],
    "display": false
   },
@@ -6745,10 +6745,10 @@
    "label": "Poster 91E0-ENO1-00-10",
    "notizen": [],
    "board_px200": [
-    212,
-    1330,
-    590,
-    1827
+    188,
+    1116,
+    612,
+    1914
    ],
    "display": false
   },
@@ -6785,10 +6785,10 @@
    "label": "Poster 91E0-ENO1-00-10",
    "notizen": [],
    "board_px200": [
-    761,
-    1139,
-    1324,
-    1817
+    748,
+    1092,
+    1337,
+    1913
    ],
    "display": false
   },
