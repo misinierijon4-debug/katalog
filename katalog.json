@@ -1,5 +1,5 @@
 {
- "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281) | Seiten 62+100 ersetzt durch Einzelblatt-PDFs 9555-9585-9557-MW21/-EJ26 (Textlayer, 07/2026)",
+ "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281) | Seiten 62+100 ersetzt durch Einzelblatt-PDFs 9555-9585-9557-MW21/-EJ26 (Textlayer, 07/2026) | Mustertafeln ENIGMA 2019.pdf + Mustertafeln LINEAR.pdf (Seiten 282-305) | Mustertafeln NATURAL.pdf (Seite 306)",
  "einträge": [
   {
    "id": "p002_9555IR210410",
@@ -20722,6 +20722,1849 @@
     229,
     751,
     959
+   ]
+  },
+  {
+   "id": "p282_9521EN200410",
+   "seite": 282,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9521-EN20-04-10"
+   ],
+   "tafel_groesse": "GT 43x101 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 2420 ENI 2421"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    89,
+    579,
+    827,
+    906
+   ]
+  },
+  {
+   "id": "p282_9557EN210410",
+   "seite": 282,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-EN21-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9331-ENI1-Y9",
+    "94x134 cm /Fläche geschnitten - 97x184 /104x184 /107x184 cm",
+    "Nur auftragsbezogene Fertigung",
+    "Artikel ENI 2420 ENI 2421"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    89,
+    1190,
+    610,
+    1928
+   ]
+  },
+  {
+   "id": "p282_9569EN210410",
+   "seite": 282,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-EN21-04-10",
+    "9562-EN21-04-10",
+    "9566-EN21-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9331-ENI1-Y9",
+    "97x184 /104x184 /107x184 cm 100x200 /100,5x192,5 cm",
+    "Artikel ENI 2420 ENI 2421"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    621,
+    1072,
+    1115,
+    1928
+   ]
+  },
+  {
+   "id": "p282_9521EN210B10",
+   "seite": 282,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9521-EN21-0B-10"
+   ],
+   "tafel_groesse": "GT 43x101 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9331-ENI1-Y9",
+    "9331-ENI1-Y9",
+    "Artikel ENI 2420 ENI 2421"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    842,
+    579,
+    1580,
+    906
+   ]
+  },
+  {
+   "id": "p282_9568EN210410",
+   "seite": 282,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-EN21-04-10",
+    "9587-EN21-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9331-ENI1-Y9",
+    "Artikel ENI 2420 ENI 2421"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    1133,
+    1013,
+    1604,
+    1930
+   ]
+  },
+  {
+   "id": "p283_9555EN120410",
+   "seite": 283,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN12-04-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 ENI 1221"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    1100
+   ]
+  },
+  {
+   "id": "p283_9585EN120410",
+   "seite": 283,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9585-EN12-04-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y9",
+    "Artikel ENI 1220 ENI 1221"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    2017
+   ]
+  },
+  {
+   "id": "p283_9557EN120410",
+   "seite": 283,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-EN12-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y9",
+    "Artikel ENI 1220 ENI 1221"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    543,
+    1377,
+    997,
+    2015
+   ]
+  },
+  {
+   "id": "p284_9569EN120410",
+   "seite": 284,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-EN12-04-10",
+    "9562-EN12-04-10",
+    "9566-EN12-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y9",
+    "Artikel ENI 1220 ENI 1221"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    829,
+    602,
+    1754
+   ]
+  },
+  {
+   "id": "p284_9568EN120410",
+   "seite": 284,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-EN12-04-10",
+    "9587-EN12-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y9",
+    "Artikel ENI 1220 ENI 1221"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    642,
+    808,
+    1127,
+    1754
+   ]
+  },
+  {
+   "id": "p285_9555EN020410",
+   "seite": 285,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN02-04-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 ENI 1222"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    1100
+   ]
+  },
+  {
+   "id": "p285_9585EN020410",
+   "seite": 285,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9585-EN02-04-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI2-Y7",
+    "Artikel ENI 1220 ENI 1222"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    2040
+   ]
+  },
+  {
+   "id": "p285_9557EN020410",
+   "seite": 285,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-EN02-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI2-Y7",
+    "Artikel ENI 1220 ENI 1222"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    568,
+    1391,
+    1030,
+    2040
+   ]
+  },
+  {
+   "id": "p286_9569EN020410",
+   "seite": 286,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-EN02-04-10",
+    "9562-EN02-04-10",
+    "9566-EN02-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI2-Y7",
+    "Artikel ENI 1220 ENI 1222"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    87,
+    851,
+    571,
+    1749
+   ]
+  },
+  {
+   "id": "p286_9568EN020410",
+   "seite": 286,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-EN02-04-10",
+    "9587-EN02-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI2-Y7",
+    "Artikel ENI 1220 ENI 1222"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    608,
+    807,
+    1092,
+    1753
+   ]
+  },
+  {
+   "id": "p287_9521EN230B10",
+   "seite": 287,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9521-EN23-0B-10"
+   ],
+   "tafel_groesse": "GT 43x101 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 2420 ENI 2423"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    89,
+    579,
+    827,
+    906
+   ]
+  },
+  {
+   "id": "p287_9557EN230410",
+   "seite": 287,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-EN23-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9331-ENI3-Y6",
+    "94x134 cm /Fläche geschnitten - 97x184 /104x184 /107x184 cm",
+    "Nur auftragsbezogene Fertigung",
+    "Artikel ENI 2420 ENI 2423"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    89,
+    1183,
+    610,
+    1921
+   ]
+  },
+  {
+   "id": "p287_9569EN230410",
+   "seite": 287,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-EN23-04-10",
+    "9562-EN23-04-10",
+    "9566-EN23-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9331-ENI3-Y6",
+    "97x184 /104x184 /107x184 cm 100x200 /100,5x192,5 cm",
+    "Artikel ENI 2420 ENI 2423"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    627,
+    1066,
+    1120,
+    1925
+   ]
+  },
+  {
+   "id": "p287_9568EN230410",
+   "seite": 287,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-EN23-04-10",
+    "9587-EN23-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9331-ENI3-Y6",
+    "Artikel ENI 2420 ENI 2423"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 33x100 cm",
+   "board_px200": [
+    1133,
+    1007,
+    1604,
+    1925
+   ]
+  },
+  {
+   "id": "p288_9555EN320410",
+   "seite": 288,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN32-04-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 ENI 1223"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    1100
+   ]
+  },
+  {
+   "id": "p288_9585EN320410",
+   "seite": 288,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9585-EN32-04-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI3-Y6",
+    "65x130 cm 94x134 cm",
+    "Artikel ENI 1220 ENI 1223"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    2040
+   ]
+  },
+  {
+   "id": "p288_9557EN320410",
+   "seite": 288,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-EN32-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI3-Y6",
+    "Artikel ENI 1220 ENI 1223"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    551,
+    1391,
+    1014,
+    2040
+   ]
+  },
+  {
+   "id": "p289_9569EN320410",
+   "seite": 289,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-EN32-04-10",
+    "9562-EN32-04-10",
+    "9566-EN32-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI3-Y6",
+    "Artikel ENI 1220 ENI 1223"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    856,
+    573,
+    1754
+   ]
+  },
+  {
+   "id": "p289_9568EN320410",
+   "seite": 289,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-EN32-04-10",
+    "9587-EN32-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI3-Y6",
+    "Artikel ENI 1220 ENI 1223"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    630,
+    808,
+    1114,
+    1754
+   ]
+  },
+  {
+   "id": "p290_9555EN420410",
+   "seite": 290,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN42-04-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 ENI 1224"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    1100
+   ]
+  },
+  {
+   "id": "p290_9585EN420410",
+   "seite": 290,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9585-EN42-04-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI4-Y8",
+    "65x130 cm 94x134 cm",
+    "Artikel ENI 1220 ENI 1224"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    2040
+   ]
+  },
+  {
+   "id": "p290_9557EN420410",
+   "seite": 290,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-EN42-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI4-Y8",
+    "Artikel ENI 1220 ENI 1224"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    538,
+    1391,
+    1001,
+    2040
+   ]
+  },
+  {
+   "id": "p291_9569EN420410",
+   "seite": 291,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-EN42-04-10",
+    "9562-EN42-04-10",
+    "9566-EN42-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI4-Y8",
+    "Artikel ENI 1220 ENI 1224"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    856,
+    573,
+    1754
+   ]
+  },
+  {
+   "id": "p291_9568EN420410",
+   "seite": 291,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-EN42-04-10",
+    "9587-EN42-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI4-Y8",
+    "Artikel ENI 1220 ENI 1224"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    630,
+    808,
+    1114,
+    1754
+   ]
+  },
+  {
+   "id": "p292_9555EN520410",
+   "seite": 292,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN52-04-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 ENI 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    1100
+   ]
+  },
+  {
+   "id": "p292_9585EN520410",
+   "seite": 292,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9585-EN52-04-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y5",
+    "65x130 cm 94x134 cm",
+    "Artikel ENI 1220 ENI 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    615,
+    538,
+    2040
+   ]
+  },
+  {
+   "id": "p292_9557EN520410",
+   "seite": 292,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-EN52-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y5",
+    "Artikel ENI 1220 ENI 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    550,
+    1383,
+    1012,
+    2041
+   ]
+  },
+  {
+   "id": "p293_9569EN520410",
+   "seite": 293,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-EN52-04-10",
+    "9562-EN52-04-10",
+    "9566-EN52-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y5",
+    "Artikel ENI 1220 ENI 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    855,
+    573,
+    1753
+   ]
+  },
+  {
+   "id": "p293_9568EN520410",
+   "seite": 293,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-EN52-04-10",
+    "9587-EN52-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "9336-ENI1-Y5",
+    "Artikel ENI 1220 ENI 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    608,
+    808,
+    1092,
+    1754
+   ]
+  },
+  {
+   "id": "p294_9585ENUE0D10",
+   "seite": 294,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9585-ENUE-0D-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 / 1221 / 1222 / 1223 / 1224 / 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    934,
+    507,
+    1747
+   ]
+  },
+  {
+   "id": "p294_9557ENUE0D10",
+   "seite": 294,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9557-ENUE-0D-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 / 1221 / 1222 / 1223 / 1224 / 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    551,
+    1098,
+    1014,
+    1750
+   ]
+  },
+  {
+   "id": "p295_9569ENUE0D10",
+   "seite": 295,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9569-ENUE-0D-10",
+    "9562-ENUE-0D-10",
+    "9566-ENUE-0D-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 / 1221 / 1222 / 1223 / 1224 / 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    89,
+    854,
+    573,
+    1753
+   ]
+  },
+  {
+   "id": "p295_9568ENUE0D10",
+   "seite": 295,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9568-ENUE-0D-10",
+    "9587-ENUE-0D-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1220 / 1221 / 1222 / 1223 / 1224 / 1225"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 30x60 cm WAND",
+   "board_px200": [
+    615,
+    807,
+    1099,
+    1753
+   ]
+  },
+  {
+   "id": "p296_9540EN620E10",
+   "seite": 296,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9540-EN62-0E-10",
+    "9540-EN60-0E-10"
+   ],
+   "tafel_groesse": "65x65 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1260 ENI 1460 / 1462 ENI 2060 / 2160"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    683,
+    1019,
+    1132
+   ]
+  },
+  {
+   "id": "p296_9555EN620E10",
+   "seite": 296,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN62-0E-10",
+    "9555-EN62-0A-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1260 ENI 1460 / 1462 ENI 2060 / 2160"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1184,
+    1028,
+    1673
+   ]
+  },
+  {
+   "id": "p296_9539EN620E10",
+   "seite": 296,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9539-EN62-0E-10",
+    "9539-EN60-0D-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1260 ENI 1460 / 1462 ENI 2060 / 2160"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1719,
+    1169,
+    2248
+   ]
+  },
+  {
+   "id": "p297_9552EN600B10",
+   "seite": 297,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN60-0B-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1260 ENI 1460 ENI 2060 / 2160 / 2860"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1511,
+    795,
+    2032
+   ]
+  },
+  {
+   "id": "p297_9552EN600C10",
+   "seite": 297,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN60-0C-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1260 ENI 1460 ENI 2060 / 2160 / 2860"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    865,
+    795,
+    1394
+   ]
+  },
+  {
+   "id": "p297_9552EN600D10",
+   "seite": 297,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN60-0D-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1260 ENI 1460 ENI 2060 / 2160 / 2860"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    832,
+    1511,
+    1538,
+    2043
+   ]
+  },
+  {
+   "id": "p298_9540EN720E10",
+   "seite": 298,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9540-EN72-0E-10",
+    "9540-EN70-0E-10"
+   ],
+   "tafel_groesse": "65x65 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1270 ENI 1470 / 1472 ENI 2070 / 2170"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    690,
+    1019,
+    1139
+   ]
+  },
+  {
+   "id": "p298_9555EN720E10",
+   "seite": 298,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN72-0E-10",
+    "9555-EN72-0A-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1270 ENI 1470 / 1472 ENI 2070 / 2170"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1200,
+    1028,
+    1689
+   ]
+  },
+  {
+   "id": "p298_9539EN720E10",
+   "seite": 298,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9539-EN72-0E-10",
+    "9539-EN70-0D-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1270 ENI 1470 / 1472 ENI 2070 / 2170"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1729,
+    1189,
+    2259
+   ]
+  },
+  {
+   "id": "p299_9552EN700B10",
+   "seite": 299,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN70-0B-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1270 ENI 1470 ENI 2070 / 2170 / 2870"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1477,
+    795,
+    1999
+   ]
+  },
+  {
+   "id": "p299_9552EN700C10",
+   "seite": 299,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN70-0C-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1270 ENI 1470 ENI 2070 / 2170 / 2870"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    831,
+    795,
+    1360
+   ]
+  },
+  {
+   "id": "p299_9552EN700D10",
+   "seite": 299,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN70-0D-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1270 ENI 1470 ENI 2070 / 2170 / 2870"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    832,
+    1477,
+    1538,
+    2009
+   ]
+  },
+  {
+   "id": "p300_9540EN820E10",
+   "seite": 300,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9540-EN82-0E-10",
+    "9540-EN80-0E-10"
+   ],
+   "tafel_groesse": "65x65 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1280 ENI 1480 / 1482 ENI 2080 / 2180"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    668,
+    1019,
+    1117
+   ]
+  },
+  {
+   "id": "p300_9555EN820E10",
+   "seite": 300,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN82-0E-10",
+    "9555-EN82-0A-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1280 ENI 1480 / 1482 ENI 2080 / 2180"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1164,
+    1028,
+    1654
+   ]
+  },
+  {
+   "id": "p300_9539EN820E10",
+   "seite": 300,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9539-EN82-0E-10",
+    "9539-EN80-0D-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1280 ENI 1480 / 1482 ENI 2080 / 2180"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1701,
+    1189,
+    2233
+   ]
+  },
+  {
+   "id": "p301_9552EN800B10",
+   "seite": 301,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN80-0B-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1280 ENI 1480"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1446,
+    795,
+    1968
+   ]
+  },
+  {
+   "id": "p301_9552EN800C10",
+   "seite": 301,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN80-0C-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1280 ENI 1480"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    794,
+    795,
+    1321
+   ]
+  },
+  {
+   "id": "p301_9552EN800D10",
+   "seite": 301,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN80-0D-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1280 ENI 1480"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    832,
+    1446,
+    1538,
+    1973
+   ]
+  },
+  {
+   "id": "p302_9540EN920E10",
+   "seite": 302,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9540-EN92-0E-10",
+    "9540-EN90-0E-10"
+   ],
+   "tafel_groesse": "65x65 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1290 ENI 1490 / 1492 ENI 2090 / 2190"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    668,
+    1019,
+    1117
+   ]
+  },
+  {
+   "id": "p302_9555EN920E10",
+   "seite": 302,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9555-EN92-0E-10",
+    "9555-EN92-0A-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1290 ENI 1490 / 1492 ENI 2090 / 2190"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1172,
+    1028,
+    1662
+   ]
+  },
+  {
+   "id": "p302_9539EN920E10",
+   "seite": 302,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9539-EN92-0E-10",
+    "9539-EN90-0D-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1290 ENI 1490 / 1492 ENI 2090 / 2190"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1706,
+    1189,
+    2237
+   ]
+  },
+  {
+   "id": "p303_9552EN900B10",
+   "seite": 303,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN90-0B-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1290 ENI 1490"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    1446,
+    795,
+    1968
+   ]
+  },
+  {
+   "id": "p303_9552EN900C10",
+   "seite": 303,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN90-0C-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1290 ENI 1490"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    89,
+    794,
+    795,
+    1321
+   ]
+  },
+  {
+   "id": "p303_9552EN900D10",
+   "seite": 303,
+   "serie": "ENIGMA",
+   "material": null,
+   "codes": [
+    "9552-EN90-0D-10"
+   ],
+   "tafel_groesse": "92x125 cm",
+   "gt": false,
+   "artikel": [],
+   "label": null,
+   "notizen": [
+    "Artikel ENI 1290 ENI 1490"
+   ],
+   "display": false,
+   "name": "Mustertafel ENI 60x60 cm BODEN ENI 30x60 cm BODEN ENI 60x120 cm BODEN ENI 20x120 cm BODEN ENI 30x120 cm BODEN",
+   "board_px200": [
+    832,
+    1446,
+    1538,
+    1979
+   ]
+  },
+  {
+   "id": "p304_9555LI230410",
+   "seite": 304,
+   "serie": "LINEAR",
+   "material": null,
+   "codes": [
+    "9555-LI23-04-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "LIN 1220",
+     "stueck": "2",
+     "farbe": "weiss",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "WOO 1413",
+     "stueck": "1",
+     "farbe": "farbmix",
+     "groesse": "30x30 cm"
+    }
+   ],
+   "label": null,
+   "notizen": [
+    "wechselnde Bordüren verwenden"
+   ],
+   "display": false,
+   "name": "Mustertafel LIN 30x60 cm WAND",
+   "board_px200": [
+    89,
+    436,
+    538,
+    921
+   ]
+  },
+  {
+   "id": "p304_9585LI230410",
+   "seite": 304,
+   "serie": "LINEAR",
+   "material": null,
+   "codes": [
+    "9585-LI23-04-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "LIN 1220",
+     "stueck": "2",
+     "farbe": "weiss",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "WOO 1413",
+     "stueck": "2",
+     "farbe": "farbmix",
+     "groesse": "30x30 cm"
+    }
+   ],
+   "label": "Poster 9336-LIN2-YW-10",
+   "notizen": [
+    "9336-LIN2-YW",
+    "wechselnde Bordüren verwenden"
+   ],
+   "display": false,
+   "name": "Mustertafel LIN 30x60 cm WAND",
+   "board_px200": [
+    89,
+    1171,
+    499,
+    1969
+   ]
+  },
+  {
+   "id": "p304_9557LI230410",
+   "seite": 304,
+   "serie": "LINEAR",
+   "material": null,
+   "codes": [
+    "9557-LI23-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "LIN 1220",
+     "stueck": "2",
+     "farbe": "weiss",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "LIN 1220",
+     "stueck": "3",
+     "farbe": "weiss",
+     "groesse": "30x30 cm"
+    },
+    {
+     "artnr": "WOO 1413",
+     "stueck": "3",
+     "farbe": "farbmix",
+     "groesse": "30x30 cm"
+    }
+   ],
+   "label": "Poster 9336-LIN2-YW-10",
+   "notizen": [
+    "9336-LIN2-YW",
+    "wechselnde Bordüren verwenden"
+   ],
+   "display": false,
+   "name": "Mustertafel LIN 30x60 cm WAND",
+   "board_px200": [
+    766,
+    1150,
+    1347,
+    1969
+   ]
+  },
+  {
+   "id": "p305_9569LI230410",
+   "seite": 305,
+   "serie": "LINEAR",
+   "material": null,
+   "codes": [
+    "9569-LI23-04-10",
+    "9562-LI23-04-10",
+    "9566-LI23-04-10"
+   ],
+   "tafel_groesse": "97x184 /104x184 /107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "LIN 1220",
+     "stueck": "4",
+     "farbe": "weiss",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "LIN 1220",
+     "stueck": "5",
+     "farbe": "weiss",
+     "groesse": "30x30 cm"
+    },
+    {
+     "artnr": "WOO 1413",
+     "stueck": "3",
+     "farbe": "farbmix",
+     "groesse": "30x30 cm"
+    }
+   ],
+   "label": "Poster 9336-LIN2-YW-10",
+   "notizen": [
+    "9336-LIN2-YW",
+    "wechselnde Bordüren verwenden"
+   ],
+   "display": false,
+   "name": "Mustertafel LIN 30x60 cm WAND",
+   "board_px200": [
+    89,
+    692,
+    575,
+    1567
+   ]
+  },
+  {
+   "id": "p305_9568LI230410",
+   "seite": 305,
+   "serie": "LINEAR",
+   "material": null,
+   "codes": [
+    "9568-LI23-04-10",
+    "9587-LI23-04-10"
+   ],
+   "tafel_groesse": "100x200 /100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "LIN 1220",
+     "stueck": "4",
+     "farbe": "weiss",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "LIN 1220",
+     "stueck": "5",
+     "farbe": "weiss",
+     "groesse": "30x30 cm"
+    },
+    {
+     "artnr": "WOO 1413",
+     "stueck": "3",
+     "farbe": "farbmix",
+     "groesse": "30x30 cm"
+    }
+   ],
+   "label": "Poster 9336-LIN2-YW-10",
+   "notizen": [
+    "9336-LIN2-YW",
+    "wechselnde Bordüren verwenden"
+   ],
+   "display": false,
+   "name": "Mustertafel LIN 30x60 cm WAND",
+   "board_px200": [
+    868,
+    621,
+    1352,
+    1568
+   ]
+  },
+  {
+   "id": "p306_9555NATU0210",
+   "seite": 306,
+   "serie": "NATURAL",
+   "material": null,
+   "codes": [
+    "9555-NATU-02-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "NAT 1240",
+     "stueck": "2",
+     "farbe": "beige",
+     "groesse": null
+    },
+    {
+     "artnr": "NAT 1214",
+     "stueck": "0,3",
+     "farbe": "Dekor",
+     "groesse": null
+    }
+   ],
+   "label": "Poster NATURAL 30x60 beige",
+   "notizen": [
+    "+ Ambientebild auf Rückseite"
+   ],
+   "display": false,
+   "board_px200": [
+    186,
+    396,
+    626,
+    842
+   ]
+  },
+  {
+   "id": "p306_9555NATU0410",
+   "seite": 306,
+   "serie": "NATURAL",
+   "material": null,
+   "codes": [
+    "9555-NATU-04-10"
+   ],
+   "tafel_groesse": "GT 72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "NAT 1280",
+     "stueck": "2",
+     "farbe": "grau",
+     "groesse": null
+    },
+    {
+     "artnr": "NAT 1214",
+     "stueck": "0,3",
+     "farbe": "Dekor",
+     "groesse": null
+    }
+   ],
+   "label": "Poster NATURAL 30x60 grau",
+   "notizen": [
+    "+ Ambientebild auf Rückseite"
+   ],
+   "display": false,
+   "board_px200": [
+    954,
+    396,
+    1395,
+    842
    ]
   }
  ],
