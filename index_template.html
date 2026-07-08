@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mustertafeln-Katalog · engers</title>
+<style>
+:root{
+  --bg:#f4f3f0; --card:#ffffff; --ink:#1c1c1e; --muted:#75757a;
+  --line:#e4e2dd; --accent:#b02e2c; --accent-ink:#ffffff;
+  --badge:#2d2d30; --chip:#eceae5; --chip-on:#1c1c1e;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 18px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 40px rgba(0,0,0,.22);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+header{position:sticky;top:0;z-index:50;background:rgba(244,243,240,.88);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:10px 16px 8px;}
+.hrow{display:flex;align-items:center;gap:12px;max-width:1400px;margin:0 auto;flex-wrap:wrap}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:700;letter-spacing:-.5px}
+.brand small{font-family:inherit;color:var(--accent);font-size:24px}
+.subtitle{color:var(--muted);font-size:12.5px;margin-top:-3px}
+.searchwrap{flex:1;min-width:220px;position:relative}
+.searchwrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted)}
+#search{width:100%;padding:10px 36px 10px 36px;border:1px solid var(--line);border-radius:999px;
+  font-size:15px;background:var(--card);outline:none;transition:border .15s, box-shadow .15s}
+#search:focus{border-color:#b8b5ae;box-shadow:0 0 0 3px rgba(0,0,0,.05)}
+#clearBtn{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:var(--chip);
+  width:24px;height:24px;border-radius:50%;cursor:pointer;color:var(--muted);display:none;font-size:13px;line-height:1}
+.count{font-size:13px;color:var(--muted);white-space:nowrap}
+.count b{color:var(--ink)}
+.controls{display:flex;gap:8px;align-items:center;max-width:1400px;margin:8px auto 0;flex-wrap:wrap}
+select{padding:8px 30px 8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card) url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2375757a' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+  font-size:13.5px;color:var(--ink);appearance:none;-webkit-appearance:none;cursor:pointer}
+.typchips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:7px 13px;border-radius:999px;background:var(--chip);border:1px solid transparent;
+  font-size:13px;cursor:pointer;user-select:none;transition:all .12s}
+.chip.on{background:var(--badge);color:#fff}
+main{max-width:1400px;margin:0 auto;padding:16px}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;
+  overflow:hidden;display:flex;flex-direction:column;transition:transform .15s, box-shadow .15s;
+  border:1px solid rgba(0,0,0,.03)}
+.card:hover{transform:translateY(-3px);box-shadow:0 4px 8px rgba(0,0,0,.06),0 14px 32px rgba(0,0,0,.12)}
+.thumbbox{position:relative;aspect-ratio:1/1.12;background:#dedcd7;overflow:hidden}
+.thumbbox img{width:100%;height:100%;object-fit:contain;display:block;background:#fff}
+.noimg{display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:12px}
+.pagebadge{position:absolute;top:8px;right:8px;background:var(--badge);color:#fff;font-size:11.5px;
+  font-weight:600;padding:4px 9px;border-radius:999px;letter-spacing:.2px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.printbtn{position:absolute;bottom:8px;right:8px;border:0;background:rgba(255,255,255,.94);
+  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;
+  box-shadow:0 1px 5px rgba(0,0,0,.3);transition:transform .12s}
+.printbtn:hover{transform:scale(1.12)}
+.mprint{display:flex;gap:8px;flex-wrap:wrap}
+.mprint button{border:0;background:var(--badge);color:#fff;border-radius:999px;
+  padding:8px 15px;font-size:13.5px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.mprint button:hover{background:#000}
+.gtbadge{position:absolute;top:8px;left:8px;background:var(--accent);color:#fff;font-size:10.5px;
+  font-weight:700;padding:3px 8px;border-radius:999px}
+.cbody{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px;flex:1}
+.cserie{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.ccode{font-weight:700;font-size:14px;letter-spacing:.2px}
+.csize{font-size:13px;color:var(--muted)}
+.cart{font-size:12px;color:var(--muted);margin-top:auto;padding-top:5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.empty{text-align:center;color:var(--muted);padding:70px 20px;font-size:15px}
+.empty b{display:block;font-size:38px;margin-bottom:10px}
+
+/* ---------- modal ---------- */
+#overlay{position:fixed;inset:0;background:rgba(20,20,22,.55);z-index:100;display:none;
+  align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#overlay.open{display:flex}
+#modal{background:var(--card);border-radius:18px;max-width:960px;width:100%;max-height:94vh;max-height:94dvh;
+  overflow:auto;box-shadow:var(--shadow-lg);position:relative;display:grid;grid-template-columns:1.15fr 1fr}
+#mclose{position:absolute;top:10px;right:10px;z-index:5;border:0;background:rgba(255,255,255,.9);
+  width:34px;height:34px;border-radius:50%;font-size:17px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.2)}
+.mimgbox{position:relative;background:#efedea;min-height:320px;display:flex;align-items:center;justify-content:center}
+.mimgbox img{width:100%;height:100%;object-fit:contain;max-height:94vh}
+.navbtn{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.92);
+  width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.25)}
+.navbtn.prev{left:10px}.navbtn.next{right:10px}
+.imgdots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.imgdots span{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.25)}
+.imgdots span.on{background:var(--ink)}
+.minfo{padding:22px 22px 26px;display:flex;flex-direction:column;gap:12px}
+.minfo .cserie{font-size:12px}
+.mcodes{font-family:Georgia,serif;font-size:22px;font-weight:700;line-height:1.25}
+.mrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tag{background:var(--chip);border-radius:8px;padding:5px 10px;font-size:13px}
+.tag b{font-weight:700}
+.tag.page{background:var(--badge);color:#fff}
+.tag.gt{background:var(--accent);color:#fff;font-weight:700}
+.sect{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+  font-weight:700;margin-top:6px;border-top:1px solid var(--line);padding-top:12px}
+table.arts{width:100%;border-collapse:collapse;font-size:13.5px}
+table.arts td{padding:6px 8px 6px 0;border-bottom:1px dashed var(--line);vertical-align:top}
+table.arts tr:last-child td{border-bottom:0}
+.artnr{font-weight:700;white-space:nowrap}
+.mnotes{font-size:13px;color:var(--muted)}
+.mlabel{font-size:13.5px}
+.mlabel b{letter-spacing:.3px}
+.warn{background:#fdf3e4;border:1px solid #f0d9ae;color:#8a5b12;border-radius:10px;
+  padding:9px 12px;font-size:12.5px}
+footer{max-width:1400px;margin:8px auto 30px;padding:0 16px;color:var(--muted);font-size:12px}
+
+@media (max-width:720px){
+  #grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  #modal{grid-template-columns:1fr;max-height:92dvh}
+  .mimgbox{min-height:0;max-height:44dvh}
+  .mimgbox img{max-height:44dvh}
+  .minfo{padding:16px 16px 22px}
+  .brand{font-size:20px}
+  main{padding:10px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <div>
+      <div class="brand">engers <small>·</small> Mustertafeln</div>
+      <div class="subtitle" id="subtitle"></div>
+    </div>
+    <div class="searchwrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search" type="search" placeholder="Suche: Serie, Artikelnr., Größe, Code, Seite …" autocomplete="off">
+      <button id="clearBtn" title="Leeren">✕</button>
+    </div>
+    <div class="count" id="count"></div>
+  </div>
+  <div class="controls">
+    <select id="serieSel"><option value="">Alle Serien</option></select>
+    <select id="sortSel">
+      <option value="seite">Sortierung: Seite</option>
+      <option value="serie">Sortierung: Serie A–Z</option>
+      <option value="groesse">Sortierung: Größe</option>
+    </select>
+    <div class="typchips" id="typChips"></div>
+  </div>
+</header>
+
+<main><div id="grid"></div><div class="empty" id="empty" style="display:none"><b>∅</b>Keine Tafeln gefunden.<br>Suche oder Filter anpassen.</div></main>
+<footer id="foot"></footer>
+
+<div id="overlay">
+  <div id="modal">
+    <button id="mclose" title="Schließen">✕</button>
+    <div class="mimgbox" id="mimg"></div>
+    <div class="minfo" id="minfo"></div>
+  </div>
+</div>
+
+<script>
+const DATA = /*__DATA__*/[];
+const COVERS = /*__COVERS__*/{};
+
+/* ---------- helpers ---------- */
+const norm = s => (s||"").toString().toLowerCase()
+  .replace(/\s*x\s*/g,"x").replace(/\s+/g," ").trim();
+const el = (t,c,h) => {const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;};
+const esc = s => (s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+/* search haystack per entry */
+DATA.forEach(e=>{
+  const parts=[e.serie,e.material,e.name,e.tafel_groesse,"seite "+e.seite,String(e.seite),...(e.codes||[]),e.label||""];
+  (e.artikel||[]).forEach(a=>{parts.push(a.artnr,a.farbe,a.groesse,a.raw);});
+  (e.notizen||[]).forEach(n=>parts.push(n));
+  if(e.gt) parts.push("gt","grifftafel");
+  if(e.display) parts.push("display");
+  e._hay = norm(parts.filter(Boolean).join(" § "));
+  const m=(e.tafel_groesse||"").match(/(\d+)\s*x\s*(\d+)/);
+  e._area = m ? (+m[1])*(+m[2]) : 0;
+});
+
+/* ---------- state ---------- */
+let q="", serieF="", typF="", sort="seite";
+
+const serien=[...new Set(DATA.map(e=>e.serie).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"de"));
+const serieSel=document.getElementById("serieSel");
+serien.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;serieSel.appendChild(o);});
+
+const TYPES=[["","Alle"],["tafel","Mustertafeln"],["gt","GT (Grifftafel)"],["display","Displays"]];
+const chipsBox=document.getElementById("typChips");
+TYPES.forEach(([v,lab])=>{
+  const c=el("button","chip"+(v===""?" on":""),lab); c.dataset.v=v;
+  c.onclick=()=>{typF=v;[...chipsBox.children].forEach(x=>x.classList.toggle("on",x===c));render();};
+  chipsBox.appendChild(c);
+});
+
+document.getElementById("search").addEventListener("input",ev=>{
+  q=norm(ev.target.value);
+  document.getElementById("clearBtn").style.display=q?"block":"none";
+  render();
+});
+document.getElementById("clearBtn").onclick=()=>{const s=document.getElementById("search");s.value="";q="";document.getElementById("clearBtn").style.display="none";render();s.focus();};
+serieSel.onchange=()=>{serieF=serieSel.value;render();};
+document.getElementById("sortSel").onchange=ev=>{sort=ev.target.value;render();};
+
+/* ---------- filtering ---------- */
+function filtered(){
+  let out=DATA.filter(e=>{
+    if(serieF && e.serie!==serieF) return false;
+    if(typF==="gt" && !e.gt) return false;
+    if(typF==="display" && !e.display) return false;
+    if(typF==="tafel" && (e.display)) return false;
+    if(q && !q.split(" ").every(t=>e._hay.includes(t))) return false;
+    return true;
+  });
+  if(sort==="seite") out.sort((a,b)=>a.seite-b.seite);
+  if(sort==="serie") out.sort((a,b)=>(a.serie||"").localeCompare(b.serie||"","de")||a.seite-b.seite);
+  if(sort==="groesse") out.sort((a,b)=>b._area-a._area||a.seite-b.seite);
+  return out;
+}
+
+/* ---------- grid ---------- */
+const grid=document.getElementById("grid");
+function render(){
+  const list=filtered();
+  grid.innerHTML="";
+  document.getElementById("empty").style.display=list.length?"none":"block";
+  document.getElementById("count").innerHTML=`<b>${list.length}</b> von ${DATA.length} Tafeln`;
+  const frag=document.createDocumentFragment();
+  list.forEach(e=>{
+    const card=el("div","card");
+    const tb=el("div","thumbbox");
+    if(e.img){
+      const im=document.createElement("img");
+      im.loading="lazy"; im.decoding="async";
+      im.src="images/thumb/"+e.id+".jpg"; im.alt=e.codes.join(", ")||e.name||e.id;
+      im.onerror=()=>{tb.innerHTML='<div class="noimg">kein Bild</div>';};
+      tb.appendChild(im);
+    } else tb.appendChild(el("div","noimg","kein Bild"));
+    tb.appendChild(el("span","pagebadge","Seite "+e.seite));
+    const pb=el("button","printbtn","🖨");
+    pb.title="Katalogseite "+e.seite+" drucken";
+    pb.onclick=ev=>{ev.stopPropagation();printPage(e.seite);};
+    tb.appendChild(pb);
+    if(e.gt) tb.appendChild(el("span","gtbadge","GT"));
+    else if(e.display) tb.appendChild(el("span","gtbadge","DISPLAY"));
+    card.appendChild(tb);
+    const b=el("div","cbody");
+    b.appendChild(el("div","cserie",esc(e.serie||"–")));
+    b.appendChild(el("div","ccode",e.codes.length?e.codes.map(esc).join("<br>"):esc(e.name||"")));
+    if(e.tafel_groesse) b.appendChild(el("div","csize",esc(e.tafel_groesse)));
+    const arts=(e.artikel||[]).map(a=>a.artnr||"").filter(Boolean).join(" · ");
+    if(arts) b.appendChild(el("div","cart",esc(arts)));
+    card.appendChild(b);
+    card.onclick=()=>openModal(e);
+    frag.appendChild(card);
+  });
+  grid.appendChild(frag);
+}
+
+/* ---------- modal ---------- */
+const overlay=document.getElementById("overlay");
+let mImgs=[], mIdx=0;
+function openModal(e){
+  mImgs=[]; mIdx=0;
+  if(e.img) mImgs.push({src:"images/large/"+e.id+".jpg",alt:"Tafelfoto"});
+  const cov=COVERS[e._covkey];
+  if(cov) mImgs.push({src:"images/cover/"+e._covkey+".jpg",alt:"Serienbild"});
+  renderModalImg();
+  const info=document.getElementById("minfo");
+  info.innerHTML="";
+  info.appendChild(el("div","cserie",esc(e.serie||"Serie unbekannt")+(e.material?" · "+esc(e.material):"")));
+  info.appendChild(el("div","mcodes",e.codes.length?e.codes.map(esc).join("<br>"):esc(e.name||"")));
+  if(e.name&&e.codes.length) info.appendChild(el("div","mlabel",esc(e.name)));
+  const row=el("div","mrow");
+  row.appendChild(el("span","tag page","Seite "+e.seite+" im Katalog"));
+  if(e.tafel_groesse) row.appendChild(el("span","tag","Tafel: <b>"+esc(e.tafel_groesse)+"</b>"));
+  if(e.gt) row.appendChild(el("span","tag gt","GT – Grifftafel"));
+  if(e.display) row.appendChild(el("span","tag gt","Display"));
+  info.appendChild(row);
+  if((e.artikel||[]).length){
+    info.appendChild(el("div","sect","Artikel / Bestückung"));
+    const t=el("table","arts");
+    e.artikel.forEach(a=>{
+      const tr=document.createElement("tr");
+      if(a.raw){tr.appendChild(el("td","", "<i>"+esc(a.raw)+"</i> <span style='color:var(--accent)'>(unklar)</span>"));}
+      else{
+        tr.appendChild(el("td","artnr","Art. "+esc(a.artnr)));
+        tr.appendChild(el("td","",esc(a.stueck? "("+a.stueck+" St.)":"")));
+        tr.appendChild(el("td","",esc(a.farbe||"")));
+        tr.appendChild(el("td","",esc(a.groesse||"")));
+      }
+      t.appendChild(tr);
+    });
+    info.appendChild(t);
+  }
+  if(e.label){
+    info.appendChild(el("div","sect","Poster / Etikett"));
+    info.appendChild(el("div","mlabel",esc(e.label)));
+  }
+  if((e.notizen||[]).length){
+    info.appendChild(el("div","sect","Hinweise"));
+    info.appendChild(el("div","mnotes",e.notizen.map(esc).join("<br>")));
+  }
+  {
+    info.appendChild(el("div","sect","Drucken"));
+    const pr=el("div","mprint");
+    pagesOf(e).forEach(pn=>{
+      const b=el("button","","🖨 Seite "+pn+" drucken");
+      b.onclick=()=>printPage(pn);
+      pr.appendChild(b);
+    });
+    info.appendChild(pr);
+  }
+  if(e.unklar){
+    info.appendChild(el("div","warn","⚠️ Automatische Erfassung unsicher: "+esc(e.unklar.join("; "))+" – bitte mit Katalogseite "+e.seite+" abgleichen."));
+  }
+  overlay.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function renderModalImg(){
+  const box=document.getElementById("mimg");
+  box.innerHTML="";
+  if(!mImgs.length){box.appendChild(el("div","noimg","kein Bild"));return;}
+  const im=document.createElement("img");
+  im.src=mImgs[mIdx].src; im.alt=mImgs[mIdx].alt;
+  box.appendChild(im);
+  if(mImgs.length>1){
+    const p=el("button","navbtn prev","‹"), n=el("button","navbtn next","›");
+    p.onclick=ev=>{ev.stopPropagation();mIdx=(mIdx-1+mImgs.length)%mImgs.length;renderModalImg();};
+    n.onclick=ev=>{ev.stopPropagation();mIdx=(mIdx+1)%mImgs.length;renderModalImg();};
+    box.appendChild(p);box.appendChild(n);
+    const dots=el("div","imgdots");
+    mImgs.forEach((_,i)=>dots.appendChild(el("span",i===mIdx?"on":"")));
+    box.appendChild(dots);
+  }
+}
+function closeModal(){overlay.classList.remove("open");document.body.style.overflow="";}
+document.getElementById("mclose").onclick=closeModal;
+overlay.addEventListener("click",ev=>{if(ev.target===overlay)closeModal();});
+document.addEventListener("keydown",ev=>{
+  if(!overlay.classList.contains("open"))return;
+  if(ev.key==="Escape")closeModal();
+  if(ev.key==="ArrowLeft"&&mImgs.length>1){mIdx=(mIdx-1+mImgs.length)%mImgs.length;renderModalImg();}
+  if(ev.key==="ArrowRight"&&mImgs.length>1){mIdx=(mIdx+1)%mImgs.length;renderModalImg();}
+});
+
+/* ---------- printing ---------- */
+const codePages={};
+DATA.forEach(e=>(e.codes||[]).forEach(c=>{(codePages[c]=codePages[c]||new Set()).add(e.seite);}));
+function pagesOf(e){
+  const s=new Set([e.seite]);
+  (e.codes||[]).forEach(c=>(codePages[c]||[]).forEach(p=>s.add(p)));
+  return [...s].sort((a,b)=>a-b);
+}
+function pdfUrl(pn){return "pages/seite-"+String(pn).padStart(3,"0")+".pdf";}
+let printFrame=null, printTimer=null;
+function printPage(pn){
+  const url=pdfUrl(pn);
+  /* Bei file:// blockiert Chrome/Edge den PDF-Viewer in iframes -
+     contentWindow.print() würde die (leere) App-Seite drucken statt der PDF.
+     Daher: PDF direkt im neuen Tab öffnen, dort druckt der Browser die Katalogseite. */
+  if(location.protocol==="file:"){
+    window.open(url,"_blank");
+    return;
+  }
+  try{
+    if(printFrame) printFrame.remove();
+    printFrame=document.createElement("iframe");
+    printFrame.style.cssText="position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;visibility:hidden";
+    let printed=false;
+    printFrame.onload=()=>{
+      try{
+        printFrame.contentWindow.focus();
+        printFrame.contentWindow.print();
+        printed=true;
+      }catch(err){ window.open(url,"_blank"); printed=true; }
+    };
+    document.body.appendChild(printFrame);
+    printFrame.src=url;
+    clearTimeout(printTimer);
+    printTimer=setTimeout(()=>{ if(!printed) window.open(url,"_blank"); },2500);
+  }catch(err){
+    window.open(url,"_blank");
+  }
+}
+
+/* ---------- init ---------- */
+document.getElementById("subtitle").textContent=
+  `${DATA.length} Mustertafeln · ${serien.length} Serien · Quelle: Mustertafeln engers.pdf`;
+document.getElementById("foot").innerHTML=
+  "Digitaler Katalog, automatisch aus dem PDF extrahiert. Seitenzahlen beziehen sich auf die PDF-Datei.";
+render();
+</script>
+</body>
+</html>
