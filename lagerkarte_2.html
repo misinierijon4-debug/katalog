@@ -2315,6 +2315,7 @@
         else if (a.status === "blocked") { a.status = "offen"; changed = true; }
         if (a.verpacktAm === undefined) { a.verpacktAm = null; changed = true; }
         if (a.versendetAm === undefined) { a.versendetAm = null; changed = true; }
+        if (ensureChecklist(a)) changed = true;
         a.positionen.forEach(function (p) {
           var norm = normalizeCode(p.code || "");
           if (norm !== p.code) { p.code = norm; changed = true; }
@@ -2350,6 +2351,7 @@
         status: statusMap[a.status] || "offen",
         verpacktAm: null,
         versendetAm: null,
+        checklist: defaultChecklist(),
         positionen: posArray,
         // Legacy-Felder beibehalten für Rückwärtskompatibilität
         title: a.title || "",
@@ -4061,7 +4063,7 @@
 
   // Legt einen Auftrag neu an ODER aktualisiert nach Rückfrage den bereits
   // gespeicherten mit derselben Auftragsnummer (Duplikat-Erkennung). Beim
-  // Aktualisieren bleiben Status, Notiz und Pick-Fortschritt (pro Code)
+  // Aktualisieren bleiben Status, Notiz, Checkliste und Pick-Fortschritt (pro Code)
   // erhalten. Rückgabe: Meldungstext, oder null bei Abbruch durch den Nutzer.
   function upsertAuftrag(neu) {
     var existing = neu.auftragsnummer
@@ -4071,7 +4073,7 @@
     if (existing) {
       var ok = window.confirm(
         "„" + auftragDisplayName(existing) + "“ ist bereits gespeichert.\n" +
-        "Positionen und Verfügbarkeit aktualisieren? (Status, Notiz und Pick-Fortschritt bleiben erhalten.)"
+        "Positionen und Verfügbarkeit aktualisieren? (Status, Notiz, Checkliste und Pick-Fortschritt bleiben erhalten.)"
       );
       if (!ok) return null;
       // Pick-Zustand pro Code in die neuen Positionen übernehmen.
@@ -4096,8 +4098,10 @@
       existing.blockedCount = neu.blockedCount;
       existing.totalCount = neu.totalCount;
       existing.items = neu.items;
+      ensureChecklist(existing);
       msg = "Auftrag aktualisiert: " + auftragDisplayName(existing);
     } else {
+      ensureChecklist(neu);
       auftraege.unshift(neu);
       msg = "Auftrag gespeichert: " + auftragDisplayName(neu);
     }
@@ -4126,6 +4130,7 @@
       verpacktAm: null,
       versendetAm: null,
       notiz: "",
+      checklist: defaultChecklist(),
       positionen: positionen,
       // Legacy-Spiegel für Export-Kompatibilität (Format version 3).
       title: title,
