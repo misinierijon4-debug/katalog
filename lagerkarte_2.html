@@ -1430,6 +1430,9 @@
   .klebe-verdict { font-weight: 800; margin-top: 5px; }
   .klebe-verdict.klebe-yes { color: var(--green-fg); }
   .klebe-verdict.klebe-no { color: var(--red-fg); }
+  /* Kleben-Detail unterhalb einer Prüfzeile (Auftrag prüfen). */
+  .check-klebe { margin: 2px 0 8px 26px; }
+  .check-klebe .pos-klebe { margin-top: 2px; }
 
   .auftrag-actions-row { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
   .auftrag-avail-detail { font-size: 11.5px; margin-top: 8px; }
@@ -3150,13 +3153,15 @@
   function recheckAuftrag(id) {
     var a = findAuftrag(id);
     if (!a) return;
-    applyVerfuegbarkeit(a.positionen, buildLagerIndex());
+    var index = buildLagerIndex();
+    applyVerfuegbarkeit(a.positionen, index);
     a.geprueftAm = new Date().toISOString();
     saveAuftraege();
     renderAuftraege();
-    var blocked = (a.positionen || []).filter(function (p) { return !p.verfuegbar; }).length;
+    // Durch Kleben machbare Positionen zählen nicht als blockiert.
+    var blocked = (a.positionen || []).filter(function (p) { return istBlockiert(p, index); }).length;
     showBackupMsg(blocked === 0
-      ? auftragDisplayName(a) + ": alle Positionen verfügbar. ✓"
+      ? auftragDisplayName(a) + ": alle Positionen erfüllbar (ggf. durch Kleben). ✓"
       : auftragDisplayName(a) + ": " + blocked + " Position(en) weiterhin blockiert.");
   }
 
@@ -3222,9 +3227,12 @@
   // Katalog → keine Pick-Aufgabe, sondern kleben. Liefert die benötigte
   // Blanko-Tafel, die Fliesen-Bausteine (z.B. "PHO 1250") und den Poster —
   // jeweils inkl. Verfügbarkeit im Lager — plus ein Gesamturteil "möglich".
-  function klebeInfoFuer(p, index) {
-    if (p.verfuegbar !== false || p.lagerStatus !== "unknown") return null;
-    var eintrag = katalogEintragFuer(p.code);
+  // Kleben-Info allein aus einem Code + Lager-Index (unabhängig vom Positions-
+  // Status): Blanko-Tafel, Fliesen-Bausteine (z.B. "PHO 1250"), Poster — je
+  // inkl. Lager-Verfügbarkeit — plus Gesamturteil "möglich". null, wenn der
+  // Code nicht im Katalog steht.
+  function klebeInfoForCode(code, index) {
+    var eintrag = katalogEintragFuer(code);
     if (!eintrag) return null;
     var artikel = (eintrag.artikel || []).filter(function (a) { return a.artnr; }).map(function (a) {
       var entry = index[normalizeCode(a.artnr).replace(/-/g, "")];
@@ -3235,7 +3243,7 @@
         lagerStatus: entry ? entry.status : "unknown"
       };
     });
-    var blanko = blankoTafelStatus(p.code, index);
+    var blanko = blankoTafelStatus(code, index);
     var poster = posterStatusFuer(eintrag, index);
     // "Kleben möglich": leere Blanko-Tafel vorhanden UND alle Bausteine da.
     // Der Poster wird separat ausgewiesen, blockiert das Kleben selbst nicht.
@@ -3249,6 +3257,65 @@
       poster: poster,
       moeglich: moeglich
     };
+  }
+
+  // Kleben-Info für eine Auftragsposition: nur relevant, wenn die fertige
+  // Tafel nicht direkt nutzbar ist. Kleben ist der Normalfall für Tafeln, die
+  // nicht (mehr) im Lager stehen ("unknown") oder als leer markiert sind
+  // ("empty" → neu bekleben). Bestellte/defekte Codes betrifft es nicht.
+  function klebeInfoFuer(p, index) {
+    if (p.verfuegbar === true) return null;
+    if (p.lagerStatus && p.lagerStatus !== "unknown" && p.lagerStatus !== "empty") return null;
+    return klebeInfoForCode(p.code, index);
+  }
+
+  // Eine Position blockiert den Auftrag nur, wenn sie weder direkt verfügbar
+  // noch durch Kleben machbar ist. (Kleben ist Standard, kein Blocker.)
+  function istBlockiert(p, index) {
+    if (p.verfuegbar !== false) return false;   // verfügbar oder noch ungeprüft
+    var k = index ? klebeInfoFuer(p, index) : null;
+    if (k && k.moeglich) return false;
+    return true;
+  }
+
+  // Klickbarer Status-Chip (springt zum Code im Lager).
+  function klebeChipHtml(code, lagerStatus, titelPrefix) {
+    var da = STATUS_LABEL[lagerStatus] || STATUS_LABEL.unknown;
+    var ok = klebenNutzbar(lagerStatus);
+    return '<span class="klebe-art ' + (ok ? "klebe-ok" : "klebe-miss") + '" ' +
+      'data-action="jumpCode" data-code="' + escapeHtml(code) + '" ' +
+      'title="' + escapeHtml(titelPrefix + " — " + da.text + " · im Lager anzeigen") + '">' +
+      da.icon + ' ' + escapeHtml(code) + '</span>';
+  }
+
+  // Gemeinsame Detail-Darstellung (Blanko-Tafel · Bausteine · Poster) für die
+  // Auftragskarten UND den Prüf-Bereich. withVerdict blendet das Gesamturteil
+  // "Kleben möglich/nicht möglich" ein.
+  function klebeDetailHtml(klebe, withVerdict) {
+    var html = "";
+    if (klebe.blanko) {
+      html += '<div class="pos-klebe"><span class="klebe-label">Blanko-Tafel:</span> ' +
+        klebeChipHtml(klebe.blanko.code, klebe.blanko.lagerStatus, "Blanko-Tafel " + klebe.blanko.code) + '</div>';
+    }
+    var chips = klebe.artikel.length ? klebe.artikel.map(function (a) {
+      var da = STATUS_LABEL[a.lagerStatus] || STATUS_LABEL.unknown;
+      var ok = klebenNutzbar(a.lagerStatus);
+      return '<span class="klebe-art ' + (ok ? "klebe-ok" : "klebe-miss") + '" ' +
+        'data-action="jumpCode" data-code="' + escapeHtml(a.artnr) + '" ' +
+        'title="' + escapeHtml("Art. " + a.artnr + (a.farbe ? " · " + a.farbe : "") + " — " + da.text + " · im Lager anzeigen") + '">' +
+        da.icon + ' ' + escapeHtml(a.artnr) + (a.stueck ? ' (' + escapeHtml(a.stueck) + ' St.)' : '') + '</span>';
+    }).join(" ") : '<span style="opacity:0.7;">keine Artikel im Katalogeintrag</span>';
+    html += '<div class="pos-klebe"><span class="klebe-label">Bausteine (Katalog S. ' + klebe.seite +
+      (klebe.serie ? ' · ' + escapeHtml(klebe.serie) : '') + '):</span> ' + chips + '</div>';
+    if (klebe.poster) {
+      html += '<div class="pos-klebe"><span class="klebe-label">Poster:</span> ' +
+        klebeChipHtml(klebe.poster.code, klebe.poster.lagerStatus, "Poster " + klebe.poster.code) + '</div>';
+    }
+    if (withVerdict) {
+      html += '<div class="pos-klebe klebe-verdict ' + (klebe.moeglich ? "klebe-yes" : "klebe-no") + '">' +
+        (klebe.moeglich ? "✓ Kleben möglich" : "✕ Kleben nicht möglich – Material fehlt") + '</div>';
+    }
+    return html;
   }
 
   // Springt aus einer Auftragsposition zum Artikel im Lager (Tab + Suche).
@@ -3297,11 +3364,13 @@
     var pos = a.positionen || [];
     var total = pos.length;
     var picked = pos.filter(function (p) { return p.gepickt; }).length;
-    var blocked = pos.filter(function (p) { return p.verfuegbar === false; }).length;
+    // Nur echte Blocker zählen — durch Kleben machbare Positionen sind kein
+    // Problem (Standard-Fall), also nicht als "blockiert" werten.
+    var blocked = pos.filter(function (p) { return istBlockiert(p, lagerIndex); }).length;
     var pct = total > 0 ? Math.round(picked * 100 / total) : 0;
 
     var availBanner = blocked === 0
-      ? '<span class="auftrag-avail-banner auftrag-avail-ok">✓ ' + total + ' Pos. verfügbar</span>'
+      ? '<span class="auftrag-avail-banner auftrag-avail-ok">✓ ' + total + ' Pos. erfüllbar</span>'
       : '<span class="auftrag-avail-banner auftrag-avail-partial">⚠ ' + blocked + ' von ' + total + ' blockiert</span>';
 
     // Alle Positionen gepickt → kein Status-Wechsel mehr, aber Fortschritt
@@ -3339,51 +3408,10 @@
       var extra = "";
       if (p.lagerNote) extra += ' <span style="opacity:0.7;">– ' + escapeHtml(p.lagerNote) + '</span>';
       if (p.lagerLabel) extra += ' <span style="opacity:0.55;">(' + escapeHtml(p.lagerLabel) + ')</span>';
-      // Klebe-Position: benötigte Fliesen-Artikel aus dem Katalog anzeigen,
-      // jeweils mit Bestandsstatus; Klick springt zum Artikel im Lager.
+      // Klebe-Position: benötigte Blanko-Tafel, Fliesen-Bausteine und Poster
+      // aus dem Katalog anzeigen, jeweils mit Bestandsstatus + Gesamturteil.
       if (klebe) {
-        // Kleiner, klickbarer Status-Chip (springt zum Code im Lager).
-        var klebeChip = function (code, lagerStatus, text) {
-          var da = STATUS_LABEL[lagerStatus] || STATUS_LABEL.unknown;
-          var ok = klebenNutzbar(lagerStatus);
-          return '<span class="klebe-art ' + (ok ? "klebe-ok" : "klebe-miss") + '" ' +
-            'data-action="jumpCode" data-code="' + escapeHtml(code) + '" ' +
-            'title="' + escapeHtml(text + " — " + da.text + " · im Lager anzeigen") + '">' +
-            da.icon + ' ' + escapeHtml(code) + '</span>';
-        };
-
-        // 1) Benötigte Blanko-Tafel (leere Mustertafel).
-        var blankoHtml = "";
-        if (klebe.blanko) {
-          blankoHtml = '<div class="pos-klebe"><span class="klebe-label">Blanko-Tafel:</span> ' +
-            klebeChip(klebe.blanko.code, klebe.blanko.lagerStatus, "Blanko-Tafel " + klebe.blanko.code) + '</div>';
-        }
-
-        // 2) Fliesen-Bausteine aus dem Katalog, jeweils mit Bestandsstatus.
-        var chips = klebe.artikel.length ? klebe.artikel.map(function (a) {
-          var da = STATUS_LABEL[a.lagerStatus] || STATUS_LABEL.unknown;
-          var ok = klebenNutzbar(a.lagerStatus);
-          return '<span class="klebe-art ' + (ok ? "klebe-ok" : "klebe-miss") + '" ' +
-            'data-action="jumpCode" data-code="' + escapeHtml(a.artnr) + '" ' +
-            'title="' + escapeHtml("Art. " + a.artnr + (a.farbe ? " · " + a.farbe : "") + " — " + da.text + " · im Lager anzeigen") + '">' +
-            da.icon + ' ' + escapeHtml(a.artnr) + (a.stueck ? ' (' + escapeHtml(a.stueck) + ' St.)' : '') + '</span>';
-        }).join(" ") : '<span style="opacity:0.7;">keine Artikel im Katalogeintrag</span>';
-        var bausteineHtml = '<div class="pos-klebe"><span class="klebe-label">Bausteine (Katalog S. ' + klebe.seite +
-          (klebe.serie ? ' · ' + escapeHtml(klebe.serie) : '') + '):</span> ' + chips + '</div>';
-
-        // 3) Poster/Etikett aus dem Katalog-label (gegen den Poster-Bestand).
-        //    Ohne Code im label (rein beschreibend) wird nichts angezeigt.
-        var posterHtml = "";
-        if (klebe.poster) {
-          posterHtml = '<div class="pos-klebe"><span class="klebe-label">Poster:</span> ' +
-            klebeChip(klebe.poster.code, klebe.poster.lagerStatus, "Poster " + klebe.poster.code) + '</div>';
-        }
-
-        // 4) Gesamturteil.
-        var verdictHtml = '<div class="pos-klebe klebe-verdict ' + (klebe.moeglich ? "klebe-yes" : "klebe-no") + '">' +
-          (klebe.moeglich ? "✓ Kleben möglich" : "✕ Kleben nicht möglich – Material fehlt") + '</div>';
-
-        extra += blankoHtml + bausteineHtml + posterHtml + verdictHtml;
+        extra += klebeDetailHtml(klebe, true);
       }
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
@@ -3716,16 +3744,41 @@
     var index = buildLagerIndex();
     var lines = [];
     var blockers = [];
+    var klebenCount = 0;
     var checkedItems = [];
-    // "pending" (Poster folgt) gilt laut Vorgabe als erfüllbar.
-    var okStatuses = { ok: true, pending: true };
 
     codes.forEach(function (c) {
       var entry = index[c.norm.replace(/-/g, "")];
       var status = entry ? entry.status : "unknown";
-      var meta = STATUS_LABEL[status];
-      var isBlocker = !okStatuses[status];
-      if (isBlocker) blockers.push({ code: c.norm, status: status });
+      var direkt = status === "ok" || status === "pending";
+      // Nicht direkt im Lager? → Katalog prüfen: dann ist es ein Kleben-Fall
+      // (Standard, kein Problem), sofern das Material vorhanden ist.
+      var klebe = direkt ? null : klebeInfoForCode(c.norm, index);
+
+      var meta, isBlocker, klebeHtml = "";
+      if (direkt) {
+        meta = STATUS_LABEL[status];
+        isBlocker = false;
+      } else if (klebe) {
+        klebenCount++;
+        isBlocker = !klebe.moeglich;
+        meta = klebe.moeglich
+          ? { cls: "cl-ok",     icon: "🧩", text: "kleben – Material vorhanden" }
+          : { cls: "cl-broken", icon: "🧩", text: "kleben – Material fehlt" };
+        klebeHtml = '<div class="check-klebe">' + klebeDetailHtml(klebe, false) + '</div>';
+      } else if (status === "empty") {
+        // Im Lager, aber leere Tafel → neu bekleben (ohne Katalog kein
+        // Material-Check, aber Kleben ist der Normalfall, kein Blocker).
+        meta = STATUS_LABEL.empty;
+        isBlocker = false;
+      } else {
+        // missing (Nachbestellung), broken (defekt) oder unbekannt & nicht
+        // im Katalog → echter Blocker.
+        meta = STATUS_LABEL[status] || STATUS_LABEL.unknown;
+        isBlocker = true;
+      }
+
+      if (isBlocker) blockers.push({ code: c.norm, text: meta.text });
       checkedItems.push({
         code: c.norm,
         status: status,
@@ -3739,19 +3792,20 @@
           '<span>' + meta.icon + '</span>' +
           '<span class="cl-code">' + escapeHtml(c.norm) + '</span>' +
           '<span class="cl-status">' + meta.text + noteHtml + '</span>' +
-        '</div>'
+        '</div>' + klebeHtml
       );
     });
 
     var fulfillable = blockers.length === 0;
+    var klebenHinweis = klebenCount > 0 ? " (" + klebenCount + " davon durch Kleben)" : "";
     var verdict = fulfillable
-      ? '<div class="verdict verdict-ok"><span>✓</span><span>Auftrag erfüllbar — alle ' + codes.length + ' Positionen vorhanden oder nutzbar.</span></div>'
-      : '<div class="verdict verdict-no"><span>✕</span><span>Nicht erfüllbar — ' + blockers.length + ' von ' + codes.length + ' Positionen blockiert.</span></div>';
+      ? '<div class="verdict verdict-ok"><span>✓</span><span>Auftrag erfüllbar — alle ' + codes.length + ' Positionen vorhanden oder machbar' + klebenHinweis + '.</span></div>'
+      : '<div class="verdict verdict-no"><span>✕</span><span>' + blockers.length + ' von ' + codes.length + ' Positionen blockiert — Material fehlt.</span></div>';
 
     var blockerHtml = "";
     if (!fulfillable) {
       var items = blockers.map(function (b) {
-        return "<b>" + escapeHtml(b.code) + "</b> (" + STATUS_LABEL[b.status].text + ")";
+        return "<b>" + escapeHtml(b.code) + "</b> (" + escapeHtml(b.text) + ")";
       }).join(", ");
       blockerHtml = '<div class="blocker-list">Blockierend: ' + items + '</div>';
     }
