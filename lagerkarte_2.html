@@ -318,16 +318,10 @@
   #app[data-view="auftraege"] .extra-section,
   #app[data-view="auftraege"] #btnFab { display: none !important; }
 
-  /* Prüfen-Tab: eigener Bereich — nur die Prüf-Sektion zeigen */
-  #app[data-view="pruefen"] .subtext,
-  #app[data-view="pruefen"] .dashboard,
-  #app[data-view="pruefen"] .banner:not(#bannerBackup),
-  #app[data-view="pruefen"] #newCatRow,
-  #app[data-view="pruefen"] .map-scroll,
-  #app[data-view="pruefen"] .extra-section,
-  #app[data-view="pruefen"] #btnFab { display: none !important; }
+  /* Der Prüf-Bereich ("Auftrag prüfen") lebt jetzt im Auftrags-Tab,
+     oberhalb der Auftragsliste — kein eigener Tab mehr. */
   #checkSection { display: none; }
-  #app[data-view="pruefen"] #checkSection { display: block; }
+  #app[data-view="auftraege"] #checkSection { display: block; }
 
   /* ---------- Auftrags-Datenbank ---------- */
   .auftraege-section { margin-bottom: 8px; }
@@ -1432,6 +1426,10 @@
   .klebe-art.klebe-ok { background: var(--green-bg); color: var(--green-fg); }
   .klebe-art.klebe-miss { background: var(--red-bg); color: var(--red-fg); }
   .klebe-art:hover { filter: brightness(0.95); }
+  .pos-klebe .klebe-label { font-weight: 700; opacity: 0.8; margin-right: 2px; }
+  .klebe-verdict { font-weight: 800; margin-top: 5px; }
+  .klebe-verdict.klebe-yes { color: var(--green-fg); }
+  .klebe-verdict.klebe-no { color: var(--red-fg); }
 
   .auftrag-actions-row { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
   .auftrag-avail-detail { font-size: 11.5px; margin-top: 8px; }
@@ -1566,10 +1564,6 @@
         <button type="button" class="tab" id="tabFliesen" role="tab" data-tab="fliesen" aria-selected="false">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
           <span>Fliesen-Bestand</span>
-        </button>
-        <button type="button" class="tab" id="tabPruefen" role="tab" data-tab="pruefen" aria-selected="false">
-          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
-          <span>Auftrag prüfen</span>
         </button>
         <button type="button" class="tab" id="tabAuftraege" role="tab" data-tab="auftraege" aria-selected="false">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg></span>
@@ -1725,7 +1719,7 @@
 
       <div id="auftraegeList"></div>
       <div id="auftraegeEmpty" class="auftraege-empty" style="display:none;">
-        Noch keine Aufträge gespeichert. PDF importieren oder im Tab „Auftrag prüfen“ einen Auftrag prüfen und speichern.
+        Noch keine Aufträge gespeichert. Oben einen Auftrag einfügen bzw. als PDF importieren, prüfen und speichern.
       </div>
     </section>
 
@@ -2027,7 +2021,8 @@
       {"code": "9740", "qty": "", "note": "Kurz-Kürzel"},
       {"code": "9588", "qty": "", "note": "Kurz-Kürzel"},
       {"code": "9562", "qty": "", "note": "Kurz-Kürzel"}
-    ]}
+    ]},
+    { "id": "poster_bestand", "label": "Poster-Bestand", "zone": "spezial_zone", "items": [] }
   ];
 
   function genId() {
@@ -2160,6 +2155,17 @@
       }
     }
 
+    // Der (anfangs leere) "Poster-Bestand" gehört zum Fliesen-Bestand — bei
+    // bereits gespeicherten Ständen nachrüsten, damit dort Poster-/Etikett-
+    // Codes gepflegt und beim Kleben-Abgleich geprüft werden können.
+    if (isFliesen) {
+      var hasPoster = categories.some(function (c) { return c.id === "poster_bestand"; });
+      if (!hasPoster) {
+        changed = true;
+        categories.push({ id: "poster_bestand", label: "Poster-Bestand", zone: "spezial_zone", circled: false, items: [] });
+      }
+    }
+
     var result = {};
     for (var k3 in parsed) result[k3] = parsed[k3];
     result.categories = categories;
@@ -2235,7 +2241,9 @@
     } catch (e) { auftraege = []; }
     try {
       var savedTab = localStorage.getItem(ACTIVE_TAB_KEY);
-      if (savedTab === "fliesen" || savedTab === "tafeln" || savedTab === "pruefen" || savedTab === "auftraege") activeTab = savedTab;
+      // Der frühere Tab "pruefen" wurde in die Auftrags-Verwaltung integriert.
+      if (savedTab === "pruefen") savedTab = "auftraege";
+      if (savedTab === "fliesen" || savedTab === "tafeln" || savedTab === "auftraege") activeTab = savedTab;
     } catch (e) {}
     data = activeTab === "fliesen" ? dataFliesen : dataTafeln;
   }
@@ -3020,7 +3028,7 @@
   }
 
   function switchTab(tab) {
-    if (tab !== "tafeln" && tab !== "fliesen" && tab !== "pruefen" && tab !== "auftraege") return;
+    if (tab !== "tafeln" && tab !== "fliesen" && tab !== "auftraege") return;
     activeTab = tab;
     data = tab === "fliesen" ? dataFliesen : dataTafeln;
     persistKey(ACTIVE_TAB_KEY, tab);
@@ -3162,9 +3170,58 @@
     return hits[0] || null;
   }
 
+  // --- Kleben-Hilfsfunktionen (Blanko-Tafel & Poster) ---
+
+  // Blanko-Tafel-Code (die "leere" Mustertafel) aus einem Mustertafel-Code:
+  // die führenden 4 Ziffern. "9557-IR21-04-10" → "9557". null, wenn der Code
+  // nicht mit 4 Ziffern beginnt.
+  function blankoTafelCode(code) {
+    var m = /^(\d{4})/.exec(normalizeCode(code));
+    return m ? m[1] : null;
+  }
+
+  // Kanonisiert einen 4-stelligen Blanko-Code: die Serien "95xx" und "97xx"
+  // meinen dieselbe Blanko-Tafel; kanonische Form ist "95xx".
+  function normBlankoCode(vier) {
+    return String(vier).replace(/^97/, "95");
+  }
+
+  // Prüft die Blanko-Tafel im Lager-Index — probiert beide gleichwertigen
+  // Serien-Formen (95xx = 97xx). Liefert {code, lagerStatus}.
+  function blankoTafelStatus(mustertafelCode, index) {
+    var vier = blankoTafelCode(mustertafelCode);
+    if (!vier) return null;
+    var kanon = normBlankoCode(vier);            // 95xx
+    var alt = kanon.replace(/^95/, "97");         // 97xx (Geschwister)
+    var entry = index[kanon] || index[alt];
+    return { code: vier, lagerStatus: entry ? entry.status : "unknown" };
+  }
+
+  // Zieht den Poster-/Etikett-Code aus dem Katalogfeld "label". Labels sind
+  // z.B. "Poster 91E0-IRO1-00-10" (Code) oder "Poster NATURAL 30x60 beige"
+  // (rein beschreibend, kein Code). Liefert den normalisierten Code oder null.
+  function posterCodeAusLabel(label) {
+    if (!label) return null;
+    var m = /([0-9A-Z]{3,4}-[0-9A-Z]{2,4}-[0-9A-Z]{2,4}(?:-\d{1,2})?)/i.exec(String(label));
+    return m ? normalizeCode(m[1]) : null;
+  }
+
+  // Poster-Verfügbarkeit für einen Katalogeintrag: Poster-Code aus "label"
+  // gegen den Poster-Bestand (Teil des Lager-Index) prüfen. null, wenn das
+  // label keinen Code enthält (rein beschreibend).
+  function posterStatusFuer(eintrag, index) {
+    var code = posterCodeAusLabel(eintrag.label);
+    if (!code) return null;
+    var entry = index[code.replace(/-/g, "")];
+    return { code: code, lagerStatus: entry ? entry.status : "unknown" };
+  }
+
+  function klebenNutzbar(st) { return st === "ok" || st === "pending"; }
+
   // Klebe-Info für eine Auftragsposition: Tafel ist nicht im Lager, aber im
-  // Katalog → keine Pick-Aufgabe, sondern kleben. Liefert die benötigten
-  // Fliesen-Artikel (z.B. "PHO 1250") inkl. Verfügbarkeit im Fliesen-Lager.
+  // Katalog → keine Pick-Aufgabe, sondern kleben. Liefert die benötigte
+  // Blanko-Tafel, die Fliesen-Bausteine (z.B. "PHO 1250") und den Poster —
+  // jeweils inkl. Verfügbarkeit im Lager — plus ein Gesamturteil "möglich".
   function klebeInfoFuer(p, index) {
     if (p.verfuegbar !== false || p.lagerStatus !== "unknown") return null;
     var eintrag = katalogEintragFuer(p.code);
@@ -3178,7 +3235,20 @@
         lagerStatus: entry ? entry.status : "unknown"
       };
     });
-    return { seite: eintrag.seite, serie: eintrag.serie || "", artikel: artikel };
+    var blanko = blankoTafelStatus(p.code, index);
+    var poster = posterStatusFuer(eintrag, index);
+    // "Kleben möglich": leere Blanko-Tafel vorhanden UND alle Bausteine da.
+    // Der Poster wird separat ausgewiesen, blockiert das Kleben selbst nicht.
+    var moeglich = (!blanko || klebenNutzbar(blanko.lagerStatus)) &&
+      artikel.every(function (a) { return klebenNutzbar(a.lagerStatus); });
+    return {
+      seite: eintrag.seite,
+      serie: eintrag.serie || "",
+      artikel: artikel,
+      blanko: blanko,
+      poster: poster,
+      moeglich: moeglich
+    };
   }
 
   // Springt aus einer Auftragsposition zum Artikel im Lager (Tab + Suche).
@@ -3258,7 +3328,8 @@
       if (p.verfuegbar === true) {
         badge = '<span class="auftrag-pos-badge avail-yes">✓ verfügbar</span>';
       } else if (klebe) {
-        badge = '<span class="auftrag-pos-badge avail-klebe">🧩 kleben – nicht im Lager</span>';
+        badge = '<span class="auftrag-pos-badge avail-klebe">🧩 ' +
+          (klebe.moeglich ? "kleben möglich" : "kleben – Material fehlt") + '</span>';
       } else if (p.verfuegbar === false) {
         var meta = p.lagerStatus ? (STATUS_LABEL[p.lagerStatus] || STATUS_LABEL.unknown) : null;
         badge = '<span class="auftrag-pos-badge avail-no">✕ ' + (meta ? meta.text : "blockiert") + '</span>';
@@ -3271,16 +3342,48 @@
       // Klebe-Position: benötigte Fliesen-Artikel aus dem Katalog anzeigen,
       // jeweils mit Bestandsstatus; Klick springt zum Artikel im Lager.
       if (klebe) {
+        // Kleiner, klickbarer Status-Chip (springt zum Code im Lager).
+        var klebeChip = function (code, lagerStatus, text) {
+          var da = STATUS_LABEL[lagerStatus] || STATUS_LABEL.unknown;
+          var ok = klebenNutzbar(lagerStatus);
+          return '<span class="klebe-art ' + (ok ? "klebe-ok" : "klebe-miss") + '" ' +
+            'data-action="jumpCode" data-code="' + escapeHtml(code) + '" ' +
+            'title="' + escapeHtml(text + " — " + da.text + " · im Lager anzeigen") + '">' +
+            da.icon + ' ' + escapeHtml(code) + '</span>';
+        };
+
+        // 1) Benötigte Blanko-Tafel (leere Mustertafel).
+        var blankoHtml = "";
+        if (klebe.blanko) {
+          blankoHtml = '<div class="pos-klebe"><span class="klebe-label">Blanko-Tafel:</span> ' +
+            klebeChip(klebe.blanko.code, klebe.blanko.lagerStatus, "Blanko-Tafel " + klebe.blanko.code) + '</div>';
+        }
+
+        // 2) Fliesen-Bausteine aus dem Katalog, jeweils mit Bestandsstatus.
         var chips = klebe.artikel.length ? klebe.artikel.map(function (a) {
           var da = STATUS_LABEL[a.lagerStatus] || STATUS_LABEL.unknown;
-          var ok = a.lagerStatus === "ok" || a.lagerStatus === "pending";
+          var ok = klebenNutzbar(a.lagerStatus);
           return '<span class="klebe-art ' + (ok ? "klebe-ok" : "klebe-miss") + '" ' +
             'data-action="jumpCode" data-code="' + escapeHtml(a.artnr) + '" ' +
             'title="' + escapeHtml("Art. " + a.artnr + (a.farbe ? " · " + a.farbe : "") + " — " + da.text + " · im Lager anzeigen") + '">' +
             da.icon + ' ' + escapeHtml(a.artnr) + (a.stueck ? ' (' + escapeHtml(a.stueck) + ' St.)' : '') + '</span>';
         }).join(" ") : '<span style="opacity:0.7;">keine Artikel im Katalogeintrag</span>';
-        extra += '<div class="pos-klebe">Kleben (Katalog S. ' + klebe.seite +
-          (klebe.serie ? ' · ' + escapeHtml(klebe.serie) : '') + '): ' + chips + '</div>';
+        var bausteineHtml = '<div class="pos-klebe"><span class="klebe-label">Bausteine (Katalog S. ' + klebe.seite +
+          (klebe.serie ? ' · ' + escapeHtml(klebe.serie) : '') + '):</span> ' + chips + '</div>';
+
+        // 3) Poster/Etikett aus dem Katalog-label (gegen den Poster-Bestand).
+        //    Ohne Code im label (rein beschreibend) wird nichts angezeigt.
+        var posterHtml = "";
+        if (klebe.poster) {
+          posterHtml = '<div class="pos-klebe"><span class="klebe-label">Poster:</span> ' +
+            klebeChip(klebe.poster.code, klebe.poster.lagerStatus, "Poster " + klebe.poster.code) + '</div>';
+        }
+
+        // 4) Gesamturteil.
+        var verdictHtml = '<div class="pos-klebe klebe-verdict ' + (klebe.moeglich ? "klebe-yes" : "klebe-no") + '">' +
+          (klebe.moeglich ? "✓ Kleben möglich" : "✕ Kleben nicht möglich – Material fehlt") + '</div>';
+
+        extra += blankoHtml + bausteineHtml + posterHtml + verdictHtml;
       }
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
