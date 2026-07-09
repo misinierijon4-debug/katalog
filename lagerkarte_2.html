@@ -1773,6 +1773,7 @@
         <div class="was-fehlt-modal-sub" id="wasFehltSub"></div>
         <div class="was-fehlt-body" id="wasFehltBody"></div>
         <div class="was-fehlt-modal-actions">
+          <button type="button" class="btn" id="btnWasFehltCopy">📋 Codes kopieren</button>
           <button type="button" class="btn" id="btnWasFehltClose">Schließen</button>
         </div>
       </div>
@@ -4471,12 +4472,15 @@
   var wasFehltTitleEl = document.getElementById("wasFehltTitle");
   var wasFehltSubEl = document.getElementById("wasFehltSub");
   var wasFehltBodyEl = document.getElementById("wasFehltBody");
+  var btnWasFehltCopyEl = document.getElementById("btnWasFehltCopy");
+  var wasFehltCurrentReport = null;   // für den Kopieren-Button gemerkt
 
   function openWasFehltModal(auftragId) {
     var a = findAuftrag(auftragId);
     if (!a) return;
     var index = buildLagerIndex();
     var report = ermittleWasFehlt(a, index);
+    wasFehltCurrentReport = report;
     wasFehltTitleEl.textContent = "Was fehlt? – " + auftragDisplayName(a);
     wasFehltSubEl.textContent = report.katalogFehlt.length + " Pos. ohne Katalogeintrag · " +
       report.bausteine.length + " fehlende Baustein(e) · " + report.blanko.length + " fehlende Blanko-Tafel(n)";
@@ -4489,15 +4493,46 @@
         jumpToLagerCode(code);
       });
     });
+    var hatCodes = report.katalogFehlt.length + report.bausteine.length + report.blanko.length > 0;
+    btnWasFehltCopyEl.style.display = hatCodes ? "" : "none";
     wasFehltModalEl.style.display = "flex";
   }
 
   function closeWasFehltModal() {
     wasFehltModalEl.style.display = "none";
     wasFehltBodyEl.innerHTML = "";
+    wasFehltCurrentReport = null;
   }
 
   document.getElementById("btnWasFehltClose").addEventListener("click", closeWasFehltModal);
+
+  // Alle im Fenster gezeigten Codes (Katalog-fehlt + Bausteine + Blanko-
+  // Tafeln), dedupliziert, komma-getrennt in die Zwischenablage kopieren —
+  // z.B. zum Einfügen in eine Bestell-/Such-Zeile beim Lieferanten.
+  btnWasFehltCopyEl.addEventListener("click", function () {
+    if (!wasFehltCurrentReport) return;
+    var seen = {};
+    var codes = [];
+    function pushCode(c) { if (c && !seen[c]) { seen[c] = true; codes.push(c); } }
+    wasFehltCurrentReport.katalogFehlt.forEach(function (k) { pushCode(k.code); });
+    wasFehltCurrentReport.bausteine.forEach(function (b) { pushCode(b.artnr); });
+    wasFehltCurrentReport.blanko.forEach(function (bl) { pushCode(bl.code); });
+    if (!codes.length) return;
+    var text = codes.join(", ");
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(function () {});
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+    var btn = btnWasFehltCopyEl;
+    btn.textContent = "✓ Kopiert";
+    setTimeout(function () { btn.textContent = "📋 Codes kopieren"; }, 1200);
+  });
 
   auftragDropzoneEl.addEventListener("click", function () { auftragPdfFilesEl.click(); });
 
