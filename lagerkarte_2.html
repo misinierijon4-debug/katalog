@@ -3229,6 +3229,28 @@
     return c[step.key] === true;
   }
 
+  function nextAction(a) {
+    for (var i = 0; i < CHECKLIST_STEPS.length; i++) {
+      if (!isStepDone(a, CHECKLIST_STEPS[i])) return CHECKLIST_STEPS[i];
+    }
+    return null;
+  }
+
+  function nextActionButtonLabel(step) {
+    var labels = {
+      materialGeprueft: "Material prüfen",
+      allePositionenGepickt: "Positionen picken",
+      kleben: "Kleben erledigen",
+      paketGepackt: "Paket packen",
+      lieferscheinBeantragt: "Lieferschein beantragen",
+      lieferscheinGedruckt: "Lieferschein drucken",
+      lieferscheinAufgeklebt: "Lieferschein aufkleben",
+      versandbereit: "Versandbereit markieren",
+      versendet: "Versenden"
+    };
+    return labels[step.key] || step.label;
+  }
+
   function findAuftrag(id) {
     return auftraege.filter(function (a) { return a.id === id; })[0] || null;
   }
@@ -3309,6 +3331,42 @@
     saveAuftraege();
     applyTabChrome();
     renderAuftraege();
+  }
+
+  function scrollAuftragPositionen(id) {
+    var cards = document.querySelectorAll('details[data-id]');
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].getAttribute("data-id") === id) {
+        var table = cards[i].querySelector(".auftrag-pos-table");
+        if (table) table.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        return;
+      }
+    }
+  }
+
+  function runNextChecklistAction(id) {
+    var a = findAuftrag(id);
+    if (!a) return;
+    ensureChecklist(a);
+    var step = nextAction(a);
+    if (!step) return;
+    if (step.key === "allePositionenGepickt") {
+      scrollAuftragPositionen(id);
+      return;
+    }
+    if (step.key === "kleben") {
+      a.checklist.kleben = "erledigt";
+      applyAuftragStatus(a, computeAuftragStatus(a));
+      saveAuftraege();
+      applyTabChrome();
+      renderAuftraege();
+      return;
+    }
+    if (step.key === "versendet") {
+      setAuftragStatus(id, "versendet");
+      return;
+    }
+    setCheckStep(id, step.key, true);
   }
 
   function deleteAuftrag(id) {
@@ -3700,7 +3758,7 @@
       : '<span class="auftrag-avail-banner auftrag-avail-partial">⚠ ' + blocked + ' von ' + total + ' blockiert</span>';
 
     // Alle Positionen gepickt → kein Status-Wechsel mehr, aber Fortschritt
-    // grün hervorheben und den "Verpackt"-Button nahelegen.
+    // grün hervorheben. Der nächste Arbeitsschritt steuert die Empfehlung.
     var allPicked = total > 0 && picked === total;
     var progress =
       '<span class="auftrag-progress' + (allPicked ? " complete" : "") + '">' +
@@ -3708,10 +3766,12 @@
         '<span class="auftrag-progress-text">' + picked + '/' + total + (allPicked ? ' – komplett gepickt ✓' : ' gepickt') + '</span>' +
       '</span>';
 
+    var next = nextAction(a);
+
     var statusBtns = Object.keys(AUFTRAG_STATUS).map(function (key) {
       var s = AUFTRAG_STATUS[key];
       var on = st === key ? " " + s.cls : "";
-      var suggest = key === "verpackt" && allPicked && st === "inArbeit" ? " suggest" : "";
+      var suggest = key === "verpackt" && next && next.key === "paketGepackt" ? " suggest" : "";
       return '<button type="button" class="auftrag-status-btn' + on + suggest + '" ' +
         'data-action="auftragStatus" data-id="' + a.id + '" data-status="' + key + '" ' +
         'title="Status setzen: ' + s.label + '">' + s.label + '</button>';
@@ -3769,7 +3829,8 @@
       if (step.key === "allePositionenGepickt") meta = picked + "/" + total + " – automatisch";
       else if (step.key === "kleben") meta = klebenLabel[checklist.kleben] || "offen";
       else if (step.key === "versendet") meta = "Status";
-      var cls = "auftrag-checklist-row" + (done ? " done" : "") + (step.derived ? " derived" : "");
+      var cls = "auftrag-checklist-row" + (done ? " done" : "") +
+        (step.derived ? " derived" : "") + (next && next.key === step.key ? " suggest" : "");
       var tag = step.derived ? "div" : "button";
       var attrs = step.derived
         ? ""
@@ -3789,6 +3850,9 @@
         '<div class="auftrag-checklist-title">Arbeitsschritte</div>' +
         checklistRows +
       '</div>';
+    var nextButton = next
+      ? '<button type="button" class="btn btn-primary" data-action="nextChecklistAction" data-id="' + a.id + '">➜ ' + escapeHtml(nextActionButtonLabel(next)) + '</button>'
+      : "";
 
     var metaBits = [];
     if (a.kunde && a.kunde !== auftragDisplayName(a)) metaBits.push(escapeHtml(a.kunde));
@@ -3821,6 +3885,7 @@
           '</table>' +
           checklistHtml +
           '<div class="auftrag-actions-row">' +
+            nextButton +
             '<button type="button" class="btn" data-action="recheck" data-id="' + a.id + '">🔄 Verfügbarkeit neu prüfen</button>' +
             (blocked > 0
               ? '<button type="button" class="btn btn-danger" data-action="showMissing" data-id="' + a.id + '">🧩 Was fehlt?</button>'
@@ -3967,6 +4032,19 @@
         lastChecklistToggle.key = key;
         lastChecklistToggle.t = now;
         cycleKleben(id);
+      });
+    });
+    listEl.querySelectorAll('[data-action="nextChecklistAction"]').forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var id = el.getAttribute("data-id");
+        var key = id + ":next";
+        var now = Date.now();
+        if (key === lastChecklistToggle.key && now - lastChecklistToggle.t < 350) return;
+        lastChecklistToggle.key = key;
+        lastChecklistToggle.t = now;
+        runNextChecklistAction(id);
       });
     });
     // Notiz: beim Tippen nur das Modell aktualisieren, speichern beim Verlassen.
