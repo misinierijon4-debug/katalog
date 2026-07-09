@@ -439,6 +439,16 @@
     font-size: 12px;
     color: var(--text-muted);
   }
+  button.auftrag-checklist-row {
+    width: 100%;
+    border: 0;
+    background: none;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    padding: 0;
+  }
+  button.auftrag-checklist-row:hover { color: var(--text); }
   .auftrag-checklist-row.done { color: var(--text); font-weight: 650; }
   .auftrag-checklist-row.derived { opacity: 0.88; }
   .auftrag-checklist-row.suggest {
@@ -3248,6 +3258,27 @@
     renderAuftraege();
   }
 
+  function setCheckStep(id, key, val) {
+    var a = findAuftrag(id);
+    if (!a) return;
+    ensureChecklist(a);
+    var def = defaultChecklist();
+    if (key === "kleben" || def[key] !== false) return;
+    a.checklist[key] = typeof val === "boolean" ? val : !a.checklist[key];
+    saveAuftraege();
+    renderAuftraege();
+  }
+
+  function cycleKleben(id) {
+    var a = findAuftrag(id);
+    if (!a) return;
+    ensureChecklist(a);
+    var next = { offen: "erledigt", erledigt: "nichtNoetig", nichtNoetig: "offen" };
+    a.checklist.kleben = next[a.checklist.kleben] || "erledigt";
+    saveAuftraege();
+    renderAuftraege();
+  }
+
   function deleteAuftrag(id) {
     auftraege = auftraege.filter(function (a) { return a.id !== id; });
     saveAuftraege();
@@ -3712,13 +3743,19 @@
       else if (step.key === "kleben") meta = klebenLabel[checklist.kleben] || "offen";
       else if (step.key === "versendet") meta = "Status";
       var cls = "auftrag-checklist-row" + (done ? " done" : "") + (step.derived ? " derived" : "");
-      return '<div class="' + cls + '">' +
+      var tag = step.derived ? "div" : "button";
+      var attrs = step.derived
+        ? ""
+        : ' type="button" data-action="' + (step.tri ? "cycleKleben" : "checkStep") + '" data-id="' + a.id + '"' +
+          (step.tri ? "" : ' data-step="' + step.key + '"') +
+          ' aria-pressed="' + (done ? "true" : "false") + '"';
+      return '<' + tag + ' class="' + cls + '"' + attrs + '>' +
         '<span class="auftrag-checklist-mark" aria-hidden="true">' +
           '<span class="pick-circle"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>' +
         '</span>' +
         '<span class="auftrag-checklist-label">' + escapeHtml(step.label) + '</span>' +
         (meta ? '<span class="auftrag-checklist-meta">' + escapeHtml(meta) + '</span>' : "") +
-      '</div>';
+      '</' + tag + '>';
     }).join("");
     var checklistHtml =
       '<div class="auftrag-checklist" aria-label="Arbeitsschritte">' +
@@ -3773,6 +3810,7 @@
   // von renderAuftraege leben, weil die Liste nach jedem Toggle neu
   // gerendert wird (der zweite Klick trifft ein frisches Element).
   var lastPickToggle = { key: "", t: 0 };
+  var lastChecklistToggle = { key: "", t: 0 };
 
   function renderAuftraege() {
     var listEl = document.getElementById("auftraegeList");
@@ -3875,6 +3913,33 @@
     listEl.querySelectorAll('[data-action="showMissing"]').forEach(function (el) {
       el.addEventListener("click", function () {
         openWasFehltModal(el.getAttribute("data-id"));
+      });
+    });
+    listEl.querySelectorAll('[data-action="checkStep"]').forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var id = el.getAttribute("data-id");
+        var step = el.getAttribute("data-step");
+        var key = id + ":" + step;
+        var now = Date.now();
+        if (key === lastChecklistToggle.key && now - lastChecklistToggle.t < 350) return;
+        lastChecklistToggle.key = key;
+        lastChecklistToggle.t = now;
+        setCheckStep(id, step);
+      });
+    });
+    listEl.querySelectorAll('[data-action="cycleKleben"]').forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var id = el.getAttribute("data-id");
+        var key = id + ":kleben";
+        var now = Date.now();
+        if (key === lastChecklistToggle.key && now - lastChecklistToggle.t < 350) return;
+        lastChecklistToggle.key = key;
+        lastChecklistToggle.t = now;
+        cycleKleben(id);
       });
     });
     // Notiz: beim Tippen nur das Modell aktualisieren, speichern beim Verlassen.
