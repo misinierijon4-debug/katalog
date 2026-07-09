@@ -3120,6 +3120,59 @@
   };
   var AUFTRAG_STATUS_ORDER = { offen: 0, inArbeit: 1, verpackt: 2, versendet: 3 };
 
+  function defaultChecklist() {
+    return {
+      materialGeprueft: false,
+      kleben: "offen",
+      paketGepackt: false,
+      lieferscheinBeantragt: false,
+      lieferscheinGedruckt: false,
+      lieferscheinAufgeklebt: false,
+      versandbereit: false
+    };
+  }
+
+  // Füllt fehlende Einzel-Schlüssel nach, falls später neue Schritte dazukommen.
+  function ensureChecklist(a) {
+    var changed = false;
+    if (!a.checklist || typeof a.checklist !== "object") {
+      a.checklist = defaultChecklist();
+      return true;
+    }
+    var def = defaultChecklist();
+    Object.keys(def).forEach(function (k) {
+      if (a.checklist[k] === undefined) {
+        a.checklist[k] = def[k];
+        changed = true;
+      }
+    });
+    return changed;
+  }
+
+  // Reihenfolge = echter Arbeitsablauf. "derived" = aus anderen Daten berechnet.
+  var CHECKLIST_STEPS = [
+    { key: "materialGeprueft",       label: "Material geprüft" },
+    { key: "allePositionenGepickt",  label: "Alle Positionen gepickt", derived: true },
+    { key: "kleben",                 label: "Kleben erledigt / nicht nötig", tri: true },
+    { key: "paketGepackt",           label: "Paket gepackt" },
+    { key: "lieferscheinBeantragt",  label: "Lieferschein beantragt" },
+    { key: "lieferscheinGedruckt",   label: "Lieferschein gedruckt" },
+    { key: "lieferscheinAufgeklebt", label: "Lieferschein aufgeklebt" },
+    { key: "versandbereit",          label: "Versandbereit" },
+    { key: "versendet",              label: "Versendet", derived: true }
+  ];
+
+  function isStepDone(a, step) {
+    var c = a.checklist || defaultChecklist();
+    var pos = a.positionen || [];
+    if (step.key === "allePositionenGepickt") {
+      return pos.length > 0 && pos.every(function (p) { return p.gepickt; });
+    }
+    if (step.key === "kleben") return c.kleben !== "offen";
+    if (step.key === "versendet") return a.status === "versendet";
+    return c[step.key] === true;
+  }
+
   function findAuftrag(id) {
     return auftraege.filter(function (a) { return a.id === id; })[0] || null;
   }
