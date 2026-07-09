@@ -469,7 +469,7 @@
   .auftrag-checklist-row .pick-circle svg { width: 13px; height: 13px; }
   .auftrag-checklist-row.done .pick-circle { background: var(--green-fg); border-color: var(--green-fg); }
   .auftrag-checklist-row.done .pick-circle svg { transform: scale(1); }
-  .auftrag-checklist-label { flex: 1 1 auto; min-width: 0; }
+  .auftrag-checklist-label { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
   .auftrag-checklist-meta { flex: none; font-size: 11px; color: var(--text-faint); white-space: nowrap; }
 
   .check-save-row { margin-top: 12px; }
@@ -1549,6 +1549,13 @@
     .title-row h1 { font-size: 18px; }
     #stats { display: none; }
     .dashboard { grid-template-columns: repeat(2, 1fr); }
+    .tabs {
+      display: flex;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab { flex: 0 0 auto; }
     .btn span.btn-label { display: none; }
     .btn { width: 36px; padding: 0; }
     /* Buttons in Auftragskarten behalten ihre volle Breite (Text-Buttons). */
@@ -1557,6 +1564,12 @@
     .auftrag-summary { flex-wrap: wrap; }
     .auftrag-status-btns { flex-wrap: wrap; margin-left: 0; width: 100%; }
     .map-scroll { margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+    .auftrag-checklist-row { align-items: flex-start; padding: 2px 0; }
+    .auftrag-checklist-meta {
+      flex: 1 1 100%;
+      margin-left: 36px;
+      white-space: normal;
+    }
 
     /* Auftragspositionen als Karten statt Tabelle: großer Pick-Toggle
        links, Code/Menge/Verfügbarkeit gestapelt daneben. */
