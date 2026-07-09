@@ -417,6 +417,50 @@
   }
   .auftrag-body .check-line { padding: 4px 8px; margin-bottom: 3px; font-size: 11px; }
   .auftrag-body .check-line .cl-code { min-width: 120px; }
+  .auftrag-checklist {
+    margin: 8px 0;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .auftrag-checklist-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 4px;
+  }
+  .auftrag-checklist-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 30px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .auftrag-checklist-row.done { color: var(--text); font-weight: 650; }
+  .auftrag-checklist-row.derived { opacity: 0.88; }
+  .auftrag-checklist-row.suggest {
+    margin: 2px -4px;
+    padding: 0 4px;
+    border-radius: var(--radius-sm);
+    background: var(--primary-bg);
+    color: var(--primary-fg);
+  }
+  .auftrag-checklist-mark {
+    width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .auftrag-checklist-row .pick-circle { width: 22px; height: 22px; }
+  .auftrag-checklist-row .pick-circle svg { width: 13px; height: 13px; }
+  .auftrag-checklist-row.done .pick-circle { background: var(--green-fg); border-color: var(--green-fg); }
+  .auftrag-checklist-row.done .pick-circle svg { transform: scale(1); }
+  .auftrag-checklist-label { flex: 1 1 auto; min-width: 0; }
+  .auftrag-checklist-meta { flex: none; font-size: 11px; color: var(--text-faint); white-space: nowrap; }
 
   .check-save-row { margin-top: 12px; }
 
@@ -3655,6 +3699,33 @@
       '</tr>';
     }).join("");
 
+    var checklist = a.checklist || defaultChecklist();
+    var klebenLabel = {
+      offen: "offen",
+      erledigt: "erledigt",
+      nichtNoetig: "nicht nötig"
+    };
+    var checklistRows = CHECKLIST_STEPS.map(function (step) {
+      var done = isStepDone(a, step);
+      var meta = "";
+      if (step.key === "allePositionenGepickt") meta = picked + "/" + total + " – automatisch";
+      else if (step.key === "kleben") meta = klebenLabel[checklist.kleben] || "offen";
+      else if (step.key === "versendet") meta = "Status";
+      var cls = "auftrag-checklist-row" + (done ? " done" : "") + (step.derived ? " derived" : "");
+      return '<div class="' + cls + '">' +
+        '<span class="auftrag-checklist-mark" aria-hidden="true">' +
+          '<span class="pick-circle"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>' +
+        '</span>' +
+        '<span class="auftrag-checklist-label">' + escapeHtml(step.label) + '</span>' +
+        (meta ? '<span class="auftrag-checklist-meta">' + escapeHtml(meta) + '</span>' : "") +
+      '</div>';
+    }).join("");
+    var checklistHtml =
+      '<div class="auftrag-checklist" aria-label="Arbeitsschritte">' +
+        '<div class="auftrag-checklist-title">Arbeitsschritte</div>' +
+        checklistRows +
+      '</div>';
+
     var metaBits = [];
     if (a.kunde && a.kunde !== auftragDisplayName(a)) metaBits.push(escapeHtml(a.kunde));
     if (a.ort) metaBits.push(escapeHtml(a.ort));
@@ -3684,6 +3755,7 @@
             '<thead><tr><th></th><th>Pos.</th><th>Artikel</th><th>Menge</th><th>Verfügbarkeit</th></tr></thead>' +
             '<tbody>' + rows + '</tbody>' +
           '</table>' +
+          checklistHtml +
           '<div class="auftrag-actions-row">' +
             '<button type="button" class="btn" data-action="recheck" data-id="' + a.id + '">🔄 Verfügbarkeit neu prüfen</button>' +
             (blocked > 0
