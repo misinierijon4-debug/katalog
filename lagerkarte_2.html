@@ -3238,21 +3238,49 @@
     return a.kunde || a.title || "Auftrag";
   }
 
-  function setAuftragStatus(id, status) {
-    var a = findAuftrag(id);
-    if (!a || !AUFTRAG_STATUS[status]) return;
+  function computeAuftragStatus(a) {
+    var c = a.checklist || defaultChecklist();
+    var kleben = c.kleben === undefined ? "offen" : c.kleben;
+    if (a.status === "versendet") return "versendet";
+    if (c.paketGepackt) return "verpackt";
+    var pos = a.positionen || [];
+    var irgendwasGepickt = pos.some(function (p) { return p.gepickt; });
+    var begonnen = irgendwasGepickt || c.materialGeprueft || kleben !== "offen";
+    return begonnen ? "inArbeit" : "offen";
+  }
+
+  function applyAuftragStatus(a, status) {
+    if (!AUFTRAG_STATUS[status]) status = "offen";
+    var oldStatus = a.status;
+    var now = new Date().toISOString();
     a.status = status;
-    // Zeitstempel der gesetzten Stufe frisch setzen; bei Rückwärts-Korrektur
-    // die Stempel der wieder zurückgenommenen Stufen löschen.
     if (status === "verpackt") {
-      a.verpacktAm = new Date().toISOString();
+      if (oldStatus !== "verpackt" || !a.verpacktAm) a.verpacktAm = now;
       a.versendetAm = null;
     } else if (status === "versendet") {
-      a.versendetAm = new Date().toISOString();
+      if (!a.verpacktAm) a.verpacktAm = now;
+      if (oldStatus !== "versendet" || !a.versendetAm) a.versendetAm = now;
     } else {
       a.verpacktAm = null;
       a.versendetAm = null;
     }
+  }
+
+  function setAuftragStatus(id, status) {
+    var a = findAuftrag(id);
+    if (!a || !AUFTRAG_STATUS[status]) return;
+    ensureChecklist(a);
+    if (status === "verpackt") {
+      a.checklist.paketGepackt = true;
+    } else if (status === "versendet") {
+      a.checklist.versandbereit = true;
+    } else {
+      a.checklist.paketGepackt = false;
+      a.checklist.versandbereit = false;
+    }
+    // Zeitstempel der gesetzten Stufe frisch setzen; bei Rückwärts-Korrektur
+    // die Stempel der wieder zurückgenommenen Stufen löschen.
+    applyAuftragStatus(a, status);
     saveAuftraege();
     applyTabChrome();
     renderAuftraege();
@@ -3265,7 +3293,9 @@
     var def = defaultChecklist();
     if (key === "kleben" || def[key] !== false) return;
     a.checklist[key] = typeof val === "boolean" ? val : !a.checklist[key];
+    applyAuftragStatus(a, computeAuftragStatus(a));
     saveAuftraege();
+    applyTabChrome();
     renderAuftraege();
   }
 
@@ -3275,7 +3305,9 @@
     ensureChecklist(a);
     var next = { offen: "erledigt", erledigt: "nichtNoetig", nichtNoetig: "offen" };
     a.checklist.kleben = next[a.checklist.kleben] || "erledigt";
+    applyAuftragStatus(a, computeAuftragStatus(a));
     saveAuftraege();
+    applyTabChrome();
     renderAuftraege();
   }
 
@@ -3286,20 +3318,15 @@
     renderAuftraege();
   }
 
-  // Pick-Haken setzen/entfernen. Das Picken gehört komplett zu "inArbeit":
-  // erster Haken hebt offen → inArbeit, letzter Haken entfernt → offen.
-  // "Alle gepickt" wechselt NICHT mehr automatisch weiter — verpackt und
-  // versendet werden manuell gesetzt und bleiben beim Picken unangetastet.
+  // Pick-Haken setzen/entfernen. Der grobe Auftragsstatus folgt danach der
+  // Checkliste; "Paket gepackt" bleibt die Grenze zu "verpackt".
   function toggleGepickt(auftragId, posIdx) {
     var a = findAuftrag(auftragId);
     if (!a || !a.positionen || !a.positionen[posIdx]) return;
     var p = a.positionen[posIdx];
     p.gepickt = !p.gepickt;
     p.gepicktAm = p.gepickt ? new Date().toISOString() : null;
-    var picked = a.positionen.filter(function (x) { return x.gepickt; }).length;
-    if (a.status === "offen" || a.status === "inArbeit" || !AUFTRAG_STATUS[a.status]) {
-      a.status = picked > 0 ? "inArbeit" : "offen";
-    }
+    applyAuftragStatus(a, computeAuftragStatus(a));
     saveAuftraege();
     applyTabChrome();
     renderAuftraege();
