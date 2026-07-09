@@ -317,16 +317,9 @@
   #app[data-view="auftraege"] .extra-section,
   #app[data-view="auftraege"] #btnFab { display: none !important; }
 
-  /* Prüfen-Tab: eigener Bereich — nur die Prüf-Sektion zeigen */
-  #app[data-view="pruefen"] .subtext,
-  #app[data-view="pruefen"] .dashboard,
-  #app[data-view="pruefen"] .banner:not(#bannerBackup),
-  #app[data-view="pruefen"] #newCatRow,
-  #app[data-view="pruefen"] .map-scroll,
-  #app[data-view="pruefen"] .extra-section,
-  #app[data-view="pruefen"] #btnFab { display: none !important; }
+  /* Manuelle Auftragsprüfung im Auftrags-Tab. */
   #checkSection { display: none; }
-  #app[data-view="pruefen"] #checkSection { display: block; }
+  #app[data-view="auftraege"] #checkSection { display: block; }
 
   /* ---------- Auftrags-Datenbank ---------- */
   .auftraege-section { margin-bottom: 8px; }
@@ -1147,6 +1140,7 @@
     overflow: hidden;
     box-shadow: var(--shadow-sm);
   }
+  #auftraegeSection #checkSection { margin: 0 0 16px; }
   .check-header {
     display: flex;
     align-items: center;
@@ -1252,6 +1246,30 @@
   .check-summary { font-size: 11.5px; color: var(--text-muted); margin: 8px 0; }
   .blocker-list { margin-top: 8px; font-size: 11.5px; color: var(--red-fg); }
   .blocker-list b { font-family: 'SFMono-Regular', Consolas, 'Courier New', monospace; }
+  .kleben-details {
+    margin: 4px 0 8px 28px;
+    padding: 7px 10px;
+    border-left: 3px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+    font-size: 11.5px;
+  }
+  .kleben-details summary {
+    cursor: pointer;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .kleben-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 5px;
+    font-family: 'SFMono-Regular', Consolas, 'Courier New', monospace;
+  }
+  .kleben-row.ok { color: var(--green-fg); }
+  .kleben-row.no { color: var(--red-fg); }
+  .kleben-row .kr-label { min-width: 82px; font-weight: 700; }
+  .kleben-row .kr-note { opacity: 0.72; font-family: inherit; }
 
   /* ---------- Theme toggle icons ---------- */
   .icon-moon { display: none; }
@@ -1546,10 +1564,6 @@
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
           <span>Fliesen-Bestand</span>
         </button>
-        <button type="button" class="tab" id="tabPruefen" role="tab" data-tab="pruefen" aria-selected="false">
-          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
-          <span>Auftrag prüfen</span>
-        </button>
         <button type="button" class="tab" id="tabAuftraege" role="tab" data-tab="auftraege" aria-selected="false">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg></span>
           <span>Auftrags-Verwaltung</span>
@@ -1704,7 +1718,7 @@
 
       <div id="auftraegeList"></div>
       <div id="auftraegeEmpty" class="auftraege-empty" style="display:none;">
-        Noch keine Aufträge gespeichert. PDF importieren oder im Tab „Auftrag prüfen“ einen Auftrag prüfen und speichern.
+        Noch keine Aufträge gespeichert. PDF importieren oder oben im Bereich „Auftrag prüfen“ einen Auftrag prüfen und speichern.
       </div>
     </section>
 
@@ -1728,6 +1742,7 @@
 
 </div>
 
+<script src="katalog.js"></script>
 <script>
 (function () {
   "use strict";
@@ -1831,6 +1846,7 @@
     position_6:   { col: "1 / 2", row: "2 / 4" },
     bricks:       { col: "4 / 5", row: "2 / 4" },
     leere_tafeln: { col: "5 / 6", row: "2 / 4" },
+    poster_bestand: { col: "5 / 6", row: "1 / 2" },
     position_1:   { col: "1 / 2", row: "4 / 5" },
     position_2:   { col: "2 / 3", row: "4 / 5" },
     position_3:   { col: "3 / 4", row: "4 / 5" },
@@ -1973,6 +1989,7 @@
       {"code": "BRI-3160", "qty": "", "note": "Brick Stick · ziegelrot"},
       {"code": "ARI-0635", "qty": "", "note": "Arizona Nature · farbmix natur"}
     ]},
+    { "id": "poster_bestand", "label": "Poster-Bestand", "zone": "spezial_zone", "items": [] },
     { "id": "leere_tafeln", "label": "Leere Tafeln", "zone": "spezial_zone", "items": [
       {"code": "9539", "qty": "", "note": "Kurz-Kürzel"},
       {"code": "9755", "qty": "", "note": "Kurz-Kürzel"},
@@ -2089,6 +2106,14 @@
       return copyCat;
     });
 
+    if (isFliesen) {
+      var hasPosterBestand = categories.some(function (c) { return c.id === "poster_bestand"; });
+      if (!hasPosterBestand) {
+        changed = true;
+        categories.push({ id: "poster_bestand", label: "Poster-Bestand", zone: "spezial_zone", circled: false, items: [] });
+      }
+    }
+
     // Die Kategorie "Fehlende Codes" gibt es nur im Tafeln-Bestand.
     if (!isFliesen) {
       var hasFehlend = categories.some(function (c) { return c.id === "fehlendCodes"; });
@@ -2175,7 +2200,8 @@
     } catch (e) { auftraege = []; }
     try {
       var savedTab = localStorage.getItem(ACTIVE_TAB_KEY);
-      if (savedTab === "fliesen" || savedTab === "tafeln" || savedTab === "pruefen" || savedTab === "auftraege") activeTab = savedTab;
+      if (savedTab === "pruefen") savedTab = "auftraege";
+      if (savedTab === "fliesen" || savedTab === "tafeln" || savedTab === "auftraege") activeTab = savedTab;
     } catch (e) {}
     data = activeTab === "fliesen" ? dataFliesen : dataTafeln;
   }
@@ -2940,7 +2966,7 @@
   }
 
   function switchTab(tab) {
-    if (tab !== "tafeln" && tab !== "fliesen" && tab !== "pruefen" && tab !== "auftraege") return;
+    if (tab !== "tafeln" && tab !== "fliesen" && tab !== "auftraege") return;
     activeTab = tab;
     data = tab === "fliesen" ? dataFliesen : dataTafeln;
     persistKey(ACTIVE_TAB_KEY, tab);
@@ -3047,12 +3073,12 @@
   // der Auftragsprüfer: ok/pending = verfügbar, alles andere blockiert).
   function applyVerfuegbarkeit(positionen, index) {
     (positionen || []).forEach(function (p) {
-      var entry = index[normalizeCode(p.code).replace(/-/g, "")];
-      var status = entry ? entry.status : "unknown";
-      p.lagerStatus = status;
-      p.lagerNote = entry ? (entry.note || "") : "";
-      p.lagerLabel = entry ? (entry.label || "") : "";
-      p.verfuegbar = status === "ok" || status === "pending";
+      var result = pruefePositionVerfuegbarkeit(p.code, index);
+      p.lagerStatus = result.status;
+      p.lagerNote = result.note;
+      p.lagerLabel = result.label;
+      p.verfuegbar = result.verfuegbar;
+      p.kleben = result.kleben;
     });
   }
 
@@ -3145,8 +3171,12 @@
 
     var rows = pos.map(function (p, i) {
       var badge;
-      if (p.verfuegbar === true) {
+      if (p.kleben && p.verfuegbar === true) {
+        badge = '<span class="auftrag-pos-badge avail-yes">✓ kleben möglich</span>';
+      } else if (p.verfuegbar === true) {
         badge = '<span class="auftrag-pos-badge avail-yes">✓ verfügbar</span>';
+      } else if (p.kleben && p.verfuegbar === false) {
+        badge = '<span class="auftrag-pos-badge avail-no">✕ kleben nicht möglich</span>';
       } else if (p.verfuegbar === false) {
         var meta = p.lagerStatus ? (STATUS_LABEL[p.lagerStatus] || STATUS_LABEL.unknown) : null;
         badge = '<span class="auftrag-pos-badge avail-no">✕ ' + (meta ? meta.text : "blockiert") + '</span>';
@@ -3156,6 +3186,7 @@
       var extra = "";
       if (p.lagerNote) extra += ' <span style="opacity:0.7;">– ' + escapeHtml(p.lagerNote) + '</span>';
       if (p.lagerLabel) extra += ' <span style="opacity:0.55;">(' + escapeHtml(p.lagerLabel) + ')</span>';
+      if (p.kleben) extra += renderKlebenDetails(p.kleben);
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
       return '<tr class="pos-row' + (p.gepickt ? " gepickt" : "") + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
@@ -3276,7 +3307,7 @@
       el.addEventListener("click", function (e) {
         // Interaktive Kind-Elemente (Code-Link, Buttons, Inputs) togglen nicht
         // mit — nur der Pick-Toggle selbst und die "leere" Zeilenfläche.
-        var hit = e.target.closest("a, button, input, textarea, select, .pos-code-link");
+        var hit = e.target.closest("a, button, input, textarea, select, details, summary, .pos-code-link");
         if (hit && !hit.classList.contains("pick-toggle")) return;
         var id = el.getAttribute("data-id");
         var posIdx = parseInt(el.getAttribute("data-pos"), 10);
@@ -3362,6 +3393,25 @@
     return c;
   }
 
+  var STATUS_RANK = { ok: 5, pending: 4, empty: 3, missing: 2, broken: 1, unknown: 0 };
+
+  function itemStatus(it) {
+    if (!it) return "unknown";
+    if (it.broken) return "broken";
+    if (it.missing) return "missing";
+    if (it.empty) return "empty";
+    if (it.pending) return "pending";
+    return "ok";
+  }
+
+  function statusAllowsFulfillment(status) {
+    return status === "ok" || status === "pending";
+  }
+
+  function lagerIndexKey(code) {
+    return normalizeCode(code).replace(/-/g, "");
+  }
+
   // Baut aus BEIDEN Lagern (Tafeln + Fliesen) einen Index:
   // normalisierter Code -> Status. So validiert die Auftragsprüfung Codes
   // über beide Bestände hinweg, egal welcher Tab gerade aktiv ist.
@@ -3369,7 +3419,6 @@
   // sonst der "beste" nutzbare Status.
   function buildLagerIndex() {
     var index = {};
-    var rank = { ok: 5, pending: 4, empty: 3, missing: 2, broken: 1 };
 
     function addDataset(dataset, lagerName) {
       if (!dataset) return;
@@ -3377,18 +3426,13 @@
         cat.items.forEach(function (it) {
           // Index-Schlüssel ohne Bindestriche, damit auch Eingaben wie
           // "2769LA60" (statt "2769-LA60") gefunden werden.
-          var key = normalizeCode(it.code).replace(/-/g, "");
+          var key = lagerIndexKey(it.code);
           if (!key) return;
-          var status;
-          if (it.broken) status = "broken";
-          else if (it.missing) status = "missing";
-          else if (it.empty) status = "empty";
-          else if (it.pending) status = "pending";
-          else status = "ok";
+          var status = itemStatus(it);
 
           var entry = { status: status, note: it.note || "", label: lagerName + " · " + cat.label };
           var existing = index[key];
-          if (!existing || rank[status] > rank[existing.status]) {
+          if (!existing || STATUS_RANK[status] > STATUS_RANK[existing.status]) {
             index[key] = entry;
           }
         });
@@ -3398,6 +3442,224 @@
     addDataset(dataTafeln, "Tafeln");
     addDataset(dataFliesen, "Fliesen");
     return index;
+  }
+
+  function getKatalogData() {
+    return Array.isArray(window.KATALOG_DATA) ? window.KATALOG_DATA : [];
+  }
+
+  function findKatalogEntryByCode(code) {
+    var key = lagerIndexKey(code);
+    if (!key) return null;
+    var list = getKatalogData();
+    for (var i = 0; i < list.length; i++) {
+      var codes = list[i].codes || [];
+      for (var j = 0; j < codes.length; j++) {
+        if (lagerIndexKey(codes[j]) === key) return list[i];
+      }
+    }
+    return null;
+  }
+
+  function blankoCodeFromMustertafelCode(code) {
+    var m = /^(\d{4})/.exec(normalizeCode(code));
+    return m ? m[1] : "";
+  }
+
+  function normalizeBlankoTafelCode(code) {
+    var m = /(\d{4})/.exec(String(code || ""));
+    if (!m) return "";
+    var c = m[1];
+    if (c.charAt(1) === "7") c = c.charAt(0) + "5" + c.slice(2);
+    return c;
+  }
+
+  function findFliesenCategory(id, label) {
+    if (!dataFliesen || !Array.isArray(dataFliesen.categories)) return null;
+    var labelNorm = String(label || "").toLowerCase();
+    for (var i = 0; i < dataFliesen.categories.length; i++) {
+      var cat = dataFliesen.categories[i];
+      if (cat.id === id || (labelNorm && String(cat.label || "").toLowerCase() === labelNorm)) return cat;
+    }
+    return null;
+  }
+
+  function entryFromFliesenItem(it, cat) {
+    return {
+      code: it.code || "",
+      status: itemStatus(it),
+      note: it.note || "",
+      label: "Fliesen · " + (cat ? cat.label : "")
+    };
+  }
+
+  function betterEntry(current, candidate) {
+    if (!candidate) return current;
+    if (!current || STATUS_RANK[candidate.status] > STATUS_RANK[current.status]) return candidate;
+    return current;
+  }
+
+  function findFliesenEntryByCode(code) {
+    var key = lagerIndexKey(code);
+    var best = null;
+    if (!key || !dataFliesen || !Array.isArray(dataFliesen.categories)) return null;
+    dataFliesen.categories.forEach(function (cat) {
+      (cat.items || []).forEach(function (it) {
+        if (lagerIndexKey(it.code) === key) best = betterEntry(best, entryFromFliesenItem(it, cat));
+      });
+    });
+    return best;
+  }
+
+  function findBlankoTafelEntry(code) {
+    var key = normalizeBlankoTafelCode(code);
+    var cat = findFliesenCategory("leere_tafeln", "Leere Tafeln");
+    var best = null;
+    if (!key || !cat) return null;
+    (cat.items || []).forEach(function (it) {
+      if (normalizeBlankoTafelCode(it.code) === key) best = betterEntry(best, entryFromFliesenItem(it, cat));
+    });
+    return best;
+  }
+
+  function extractPosterCode(label) {
+    var text = String(label || "").trim().toUpperCase();
+    var m = /([A-Z0-9]{3,5}(?:-[A-Z0-9]{2,5}){2,4})\s*$/.exec(text);
+    return m ? m[1] : "";
+  }
+
+  function posterIndexKey(code) {
+    var extracted = extractPosterCode(code);
+    return lagerIndexKey(extracted || code);
+  }
+
+  function findPosterEntry(code) {
+    var key = posterIndexKey(code);
+    var cat = findFliesenCategory("poster_bestand", "Poster-Bestand");
+    var best = null;
+    if (!key || !cat) return null;
+    (cat.items || []).forEach(function (it) {
+      if (posterIndexKey(it.code) === key) best = betterEntry(best, entryFromFliesenItem(it, cat));
+    });
+    return best;
+  }
+
+  function makeKlebenPart(kind, label, code, entry, need) {
+    var status = entry ? entry.status : "unknown";
+    return {
+      kind: kind,
+      label: label,
+      code: code || "",
+      foundCode: entry ? entry.code : "",
+      status: status,
+      note: entry ? entry.note : "",
+      lagerLabel: entry ? entry.label : "",
+      need: need || "",
+      ok: statusAllowsFulfillment(status)
+    };
+  }
+
+  function formatArtikelNeed(artikel) {
+    var bits = [];
+    if (artikel.stueck) bits.push("je " + artikel.stueck + " St.");
+    if (artikel.groesse) bits.push(artikel.groesse);
+    if (artikel.farbe) bits.push(artikel.farbe);
+    return bits.join(" · ");
+  }
+
+  function pruefeKlebenVerfuegbarkeit(mustertafelCode) {
+    var katalog = findKatalogEntryByCode(mustertafelCode);
+    if (!katalog) return null;
+
+    var katalogCode = (katalog.codes && katalog.codes[0]) || mustertafelCode;
+    var blankoRaw = blankoCodeFromMustertafelCode(mustertafelCode) || blankoCodeFromMustertafelCode(katalogCode);
+    var blankoNorm = normalizeBlankoTafelCode(blankoRaw);
+    var blanko = makeKlebenPart("blanko", "Blanko", blankoRaw, findBlankoTafelEntry(blankoRaw), blankoNorm && blankoNorm !== blankoRaw ? "gleich wie " + blankoNorm : "");
+
+    var bausteine = (katalog.artikel || []).map(function (artikel) {
+      return makeKlebenPart("artikel", "Fliese", artikel.artnr || "", findFliesenEntryByCode(artikel.artnr || ""), formatArtikelNeed(artikel));
+    });
+
+    var posterCode = extractPosterCode(katalog.label);
+    var poster = posterCode
+      ? makeKlebenPart("poster", "Poster", posterCode, findPosterEntry(posterCode), "")
+      : null;
+
+    var parts = [blanko].concat(bausteine);
+    if (poster) parts.push(poster);
+    var missing = parts.filter(function (p) { return !p.ok; });
+
+    return {
+      code: normalizeCode(mustertafelCode),
+      katalog: katalog,
+      blanko: blanko,
+      bausteine: bausteine,
+      poster: poster,
+      parts: parts,
+      missing: missing,
+      moeglich: missing.length === 0
+    };
+  }
+
+  function glueMissingSummary(kleben) {
+    if (!kleben) return "";
+    if (kleben.moeglich) return "Kleben möglich";
+    var names = kleben.missing.map(function (p) { return p.label + " " + p.code; });
+    var shown = names.slice(0, 3).join(", ");
+    if (names.length > 3) shown += " +" + (names.length - 3) + " weitere";
+    return "Kleben nicht möglich: fehlt " + shown;
+  }
+
+  function pruefePositionVerfuegbarkeit(code, index) {
+    var entry = index[lagerIndexKey(code)];
+    var status = entry ? entry.status : "unknown";
+    var result = {
+      status: status,
+      note: entry ? (entry.note || "") : "",
+      label: entry ? (entry.label || "") : "",
+      verfuegbar: statusAllowsFulfillment(status),
+      kleben: null
+    };
+
+    if (!result.verfuegbar) {
+      var kleben = pruefeKlebenVerfuegbarkeit(code);
+      if (kleben) {
+        result.kleben = kleben;
+        result.verfuegbar = kleben.moeglich;
+        result.note = glueMissingSummary(kleben);
+        result.label = "Katalog" + (kleben.katalog.seite ? " S. " + kleben.katalog.seite : "");
+      }
+    }
+
+    return result;
+  }
+
+  function renderKlebenDetails(kleben) {
+    if (!kleben) return "";
+    var katalog = kleben.katalog || {};
+    var parts = Array.isArray(kleben.parts) ? kleben.parts : [];
+    if (parts.length === 0) return "";
+    var titleBits = ["Kleben"];
+    if (katalog.seite) titleBits.push("Katalog S. " + katalog.seite);
+    if (katalog.serie) titleBits.push(katalog.serie);
+    var summary = titleBits.join(" · ") + ": " + (kleben.moeglich ? "möglich" : "nicht möglich");
+    var rows = parts.map(function (p) {
+      var meta = STATUS_LABEL[p.status] || STATUS_LABEL.unknown;
+      var icon = p.ok ? "✓" : "✕";
+      var need = p.need ? " (" + escapeHtml(p.need) + ")" : "";
+      var found = p.foundCode && p.foundCode !== p.code ? " · Bestand: " + p.foundCode : "";
+      var note = p.note ? " · " + p.note : "";
+      return '<div class="kleben-row ' + (p.ok ? "ok" : "no") + '">' +
+        '<span>' + icon + '</span>' +
+        '<span class="kr-label">' + escapeHtml(p.label) + '</span>' +
+        '<span><b>' + escapeHtml(p.code || "?") + '</b>' + need + '</span>' +
+        '<span class="kr-note">' + escapeHtml(meta.text + found + note) + '</span>' +
+      '</div>';
+    }).join("");
+    return '<details class="kleben-details"' + (kleben.moeglich ? "" : " open") + '>' +
+      '<summary>' + escapeHtml(summary) + '</summary>' +
+      rows +
+    '</details>';
   }
 
   // Extrahiert aus beliebigem eingefügtem Text alle Artikelcodes.
@@ -3465,29 +3727,34 @@
     var lines = [];
     var blockers = [];
     var checkedItems = [];
-    // "pending" (Poster folgt) gilt laut Vorgabe als erfüllbar.
-    var okStatuses = { ok: true, pending: true };
 
     codes.forEach(function (c) {
-      var entry = index[c.norm.replace(/-/g, "")];
-      var status = entry ? entry.status : "unknown";
-      var meta = STATUS_LABEL[status];
-      var isBlocker = !okStatuses[status];
-      if (isBlocker) blockers.push({ code: c.norm, status: status });
+      var result = pruefePositionVerfuegbarkeit(c.norm, index);
+      var status = result.status;
+      var meta = result.kleben
+        ? (result.kleben.moeglich
+          ? { cls: "cl-ok", icon: "✓", text: "Kleben möglich" }
+          : { cls: "cl-broken", icon: "✕", text: "Kleben nicht möglich" })
+        : (STATUS_LABEL[status] || STATUS_LABEL.unknown);
+      var isBlocker = !result.verfuegbar;
+      if (isBlocker) blockers.push({ code: c.norm, status: status, text: result.note || meta.text });
       checkedItems.push({
         code: c.norm,
         status: status,
-        note: entry ? (entry.note || "") : "",
-        label: entry ? (entry.label || "") : ""
+        note: result.note || "",
+        label: result.label || "",
+        kleben: result.kleben
       });
 
-      var noteHtml = entry && entry.note ? ' <span style="opacity:0.7;">– ' + escapeHtml(entry.note) + '</span>' : "";
+      var noteHtml = result.note ? ' <span style="opacity:0.7;">– ' + escapeHtml(result.note) + '</span>' : "";
+      var detailsHtml = result.kleben ? renderKlebenDetails(result.kleben) : "";
       lines.push(
         '<div class="check-line ' + meta.cls + '">' +
           '<span>' + meta.icon + '</span>' +
           '<span class="cl-code">' + escapeHtml(c.norm) + '</span>' +
           '<span class="cl-status">' + meta.text + noteHtml + '</span>' +
-        '</div>'
+        '</div>' +
+        detailsHtml
       );
     });
 
@@ -3499,7 +3766,8 @@
     var blockerHtml = "";
     if (!fulfillable) {
       var items = blockers.map(function (b) {
-        return "<b>" + escapeHtml(b.code) + "</b> (" + STATUS_LABEL[b.status].text + ")";
+        var fallback = (STATUS_LABEL[b.status] || STATUS_LABEL.unknown).text;
+        return "<b>" + escapeHtml(b.code) + "</b> (" + escapeHtml(b.text || fallback) + ")";
       }).join(", ");
       blockerHtml = '<div class="blocker-list">Blockierend: ' + items + '</div>';
     }
@@ -3598,7 +3866,7 @@
       blockedCount: blocked,
       totalCount: positionen.length,
       items: positionen.map(function (p) {
-        return { code: p.code, status: p.lagerStatus || "unknown", note: p.lagerNote || "", label: p.lagerLabel || "" };
+        return { code: p.code, status: p.lagerStatus || "unknown", note: p.lagerNote || "", label: p.lagerLabel || "", kleben: p.kleben || null };
       })
     };
   }
@@ -3921,7 +4189,7 @@
       var trimmed = (text || "").trim();
       if (!trimmed) {
         auftragImportBusy = false;
-        setDropzoneStatus("„" + file.name + "“: kein Text gefunden (Scan ohne Textebene) — bitte im Tab „Auftrag prüfen“ den Foto-Upload nutzen.");
+        setDropzoneStatus("„" + file.name + "“: kein Text gefunden (Scan ohne Textebene) — bitte oben im Bereich „Auftrag prüfen“ den Foto-Upload nutzen.");
         processNextAuftragImport();
         return;
       }
@@ -4872,8 +5140,17 @@
   }
 
   // ---- init ----
+  function moveCheckSectionIntoAuftraege() {
+    var section = document.getElementById("auftraegeSection");
+    var check = document.getElementById("checkSection");
+    if (!section || !check || check.parentNode === section) return;
+    var header = section.querySelector(".auftraege-header");
+    section.insertBefore(check, header ? header.nextSibling : section.firstChild);
+  }
+
   function startApp() {
     loadData();
+    moveCheckSectionIntoAuftraege();
     document.getElementById("loadingMsg").style.display = "none";
     document.getElementById("app").style.display = "block";
     // Tab-Buttons + Dashboard auf den (ggf. gespeicherten) aktiven Tab bringen.
