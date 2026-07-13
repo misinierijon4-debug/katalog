@@ -121,6 +121,8 @@ Tafel-Panel bestimmen (wie `add_natural.py` das mit Codes macht).
 2. **`katalog.js` NUR über `tools/build.py` neu bauen.** Achtung Falle: der
    Inline-Rebuild in `add_natural.py` verwirft das `marke`-Feld (Regression!) —
    nicht kopieren. Run: `uv run --python 3.12 python tools/build.py`.
+   Danach `tools/build_auftraege.py` ausführen — `auftraege.html` wird aus
+   `index.html` generiert und muss nach jedem Rebuild neu erzeugt werden.
 3. **Verifikation** (lokaler Server, launch.json „mustertafeln-katalog“, Port 8642):
    - `build.py`-Ausgabe: 1266 + 34 = 1300 Einträge; engers-Zähler +34.
    - Suche im Katalog-UI nach `9740-NAT`, `9540-NAT-01`, `9562-NAT-06` → Treffer
