@@ -3851,6 +3851,7 @@
     var katalogFehlt = [];
     var bausteineMap = {};
     var blankoMap = {};
+    var posterMap = {};
 
     function addFehlend(map, key, meta, p) {
       if (!map[key]) {
@@ -3861,8 +3862,19 @@
     }
 
     (auftrag.positionen || []).forEach(function (p, i) {
-      if (!istBlockiert(p, index)) return;
       if (p.lagerStatus === "missing" || p.lagerStatus === "broken") return;
+
+      // Fehlende Poster/Etiketten: blockieren das Kleben nicht, fehlen aber
+      // trotzdem — deshalb über ALLE Klebe-Positionen sammeln (nicht nur
+      // über blockierte). klebeInfoFuer liefert null, wenn die Position
+      // direkt aus dem Tafel-Bestand bedient wird (kein Kleben nötig).
+      var klebeP = klebeInfoFuer(p, index);
+      if (klebeP && klebeP.poster && !klebenNutzbar(klebeP.poster.lagerStatus)) {
+        addFehlend(posterMap, klebeP.poster.code,
+          { code: klebeP.poster.code, lagerStatus: klebeP.poster.lagerStatus }, p);
+      }
+
+      if (!istBlockiert(p, index)) return;
 
       var eintrag = katalogEintragFuer(p.code);
       if (!eintrag) {
@@ -3896,8 +3908,13 @@
     });
     var blanko = Object.keys(blankoMap).map(function (k) { return blankoMap[k]; });
     blanko.sort(function (a, b) { return String(a.code).localeCompare(String(b.code), "de"); });
+    var poster = Object.keys(posterMap).map(function (k) { return posterMap[k]; });
+    poster.sort(function (a, b) {
+      if (b.positionen.length !== a.positionen.length) return b.positionen.length - a.positionen.length;
+      return String(a.code).localeCompare(String(b.code), "de");
+    });
 
-    return { katalogFehlt: katalogFehlt, bausteine: bausteine, blanko: blanko };
+    return { katalogFehlt: katalogFehlt, bausteine: bausteine, blanko: blanko, poster: poster };
   }
 
   // Baut die "Positionen"-Zeile für dedupliziert gefehlte Bausteine/Blanko
@@ -3909,12 +3926,9 @@
     return '<div class="wf-used-in">benötigt für: ' + escapeHtml(text) + '</div>';
   }
 
-  // TODO (später): dritte Kategorie "Fehlende Poster" ergänzen, sobald der
-  // Poster-Bestand gepflegt ist (posterStatusFuer liefert dann verlässliche
-  // Treffer). Aktuell bewusst NICHT eingebaut, da der Poster-Bestand noch
-  // leer/ungepflegt ist und sonst durchgehend Falsch-Positive entstünden.
   function renderWasFehltBody(report) {
-    if (!report.katalogFehlt.length && !report.bausteine.length && !report.blanko.length) {
+    var posterList = report.poster || [];
+    if (!report.katalogFehlt.length && !report.bausteine.length && !report.blanko.length && !posterList.length) {
       return '<div class="was-fehlt-empty">Alle benötigten Bausteine sind erfasst. ✓</div>';
     }
 
@@ -3958,6 +3972,22 @@
             '<span class="klebe-art klebe-miss">' + meta.icon + ' ' + escapeHtml(meta.text) + '</span>' +
           '</div>' +
           wfUsedInHtml(bl.positionen) +
+        '</div>';
+      }).join("");
+    }
+
+    // Fehlende Poster/Etiketten (Poster-Bestand) — blockieren das Kleben
+    // nicht, sollen aber nachbestellt/nachgedruckt werden.
+    if (posterList.length) {
+      html += '<div class="was-fehlt-group-title">🖼 Fehlende Poster/Etiketten (' + posterList.length + ')</div>';
+      html += posterList.map(function (po) {
+        var meta = STATUS_LABEL[po.lagerStatus] || STATUS_LABEL.unknown;
+        return '<div class="was-fehlt-item">' +
+          '<div class="wf-head">' +
+            '<span class="wf-code" data-action="jumpCode" data-code="' + escapeHtml(po.code) + '">' + escapeHtml(po.code) + '</span>' +
+            '<span class="klebe-art klebe-miss">' + meta.icon + ' ' + escapeHtml(meta.text) + '</span>' +
+          '</div>' +
+          wfUsedInHtml(po.positionen) +
         '</div>';
       }).join("");
     }
@@ -4167,9 +4197,9 @@
           '</table>' +
           '<div class="auftrag-actions-row">' +
             '<button type="button" class="btn" data-action="recheck" data-id="' + a.id + '">🔄 Verfügbarkeit neu prüfen</button>' +
-            (blocked > 0
-              ? '<button type="button" class="btn btn-danger" data-action="showMissing" data-id="' + a.id + '">🧩 Was fehlt?</button>'
-              : "") +
+            // Immer anzeigen (nicht nur bei Blockern): auch fehlende Poster/
+            // Etiketten sollen auffindbar sein — die blockieren nicht.
+            '<button type="button" class="btn' + (blocked > 0 ? " btn-danger" : "") + '" data-action="showMissing" data-id="' + a.id + '">🧩 Was fehlt?</button>' +
             geprueft +
           '</div>' +
           '<textarea class="auftrag-notiz" data-action="notiz" data-id="' + a.id + '" placeholder="Notiz zum Auftrag (z. B. „Kunde informiert, wartet auf Lieferung KW 32“)…">' + escapeHtml(a.notiz || "") + '</textarea>' +
@@ -5046,7 +5076,8 @@
     wasFehltCurrentReport = report;
     wasFehltTitleEl.textContent = "Was fehlt? – " + auftragDisplayName(a);
     wasFehltSubEl.textContent = report.katalogFehlt.length + " Pos. ohne Katalogeintrag · " +
-      report.bausteine.length + " fehlende Baustein(e) · " + report.blanko.length + " fehlende Blanko-Tafel(n)";
+      report.bausteine.length + " fehlende Baustein(e) · " + report.blanko.length + " fehlende Blanko-Tafel(n) · " +
+      (report.poster || []).length + " fehlende(s) Poster/Etikett(en)";
     wasFehltBodyEl.innerHTML = renderWasFehltBody(report);
     // Codes im Modal springen ins Lager (Modal schließt sich dabei).
     wasFehltBodyEl.querySelectorAll('[data-action="jumpCode"]').forEach(function (el) {
@@ -5056,7 +5087,7 @@
         jumpToLagerCode(code);
       });
     });
-    var hatCodes = report.katalogFehlt.length + report.bausteine.length + report.blanko.length > 0;
+    var hatCodes = report.katalogFehlt.length + report.bausteine.length + report.blanko.length + (report.poster || []).length > 0;
     btnWasFehltCopyEl.style.display = hatCodes ? "" : "none";
     wasFehltModalEl.style.display = "flex";
   }
@@ -5080,6 +5111,7 @@
     wasFehltCurrentReport.katalogFehlt.forEach(function (k) { pushCode(k.code); });
     wasFehltCurrentReport.bausteine.forEach(function (b) { pushCode(b.artnr); });
     wasFehltCurrentReport.blanko.forEach(function (bl) { pushCode(bl.code); });
+    (wasFehltCurrentReport.poster || []).forEach(function (po) { pushCode(po.code); });
     if (!codes.length) return;
     var text = codes.join(", ");
     if (navigator.clipboard) {
