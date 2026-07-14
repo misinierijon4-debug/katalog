@@ -724,11 +724,19 @@
     grid-auto-rows: minmax(70px, auto);
     min-width: 1748px;
   }
+  /* Poster-Bestand: drei Bereiche (Tisch 1 / Tisch 2 / Regal) nebeneinander,
+     gleiche kompakte Listenansicht wie der Fliesen-Bestand. */
+  #mapGrid.map-poster {
+    grid-template-columns: repeat(3, minmax(340px, 1fr));
+    grid-auto-rows: minmax(70px, auto);
+    min-width: 1060px;
+  }
   /* Während einer aktiven Suche/Filter kein festes Hallenraster mehr: die
      Treffer werden kompakt und sortiert ohne Lücken gepackt (kein
      horizontales Scrollen). */
   #mapGrid.map-filtering,
-  #mapGrid.map-filtering.map-fliesen {
+  #mapGrid.map-filtering.map-fliesen,
+  #mapGrid.map-filtering.map-poster {
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     grid-auto-rows: auto;
     min-width: 0;
@@ -1670,6 +1678,10 @@
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
           <span>Fliesen-Bestand</span>
         </button>
+        <button type="button" class="tab" id="tabPoster" role="tab" data-tab="poster" aria-selected="false">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+          <span>Poster-Bestand</span>
+        </button>
         <button type="button" class="tab" id="tabAuftraege" role="tab" data-tab="auftraege" aria-selected="false">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg></span>
           <span>Auftrags-Verwaltung</span>
@@ -2148,6 +2160,86 @@
     { "id": "poster_bestand", "label": "Poster-Bestand", "zone": "spezial_zone", "items": [] }
   ];
 
+  // Raster für den Poster-Bestand: drei Bereiche nebeneinander, wie sie im
+  // Raum stehen (Tisch 1 / Tisch 2 / Regal).
+  var POSITIONS_POSTER = {
+    poster_tisch1: { col: "1 / 2", row: "1 / 2" },
+    poster_tisch2: { col: "2 / 3", row: "1 / 2" },
+    poster_regal:  { col: "3 / 4", row: "1 / 2" }
+  };
+
+  // Ausgangsdaten Poster-/Etikettenbestand (Aufnahme 14.07.2026). Codes sind
+  // bereinigt und auf die ersten zwei Segmente gekürzt (z.B. "91E5-PHO1" aus
+  // "91E5-PHO1-00-10"). Etiketten sind über die Notiz "Etikett" markiert,
+  // alles andere sind Poster. Die Notiz nennt zusätzlich den Stapel bzw. die
+  // Regal-Reihe, damit man das Blatt im Stapel wiederfindet.
+  var seedDataPoster = [
+    { "id": "poster_tisch1", "label": "Tisch 1", "zone": "poster_zone", "items": [
+      {"code": "91E5-PHO1", "qty": "", "note": "Stapel 1"},
+      {"code": "91ED-MIW2", "qty": "", "note": "Stapel 2"},
+      {"code": "9336-SPA2", "qty": "", "note": "Stapel 2"},
+      {"code": "91E3-IRO1", "qty": "", "note": "Stapel 2"},
+      {"code": "91E0-IRO1", "qty": "", "note": "Stapel 3"},
+      {"code": "91E0-CAR1", "qty": "", "note": "Stapel 3"},
+      {"code": "91E0-PHO1", "qty": "", "note": "Stapel 3"},
+      {"code": "91E0-PHO2", "qty": "", "note": "Stapel 3"},
+      {"code": "91E4-ENO1", "qty": "", "note": "Stapel 4 · Etikett"},
+      {"code": "91E4-BES1", "qty": "", "note": "Stapel 4 · Etikett"},
+      {"code": "91E4-WOO4", "qty": "", "note": "Stapel 4 · Etikett"},
+      {"code": "91E4-TER1", "qty": "", "note": "Stapel 4 · Etikett"},
+      {"code": "91E4-UND1", "qty": "", "note": "Stapel 4 · Etikett"},
+      {"code": "91E5-COL1", "qty": "", "note": "Stapel 4"},
+      {"code": "91E0-CAR2", "qty": "", "note": "Stapel 4"},
+      {"code": "91E8-IRO1", "qty": "", "note": "Stapel 4"},
+      {"code": "91E8-PHO1", "qty": "", "note": "Stapel 4"},
+      {"code": "91E5-SPA2", "qty": "", "note": "Stapel 5"},
+      {"code": "91E0-IND4", "qty": "", "note": "Stapel 5"},
+      {"code": "91E5-GLO2", "qty": "", "note": "Stapel 5"},
+      {"code": "91E0-WOO1", "qty": "", "note": "Stapel 5"},
+      {"code": "91E0-IND3", "qty": "", "note": "Stapel 5"},
+      {"code": "91E0-STE2", "qty": "", "note": "Stapel 6"},
+      {"code": "NAT-30x60", "qty": "", "note": "Stapel 6 · Fliese"},
+      {"code": "91E0-TRE1", "qty": "", "note": "Stapel 6"},
+      {"code": "91E0-STE1", "qty": "", "note": "Stapel 6"},
+      {"code": "91E0-IND2", "qty": "", "note": "Stapel 6"},
+      {"code": "91E5-MIW1", "qty": "", "note": "Stapel 6"},
+      {"code": "91E0-MIW1", "qty": "", "note": "Stapel 6"}
+    ]},
+    { "id": "poster_tisch2", "label": "Tisch 2", "zone": "poster_zone", "items": [
+      {"code": "91E5-MIW2", "qty": "", "note": "Kopfende (quer)"},
+      {"code": "91E3-TRE1", "qty": "2", "note": "Stapel"},
+      {"code": "9331-ENI4", "qty": "", "note": "Stapel"},
+      {"code": "9331-ENI2", "qty": "", "note": "Stapel"},
+      {"code": "91E0-ENO1", "qty": "", "note": "Stapel"},
+      {"code": "91E5-TRE1", "qty": "", "note": "Stapel"},
+      {"code": "91E1-ENO1", "qty": "2", "note": "Stapel"}
+    ]},
+    { "id": "poster_regal", "label": "Regal", "zone": "poster_zone", "items": [
+      {"code": "9336-ENI1", "qty": "", "note": "Reihe 1 (oben)"},
+      {"code": "91E0-ENO1", "qty": "", "note": "Reihe 1 (oben)"},
+      {"code": "9336-CAM8", "qty": "", "note": "Reihe 1 (oben)"},
+      {"code": "9336-CAM4", "qty": "", "note": "Reihe 1 (oben)"},
+      {"code": "9336-LIN2", "qty": "", "note": "Reihe 1 (oben)"},
+      {"code": "9336-ENI4", "qty": "", "note": "Reihe 2 (Mitte oben)"},
+      {"code": "9336-ENI2", "qty": "", "note": "Reihe 2 (Mitte oben)"},
+      {"code": "9336-ENI3", "qty": "", "note": "Reihe 2 (Mitte oben)"},
+      {"code": "91E0-FAN2", "qty": "", "note": "Reihe 2 (Mitte oben)"},
+      {"code": "91E0-FLO1", "qty": "", "note": "Reihe 2 (Mitte oben)"},
+      {"code": "9336-LIN2", "qty": "", "note": "Reihe 2 (Mitte oben)"},
+      {"code": "91E9-BES1", "qty": "", "note": "Reihe 2 · Schlitz darunter"},
+      {"code": "9331-SPA2", "qty": "", "note": "Reihe 3 · linker Stapel"},
+      {"code": "9331-ENI3", "qty": "", "note": "Reihe 3 · linker Stapel"},
+      {"code": "9331-ENI1", "qty": "", "note": "Reihe 3 · linker Stapel"},
+      {"code": "91E5-PAL1", "qty": "", "note": "Reihe 3 · mittiges Fach"},
+      {"code": "91E7-SPA1", "qty": "", "note": "Reihe 3 · rechtes Fach"},
+      {"code": "9331-SPA2", "qty": "", "note": "Reihe 3 · rechtes Fach"},
+      {"code": "91E0-KAV2", "qty": "", "note": "Reihe 4 (unten)"},
+      {"code": "91E0-KAV1", "qty": "", "note": "Reihe 4 (unten)"},
+      {"code": "91E1-TIM2", "qty": "", "note": "Reihe 4 (unten)"},
+      {"code": "91E1-TIM1", "qty": "", "note": "Reihe 4 (unten)"}
+    ]}
+  ];
+
   // Fliesen-Lieferung vom 10.07.2026, noch ohne Stellplatz — wird über
   // migrate() einmalig als eigene Kategorie in den Fliesen-Bestand
   // eingetragen (Flag lieferung20260710v2 im Datensatz). Nur Produkt-Codes,
@@ -2285,7 +2377,7 @@
   // - wandelt zuvor als "nicht verwendbar" markierte 9752-Poster-Codes in
   //   den neuen Status "Poster folgt" um (Fliesen werden jetzt trotzdem
   //   verwendet, Poster wird bei Ankunft nachträglich geklebt)
-  function migrate(parsed, isFliesen) {
+  function migrate(parsed, isFliesen, isPoster) {
     var changed = false;
     var categories = parsed.categories.map(function (cat) {
       var items = cat.items.map(function (it) {
@@ -2329,7 +2421,7 @@
     });
 
     // Die Kategorie "Fehlende Codes" gibt es nur im Tafeln-Bestand.
-    if (!isFliesen) {
+    if (!isFliesen && !isPoster) {
       var hasFehlend = categories.some(function (c) { return c.id === "fehlendCodes"; });
       if (!hasFehlend) {
         changed = true;
@@ -2339,15 +2431,16 @@
       }
     }
 
-    // Der (anfangs leere) "Poster-Bestand" gehört zum Fliesen-Bestand — bei
-    // bereits gespeicherten Ständen nachrüsten, damit dort Poster-/Etikett-
-    // Codes gepflegt und beim Kleben-Abgleich geprüft werden können.
+    // Der Poster-Bestand hat seit 14.07.2026 einen eigenen Tab (dataPoster).
+    // Die früher im Fliesen-Bestand angelegte (leere) Platzhalter-Kategorie
+    // wird entfernt; falls dort doch schon Artikel eingetragen wurden, bleibt
+    // die Kategorie erhalten und weiterhin im Lager-Index sichtbar.
     if (isFliesen) {
-      var hasPoster = categories.some(function (c) { return c.id === "poster_bestand"; });
-      if (!hasPoster) {
-        changed = true;
-        categories.push({ id: "poster_bestand", label: "Poster-Bestand", zone: "spezial_zone", circled: false, items: [] });
-      }
+      var beforePoster = categories.length;
+      categories = categories.filter(function (c) {
+        return !(c.id === "poster_bestand" && (c.items || []).length === 0);
+      });
+      if (categories.length !== beforePoster) changed = true;
     }
 
     var result = {};
@@ -2404,14 +2497,16 @@
   // damit die bestehende Logik (findCat, addItem, render …) unverändert
   // weiterläuft.
   var FLIESEN_STORAGE_KEY = "lager-fliesen-data-html";
+  var POSTER_STORAGE_KEY = "lager-poster-data-html";
   var ACTIVE_TAB_KEY = "lager-active-tab";
   var AUFTRAEGE_STORAGE_KEY = "lager-auftraege-history";
 
   var dataTafeln = null;
   var dataFliesen = null;
+  var dataPoster = null;
   var auftraege = [];                 // Auftrags-Historie (neuester zuerst)
   var lastCheck = null;               // Ergebnis der letzten Prüfung (für "Speichern")
-  var activeTab = "tafeln";           // "tafeln" | "fliesen" | "auftraege"
+  var activeTab = "tafeln";           // "tafeln" | "fliesen" | "poster" | "auftraege"
   var data = null;                    // Zeiger auf den aktiven Bestands-Datensatz
   var search = "";
   var showNewCat = false;
@@ -2423,24 +2518,37 @@
   var auftragSearch = "";               // Suchbegriff im Kommissionierungs-Tab
 
   function activeKey() {
-    return activeTab === "fliesen" ? FLIESEN_STORAGE_KEY : STORAGE_KEY;
+    if (activeTab === "fliesen") return FLIESEN_STORAGE_KEY;
+    if (activeTab === "poster") return POSTER_STORAGE_KEY;
+    return STORAGE_KEY;
   }
 
   function activePositions() {
-    return activeTab === "fliesen" ? POSITIONS_FLIESEN : POSITIONS;
+    if (activeTab === "fliesen") return POSITIONS_FLIESEN;
+    if (activeTab === "poster") return POSITIONS_POSTER;
+    return POSITIONS;
+  }
+
+  // Liefert den Bestands-Datensatz zu einem Tab ("auftraege" → Tafeln,
+  // damit der data-Zeiger dort nie ins Leere zeigt).
+  function datasetFor(tab) {
+    if (tab === "fliesen") return dataFliesen;
+    if (tab === "poster") return dataPoster;
+    return dataTafeln;
   }
 
   // Lädt einen einzelnen Datensatz aus dem Speicher oder legt ihn aus den
-  // Ausgangsdaten an.
-  function loadDataset(key, isFliesen) {
-    var seedFn = isFliesen
-      ? function () { return normalizeFliesen(seedDataFliesen); }
-      : function () { return normalize(seedData); };
+  // Ausgangsdaten an. kind: "tafeln" | "fliesen" | "poster".
+  function loadDataset(key, kind) {
+    var seedFn =
+      kind === "fliesen" ? function () { return normalizeFliesen(seedDataFliesen); } :
+      kind === "poster"  ? function () { return normalizeFliesen(seedDataPoster); } :
+      function () { return normalize(seedData); };
     try {
       var raw = localStorage.getItem(key);
       if (raw) {
         var parsed = JSON.parse(raw);
-        var res = migrate(parsed, isFliesen);
+        var res = migrate(parsed, kind === "fliesen", kind === "poster");
         if (res.changed) {
           try { localStorage.setItem(key, JSON.stringify(res.data)); } catch (e) {}
         }
@@ -2455,8 +2563,9 @@
   }
 
   function loadData() {
-    dataTafeln = loadDataset(STORAGE_KEY, false);
-    dataFliesen = loadDataset(FLIESEN_STORAGE_KEY, true);
+    dataTafeln = loadDataset(STORAGE_KEY, "tafeln");
+    dataFliesen = loadDataset(FLIESEN_STORAGE_KEY, "fliesen");
+    dataPoster = loadDataset(POSTER_STORAGE_KEY, "poster");
     try {
       var rawA = localStorage.getItem(AUFTRAEGE_STORAGE_KEY);
       if (rawA) {
@@ -2470,9 +2579,9 @@
       var savedTab = localStorage.getItem(ACTIVE_TAB_KEY);
       // Der frühere Tab "pruefen" wurde in die Auftrags-Verwaltung integriert.
       if (savedTab === "pruefen") savedTab = "auftraege";
-      if (savedTab === "fliesen" || savedTab === "tafeln" || savedTab === "auftraege") activeTab = savedTab;
+      if (savedTab === "fliesen" || savedTab === "tafeln" || savedTab === "poster" || savedTab === "auftraege") activeTab = savedTab;
     } catch (e) {}
-    data = activeTab === "fliesen" ? dataFliesen : dataTafeln;
+    data = datasetFor(activeTab);
   }
 
   // Migriert alte Aufträge (legacy-Format mit items/title/fulfillable) ins neue
@@ -2719,7 +2828,9 @@
     return escapeHtml(before) + '<mark class="hl">' + escapeHtml(match) + '</mark>' + escapeHtml(after);
   }
 
-  function isFliesenTab() { return activeTab === "fliesen"; }
+  // Fliesen UND Poster nutzen dieselbe kompakte Listenansicht
+  // (Serie/Notiz in derselben Zeile, reduzierte Status-Optionen).
+  function isFliesenTab() { return activeTab === "fliesen" || activeTab === "poster"; }
 
   // Erkennt einen Größen-Token wie "60x60", "30x120", "30 x 90".
   function isSizeToken(s) { return /^\d{2,3}\s*[xX]\s*\d{2,3}$/.test(s); }
@@ -3002,6 +3113,7 @@
 
     var mapGrid = document.getElementById("mapGrid");
     mapGrid.classList.toggle("map-fliesen", activeTab === "fliesen");
+    mapGrid.classList.toggle("map-poster", activeTab === "poster");
     mapGrid.classList.toggle("map-filtering", filteringNow);
     mapGrid.innerHTML = mapCategories.map(function (cat) {
       var pos = positions[cat.id];
@@ -3358,10 +3470,10 @@
       b.classList.toggle("active", isActive);
       b.setAttribute("aria-selected", isActive ? "true" : "false");
     });
-    var fliesen = activeTab === "fliesen";
+    var kompakt = activeTab === "fliesen" || activeTab === "poster";
     ["dashCardBroken", "dashCardPending", "dashCardEmpty"].forEach(function (id) {
       var el = document.getElementById(id);
-      if (el) el.style.display = fliesen ? "none" : "";
+      if (el) el.style.display = kompakt ? "none" : "";
     });
     // View-Attribut steuert per CSS, welche Bereiche sichtbar sind
     // (Auftrags-Tab blendet Raster/Dashboard/Banner aus).
@@ -3376,9 +3488,9 @@
   }
 
   function switchTab(tab) {
-    if (tab !== "tafeln" && tab !== "fliesen" && tab !== "auftraege") return;
+    if (tab !== "tafeln" && tab !== "fliesen" && tab !== "poster" && tab !== "auftraege") return;
     activeTab = tab;
-    data = tab === "fliesen" ? dataFliesen : dataTafeln;
+    data = datasetFor(tab);
     persistKey(ACTIVE_TAB_KEY, tab);
 
     // Transiente UI-Zustände beim Wechsel zurücksetzen.
@@ -3649,6 +3761,13 @@
     var code = posterCodeAusLabel(eintrag.label);
     if (!code) return null;
     var entry = index[code.replace(/-/g, "")];
+    // Der Poster-Bestand führt Codes gekürzt auf zwei Segmente ("91E0-IRO1");
+    // Katalog-Labels nennen den vollen Code ("91E0-IRO1-00-10") — als
+    // Fallback deshalb auch den Basis-Code (erste zwei Segmente) prüfen.
+    if (!entry) {
+      var basis = code.split("-").slice(0, 2).join("");
+      if (basis) entry = index[basis];
+    }
     return { code: code, lagerStatus: entry ? entry.status : "unknown" };
   }
 
@@ -3891,7 +4010,7 @@
   function jumpToLagerCode(code) {
     var key = normalizeCode(code).replace(/-/g, "");
     var targetTab = null;
-    [{ ds: dataTafeln, tab: "tafeln" }, { ds: dataFliesen, tab: "fliesen" }].forEach(function (l) {
+    [{ ds: dataTafeln, tab: "tafeln" }, { ds: dataFliesen, tab: "fliesen" }, { ds: dataPoster, tab: "poster" }].forEach(function (l) {
       if (targetTab || !l.ds) return;
       l.ds.categories.forEach(function (cat) {
         cat.items.forEach(function (it) {
@@ -4292,6 +4411,7 @@
 
     addDataset(dataTafeln, "Tafeln");
     addDataset(dataFliesen, "Fliesen");
+    addDataset(dataPoster, "Poster");
 
     Object.keys(aliasIndex).forEach(function (k) {
       if (!index[k]) index[k] = aliasIndex[k];
@@ -5125,7 +5245,7 @@
   var lastSnapshotTs = 0;
   var dirtySinceSnapshot = false;    // gab es Änderungen seit dem letzten Snapshot?
 
-  var DATA_KEYS = [STORAGE_KEY, FLIESEN_STORAGE_KEY, AUFTRAEGE_STORAGE_KEY];
+  var DATA_KEYS = [STORAGE_KEY, FLIESEN_STORAGE_KEY, POSTER_STORAGE_KEY, AUFTRAEGE_STORAGE_KEY];
   var MIRROR_KEYS = DATA_KEYS.concat([ACTIVE_TAB_KEY, THEME_KEY, LAST_EXPORT_KEY, FIRST_SEEN_KEY]);
 
   function idbOpen() {
@@ -5195,13 +5315,14 @@
   }
 
   function buildExportPayload() {
-    // Version 3 sichert beide Bestände UND die Auftrags-Historie.
+    // Version 4 sichert alle drei Bestände UND die Auftrags-Historie.
     return {
-      version: 3,
+      version: 4,
       exportedAt: new Date().toISOString(),
       activeTab: activeTab,
       tafeln: dataTafeln,
       fliesen: dataFliesen,
+      poster: dataPoster,
       auftraege: auftraege
     };
   }
@@ -5210,7 +5331,7 @@
   // Ohne force: nur bei Änderungen und höchstens alle 10 Minuten. Rotation:
   // nur die letzten SNAPSHOT_MAX bleiben erhalten.
   function takeSnapshot(force) {
-    if (!idb || !dataTafeln || !dataFliesen) return Promise.resolve(false);
+    if (!idb || !dataTafeln || !dataFliesen || !dataPoster) return Promise.resolve(false);
     var now = Date.now();
     if (!force && (!dirtySinceSnapshot || now - lastSnapshotTs < SNAPSHOT_MIN_INTERVAL)) {
       return Promise.resolve(false);
@@ -5268,6 +5389,11 @@
       persistKey(FLIESEN_STORAGE_KEY, JSON.stringify(dataFliesen));
       loadedParts.push("Fliesen");
     }
+    if (parsed.poster && Array.isArray(parsed.poster.categories)) {
+      dataPoster = migrate(parsed.poster, false, true).data;
+      persistKey(POSTER_STORAGE_KEY, JSON.stringify(dataPoster));
+      loadedParts.push("Poster");
+    }
     if (Array.isArray(parsed.auftraege)) {
       // Auch importierte Stände normalisieren (alte Statuswerte wie "fertig").
       auftraege = migrateAuftraege(parsed.auftraege);
@@ -5277,7 +5403,7 @@
       loadedParts.push(auftraege.length + " Aufträge");
     }
     if (loadedParts.length) {
-      data = activeTab === "fliesen" ? dataFliesen : dataTafeln;
+      data = datasetFor(activeTab);
       render();
     }
     return loadedParts;
@@ -5431,10 +5557,11 @@
   // sofort persistiert ist und (falls es Änderungen gab) als Snapshot in
   // IndexedDB liegt.
   function persistOnLeave() {
-    if (!dataTafeln || !dataFliesen) return; // App noch nicht geladen
+    if (!dataTafeln || !dataFliesen || !dataPoster) return; // App noch nicht geladen
     clearTimeout(saveTimer);
     persistKey(STORAGE_KEY, JSON.stringify(dataTafeln));
     persistKey(FLIESEN_STORAGE_KEY, JSON.stringify(dataFliesen));
+    persistKey(POSTER_STORAGE_KEY, JSON.stringify(dataPoster));
     persistKey(AUFTRAEGE_STORAGE_KEY, JSON.stringify(auftraege));
     if (dirtySinceSnapshot) takeSnapshot(true);
   }
@@ -5472,7 +5599,7 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showBackupMsg("Gesichert als " + name + " (Tafeln + Fliesen + Auftrags-Historie) — diese Datei auf das andere Gerät übertragen und dort mit „Laden“ öffnen.");
+      showBackupMsg("Gesichert als " + name + " (Tafeln + Fliesen + Poster + Auftrags-Historie) — diese Datei auf das andere Gerät übertragen und dort mit „Laden“ öffnen.");
       // Zeitpunkt merken und Erinnerungs-Banner ausblenden.
       persistKey(LAST_EXPORT_KEY, String(Date.now()));
       document.getElementById("bannerBackup").style.display = "none";
@@ -5492,7 +5619,7 @@
         // Vor jedem Import den aktuellen Stand als Sicherungspunkt ablegen.
         takeSnapshot(true);
 
-        if (parsed && (parsed.tafeln || parsed.fliesen)) {
+        if (parsed && (parsed.tafeln || parsed.fliesen || parsed.poster)) {
           // Neues Format (Version 2/3): beide Lager getrennt.
           var loadedParts = applyBackupPayload(parsed);
           if (loadedParts.length === 0) {
@@ -5538,7 +5665,7 @@
       showBackupMsg("Auftrags-Historie geleert.");
       return;
     }
-    var lagerName = activeTab === "fliesen" ? "Fliesen-Bestand" : "Tafeln-Bestand";
+    var lagerName = activeTab === "fliesen" ? "Fliesen-Bestand" : (activeTab === "poster" ? "Poster-Bestand" : "Tafeln-Bestand");
     var ok = window.confirm(
       "Wirklich den " + lagerName + " zurücksetzen? Alle deine Änderungen in DIESEM Lager (neue Bereiche, Mengen, Markierungen) gehen verloren und der Ausgangszustand wird geladen. Der andere Bestand bleibt unberührt.\n\nTipp: Vorher mit „Sichern“ eine Kopie speichern."
     );
@@ -5548,6 +5675,9 @@
     if (activeTab === "fliesen") {
       dataFliesen = normalizeFliesen(seedDataFliesen);
       data = dataFliesen;
+    } else if (activeTab === "poster") {
+      dataPoster = normalizeFliesen(seedDataPoster);
+      data = dataPoster;
     } else {
       dataTafeln = normalize(seedData);
       data = dataTafeln;
@@ -5623,12 +5753,13 @@
   var SYNC_META_KEY = "lager-sync-meta";     // { tafeln:{ts,dirty}, ... } in localStorage
   var SYNC_DEVICE_KEY = "lager-device-id";   // zufällige Geräte-ID (einmal pro Browser)
   var SYNC_PUSH_DELAY = 2000;                // lokale Änderungen gebündelt pushen
-  var SYNC_REMOTE_KEYS = ["tafeln", "fliesen", "auftraege"];
+  var SYNC_REMOTE_KEYS = ["tafeln", "fliesen", "poster", "auftraege"];
 
   // Zuordnung localStorage-Key -> Zeilen-Key in der Supabase-Tabelle.
   var SYNC_KEY_MAP = {};
   SYNC_KEY_MAP[STORAGE_KEY] = "tafeln";
   SYNC_KEY_MAP[FLIESEN_STORAGE_KEY] = "fliesen";
+  SYNC_KEY_MAP[POSTER_STORAGE_KEY] = "poster";
   SYNC_KEY_MAP[AUFTRAEGE_STORAGE_KEY] = "auftraege";
 
   var syncClient = null;          // Supabase-Client oder null (Sync aus)
@@ -5695,6 +5826,7 @@
   function syncSerialize(remoteKey) {
     if (remoteKey === "tafeln") return dataTafeln ? JSON.stringify(dataTafeln) : null;
     if (remoteKey === "fliesen") return dataFliesen ? JSON.stringify(dataFliesen) : null;
+    if (remoteKey === "poster") return dataPoster ? JSON.stringify(dataPoster) : null;
     if (remoteKey === "auftraege") return JSON.stringify(auftraege || []);
     return null;
   }
@@ -5774,12 +5906,16 @@
       if (remoteKey === "tafeln" && Array.isArray(remoteData.categories)) {
         dataTafeln = migrate(remoteData, false).data;
         persistKey(STORAGE_KEY, JSON.stringify(dataTafeln));
-        if (activeTab !== "fliesen") data = dataTafeln;
+        if (activeTab === "tafeln" || activeTab === "auftraege") data = dataTafeln;
         if (activeTab === "tafeln") render();
       } else if (remoteKey === "fliesen" && Array.isArray(remoteData.categories)) {
         dataFliesen = migrate(remoteData, true).data;
         persistKey(FLIESEN_STORAGE_KEY, JSON.stringify(dataFliesen));
         if (activeTab === "fliesen") { data = dataFliesen; render(); }
+      } else if (remoteKey === "poster" && Array.isArray(remoteData.categories)) {
+        dataPoster = migrate(remoteData, false, true).data;
+        persistKey(POSTER_STORAGE_KEY, JSON.stringify(dataPoster));
+        if (activeTab === "poster") { data = dataPoster; render(); }
       } else if (remoteKey === "auftraege" && Array.isArray(remoteData)) {
         auftraege = migrateAuftraege(remoteData);
         persistKey(AUFTRAEGE_STORAGE_KEY, JSON.stringify(auftraege));
