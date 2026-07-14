@@ -940,6 +940,55 @@
   .status-option.on-pending { background: var(--blue-bg); color: var(--blue-fg); font-weight: 700; }
   .status-option.on-empty { background: var(--purple-bg); color: var(--purple-fg); font-weight: 700; }
 
+  /* ---------- Umlagern (Drag & Drop + Menü) ---------- */
+  .code-chip[draggable="true"] { cursor: grab; }
+  .code-chip[draggable="true"]:active { cursor: grabbing; }
+  .item-row.dragging { opacity: .45; }
+  /* Während des Ziehens alle möglichen Ziele dezent markieren … */
+  body.drag-active .cat-box { outline: 1px dashed var(--border); outline-offset: -1px; }
+  /* … und das Ziel unter dem Mauszeiger deutlich hervorheben. */
+  .cat-box.drag-over {
+    outline: 2px dashed var(--primary);
+    outline-offset: -2px;
+    background: var(--primary-bg);
+  }
+  .move-menu {
+    position: fixed;
+    z-index: 60;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    padding: 4px;
+    min-width: 180px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .move-menu-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: 6px 8px 4px;
+  }
+  .move-menu-option {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .move-menu-option:hover { background: var(--surface-2); }
+
   .code-chip {
     grid-column: 2;
     grid-row: 1;
@@ -1317,6 +1366,31 @@
   }
   .auftrag-filter-chip:hover { background: var(--surface-hover); color: var(--text); }
   .auftrag-filter-chip.active { background: var(--primary-bg); color: var(--primary-fg); border-color: var(--primary); font-weight: 700; }
+  .auftrag-marke-label { margin-left: 10px; }
+  /* Marken-Chips: aktive Farbe passend zum Katalog (engers rot, V&B blau). */
+  .auftrag-filter-chip.chip-marke-engers.active { background: rgba(176,46,44,.14); color: #b02e2c; border-color: #b02e2c; }
+  .auftrag-filter-chip.chip-marke-vb.active { background: rgba(29,58,107,.14); color: #4d76b8; border-color: #4d76b8; }
+
+  /* Marken-Badges (Auftragskopf + Position bei Mischaufträgen) in den
+     Katalogfarben: engers rot, V&B blau. */
+  .auftrag-marke-badge {
+    font-size: 10.5px; font-weight: 800; padding: 2px 9px; border-radius: 999px;
+    letter-spacing: .3px; white-space: nowrap; flex: 0 0 auto;
+  }
+  .auftrag-marke-badge.marke-engers, .pos-marke-badge.marke-engers { background: rgba(176,46,44,.13); color: #c04543; }
+  .auftrag-marke-badge.marke-vb, .pos-marke-badge.marke-vb { background: rgba(77,118,184,.16); color: #4d76b8; }
+  .auftrag-marke-badge.marke-gemischt {
+    background: linear-gradient(90deg, rgba(176,46,44,.13), rgba(77,118,184,.16)); color: var(--text);
+  }
+  .pos-marke-badge {
+    font-size: 9.5px; font-weight: 800; padding: 1px 6px; border-radius: 999px;
+    letter-spacing: .3px; white-space: nowrap; vertical-align: 1px;
+  }
+  /* Falsch einsortierte Fliese (Marke laut Katalog ≠ Zone des Stellplatzes). */
+  .zone-warn {
+    font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 999px;
+    background: var(--yellow-bg); color: var(--yellow-fg); white-space: nowrap; margin-left: 6px;
+  }
 
   .auftrag-search {
     margin-left: auto; flex: 0 1 220px; min-width: 140px;
@@ -1745,6 +1819,10 @@
         <button type="button" class="auftrag-filter-chip" data-auftrag-filter="inArbeit">🔄 In Arbeit</button>
         <button type="button" class="auftrag-filter-chip" data-auftrag-filter="verpackt">📦 Verpackt</button>
         <button type="button" class="auftrag-filter-chip" data-auftrag-filter="versendet">🚚 Versendet</button>
+        <span class="auftrag-filter-label auftrag-marke-label">Marke:</span>
+        <button type="button" class="auftrag-filter-chip active" data-auftrag-marke="alle">Alle</button>
+        <button type="button" class="auftrag-filter-chip chip-marke-engers" data-auftrag-marke="engers">engers</button>
+        <button type="button" class="auftrag-filter-chip chip-marke-vb" data-auftrag-marke="vb">V&amp;B</button>
         <input type="text" id="auftragSearch" class="auftrag-search" placeholder="Auftragsnr. / Code suchen…" autocomplete="off">
       </div>
 
@@ -1820,7 +1898,8 @@
     chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
     status: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>',
     more: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>',
-    katalog: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
+    katalog: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+    move: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>'
   };
 
   // Pfad zum Mustertafeln-Katalog (index.html), relativ zum Speicherort
@@ -2069,6 +2148,67 @@
     { "id": "poster_bestand", "label": "Poster-Bestand", "zone": "spezial_zone", "items": [] }
   ];
 
+  // Fliesen-Lieferung vom 10.07.2026, noch ohne Stellplatz — wird über
+  // migrate() einmalig als eigene Kategorie in den Fliesen-Bestand
+  // eingetragen (Flag lieferung20260710v2 im Datensatz). Nur Produkt-Codes,
+  // ohne Chargen-/Maß-Zusätze.
+  var LIEFERUNG_2026_07_10 = [
+    "UND-1270",
+    "WOO-2040",
+    "WOO-2050",
+    "WOO-2060",
+    "FRE-2550",
+    "CAR-1270",
+    "WOO-1293",
+    "CEN-1280",
+    "CEN-1270",
+    "CEN-1290",
+    "ENO-2420",
+    "BRI-3130",
+    "BRI-3125",
+    "MIW-1220",
+    "GAR-1221",
+    "EOO-2830",
+    "EOO-2831",
+    "EOO-2920",
+    "GLO-2990",
+    "IRO-3171",
+    "IRO-2820",
+    "IRO-2871"
+  ];
+
+  // Nachtrag zur Lieferung vom 10.07.2026 (zweite Bilder-Auswertung) — wird
+  // über migrate() einmalig an die bestehende Lieferungs-Kategorie angehängt
+  // (Flag lieferung20260710v3). Codes, die dort schon stehen, werden beim
+  // Anhängen übersprungen.
+  var LIEFERUNG_2026_07_10_TEIL2 = [
+    "PAL-2940",
+    "PAL-2950",
+    "PAL-2980",
+    "KAV-1470",
+    "KAV-1480",
+    "KAV-1490",
+    "BRI-3110",
+    "BRI-3170",
+    "BRI-3180",
+    "WOO-1263",
+    "WOO-1293",
+    "IND-2440",
+    "WOO-1240",
+    "WOO-1250",
+    "WOO-1260",
+    "WOO-1280",
+    "IND-2421",
+    "CAR-1270",
+    "CAR-1280",
+    "WOO-2030",
+    "UND-2841",
+    "UND-2871",
+    "STE-1450",
+    "STE-1470",
+    "STE-1480"
+  ];
+
   function genId() {
     return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
   }
@@ -2212,6 +2352,48 @@
 
     var result = {};
     for (var k3 in parsed) result[k3] = parsed[k3];
+
+    if (isFliesen) {
+      // Die erste Fassung dieser Lieferung basierte auf einer falschen
+      // Bestell-Liste — falls sie schon eingetragen wurde, wieder entfernen.
+      var beforeLen = categories.length;
+      categories = categories.filter(function (c) { return c.id !== "lieferung_2026_07_10"; });
+      if (categories.length !== beforeLen) changed = true;
+
+      // Fliesen-Lieferung vom 10.07.2026 einmalig ohne Stellplatz eintragen.
+      // Das Flag (statt Kategorie-Prüfung) verhindert, dass die Kategorie
+      // nach dem Einsortieren/Löschen bei jedem Load erneut angelegt wird.
+      if (!result.lieferung20260710v2) {
+        changed = true;
+        result.lieferung20260710v2 = true;
+        categories.push({
+          id: "lieferung_2026_07_10_v2",
+          label: "Neue Lieferung 10.07.2026 (noch ohne Stellplatz)",
+          zone: "eingang",
+          circled: false,
+          items: LIEFERUNG_2026_07_10.map(function (code) {
+            return makeItem(code);
+          })
+        });
+      }
+
+      // Nachtrag (zweite Bilder-Auswertung) an die Lieferungs-Kategorie
+      // anhängen; bereits vorhandene Codes werden übersprungen.
+      if (!result.lieferung20260710v3) {
+        changed = true;
+        result.lieferung20260710v3 = true;
+        var lieferCat = categories.filter(function (c) { return c.id === "lieferung_2026_07_10_v2"; })[0];
+        if (!lieferCat) {
+          lieferCat = { id: "lieferung_2026_07_10_v2", label: "Neue Lieferung 10.07.2026 (noch ohne Stellplatz)", zone: "eingang", circled: false, items: [] };
+          categories.push(lieferCat);
+        }
+        LIEFERUNG_2026_07_10_TEIL2.forEach(function (code) {
+          var exists = lieferCat.items.some(function (it) { return it.code === code; });
+          if (!exists) lieferCat.items.push(makeItem(code));
+        });
+      }
+    }
+
     result.categories = categories;
     return { data: result, changed: changed };
   }
@@ -2237,6 +2419,7 @@
   var statusFilter = null;
   var collapsedCats = {};
   var auftragFilter = "alle";           // "alle"|"offen"|"inArbeit"|"verpackt"|"versendet"
+  var auftragMarkeFilter = "alle";      // "alle"|"engers"|"vb" — Marken-Filter im Auftrags-Tab
   var auftragSearch = "";               // Suchbegriff im Kommissionierungs-Tab
 
   function activeKey() {
@@ -2425,6 +2608,27 @@
     render();
   }
 
+  // Verlagert einen Artikel in einen anderen Stellplatz (gleicher Tab) —
+  // per Drag & Drop oder über das "Verschieben nach…"-Menü.
+  function moveItem(fromCatId, itemId, toCatId) {
+    if (fromCatId === toCatId) return;
+    var from = findCat(fromCatId), to = findCat(toCatId);
+    if (!from || !to) return;
+    for (var i = 0; i < from.items.length; i++) {
+      if (from.items[i].id === itemId) {
+        var it = from.items.splice(i, 1)[0];
+        to.items.push(it);
+        collapsedCats[toCatId] = false; // Ziel aufklappen, damit der Artikel sichtbar ist
+        movedItemId = itemId;
+        saveData();
+        render();
+        clearTimeout(movedTimer);
+        movedTimer = setTimeout(function () { movedItemId = null; render(); }, 1500);
+        return;
+      }
+    }
+  }
+
   function updateItemField(catId, itemId, field, value) {
     var cat = findCat(catId);
     if (field === "code") value = stripChargenPrefix(String(value).trim());
@@ -2468,6 +2672,9 @@
   var copiedCode = null;
   var confirmDeleteCat = null;
   var editingCodeItem = null;
+  var dragSource = null;   // { cat, item } während eines Drag-Vorgangs
+  var movedItemId = null;  // frisch verschobener Artikel → kurz grün hervorheben
+  var movedTimer = null;
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -2594,7 +2801,7 @@
         var flagged = it.broken || it.missing || it.pending || it.empty;
         var statusKey = computeStatus(it);
         var badgeMeta = STATUS_BADGE[statusKey];
-        var rowStateClass = it.broken ? " state-broken" : (it.missing ? " state-missing" : (it.pending ? " state-pending" : (it.empty ? " state-empty" : (copiedCode === it.code ? " state-copied" : ""))));
+        var rowStateClass = it.broken ? " state-broken" : (it.missing ? " state-missing" : (it.pending ? " state-pending" : (it.empty ? " state-empty" : (copiedCode === it.code || movedItemId === it.id ? " state-copied" : ""))));
         var codeClass = "code-chip" + (it.broken ? " is-broken" : (it.missing ? " is-missing" : (it.pending ? " is-pending" : (it.empty ? " is-empty" : (it.code.indexOf("LAUE") !== -1 ? " is-laue" : "")))));
         var flagBrokenClass = "status-option" + (it.broken ? " on-broken" : "");
         var flagMissingClass = "status-option" + (it.missing ? " on-missing" : "");
@@ -2635,6 +2842,16 @@
             var metaText = chips.map(function (ch) { return ch.text; }).join(" · ");
             metaHtml = '<span class="meta-inline" title="' + escapeHtml(metaText) + '">' + highlightCode(metaText, term) + '</span>';
           }
+          // Falsch einsortiert? Artikel-Marke laut Katalog gegen die Zone des
+          // Stellplatzes prüfen — nur Hinweis, blockiert nichts.
+          var zoneM = fliesenZoneMarke(cat.id);
+          var artM = zoneM ? markeFuerArtikel(it.code) : null;
+          if (zoneM && (artM === "engers" || artM === "vb") && artM !== zoneM) {
+            metaHtml += '<span class="zone-warn" title="Laut Katalog ein ' +
+              (artM === "vb" ? "V&B" : "engers") + '-Artikel — liegt aber in der ' +
+              (zoneM === "vb" ? "V&B" : "engers") + '-Zone">⚠ ' +
+              (artM === "vb" ? "V&B" : "engers") + '-Artikel</span>';
+          }
         }
 
         // Tafeln zeigen (wie bisher) bei Markierung die editierbare Status-Notiz.
@@ -2658,13 +2875,14 @@
                 ? '<input type="text" class="code-edit-input" value="' + escapeHtml(it.code) + '" ' +
                     'title="Enter = speichern, Esc = abbrechen" ' +
                     'data-action="editCodeInput" data-cat="' + cat.id + '" data-item="' + it.id + '">'
-                : '<span class="' + codeClass + '" title="' + escapeHtml(it.code) + ' — Klicken zum Kopieren" ' +
-                    'data-action="copyCode" data-code="' + escapeHtml(it.code) + '">' + highlightCode(it.code, term) + '</span>' +
+                : '<span class="' + codeClass + '" draggable="true" title="' + escapeHtml(it.code) + ' — Klicken zum Kopieren, Ziehen zum Umlagern" ' +
+                    'data-action="copyCode" data-code="' + escapeHtml(it.code) + '" data-cat="' + cat.id + '" data-item="' + it.id + '">' + highlightCode(it.code, term) + '</span>' +
                   metaHtml +
                   '<span class="row-actions">' +
                     '<button class="icon-btn row-action-btn" data-action="copyCode" data-code="' + escapeHtml(it.code) + '" title="Kopieren"><span class="icon">' + ICONS.copy + '</span></button>' +
                     '<button class="icon-btn row-action-btn" data-action="editCode" data-cat="' + cat.id + '" data-item="' + it.id + '" title="Code bearbeiten"><span class="icon">' + ICONS.edit + '</span></button>' +
                     '<button class="icon-btn row-action-btn" data-action="openStatusMenu" data-target="' + statusMenuId + '" title="Status ändern"><span class="icon">' + ICONS.status + '</span></button>' +
+                    '<button class="icon-btn row-action-btn" data-action="moveItem" data-cat="' + cat.id + '" data-item="' + it.id + '" title="In anderen Stellplatz verschieben"><span class="icon">' + ICONS.move + '</span></button>' +
                     '<button class="icon-btn row-action-btn katalog-btn" data-action="openKatalog" data-code="' + escapeHtml(it.code) + '" title="Im Katalog öffnen"><span class="icon">' + ICONS.katalog + '</span></button>' +
                   '</span>') +
               '<input type="text" class="qty-input" value="' + escapeHtml(it.qty) + '" placeholder="·" ' +
@@ -2680,7 +2898,12 @@
     return (
       '<details class="' + boxClasses + '" data-catid="' + cat.id + '"' + (isOpen ? " open" : "") + '>' +
         '<summary class="cat-title">' +
-          '<span class="cat-title-left"><span class="chevron icon">' + ICONS.chevron + '</span><span class="cat-name">' + escapeHtml(cat.label) + '</span></span>' +
+          '<span class="cat-title-left"><span class="chevron icon">' + ICONS.chevron + '</span><span class="cat-name">' + escapeHtml(cat.label) + '</span>' +
+            // Fliesen-Zonen: 7/8/9 = V&B (blau), 1–6 = engers (rot).
+            (fliesen && fliesenZoneMarke(cat.id)
+              ? '<span class="auftrag-marke-badge marke-' + fliesenZoneMarke(cat.id) + '">' + (fliesenZoneMarke(cat.id) === "vb" ? "V&B" : "engers") + '</span>'
+              : "") +
+          '</span>' +
           '<span class="cat-title-right"><span class="cat-count">' + cat.items.length + '</span>' + titleActions + '</span>' +
         '</summary>' +
         '<div class="cat-body">' +
@@ -2967,6 +3190,53 @@
       el.addEventListener("blur", commit);
     });
 
+    // ---- Umlagern: Drag & Drop vom Code-Chip auf einen anderen Stellplatz ----
+    document.querySelectorAll('.code-chip[draggable="true"]').forEach(function (el) {
+      el.addEventListener("dragstart", function (e) {
+        dragSource = { cat: el.getAttribute("data-cat"), item: el.getAttribute("data-item") };
+        e.dataTransfer.setData("text/plain", el.getAttribute("data-code") || "");
+        e.dataTransfer.effectAllowed = "move";
+        var row = el.closest(".item-row");
+        if (row) row.classList.add("dragging");
+        document.body.classList.add("drag-active");
+      });
+      el.addEventListener("dragend", function () {
+        dragSource = null;
+        document.body.classList.remove("drag-active");
+        document.querySelectorAll(".cat-box.drag-over").forEach(function (b) { b.classList.remove("drag-over"); });
+        var row = el.closest(".item-row");
+        if (row) row.classList.remove("dragging");
+      });
+    });
+
+    document.querySelectorAll(".cat-box").forEach(function (box) {
+      box.addEventListener("dragover", function (e) {
+        if (!dragSource || box.getAttribute("data-catid") === dragSource.cat) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        box.classList.add("drag-over");
+      });
+      box.addEventListener("dragleave", function (e) {
+        if (!box.contains(e.relatedTarget)) box.classList.remove("drag-over");
+      });
+      box.addEventListener("drop", function (e) {
+        if (!dragSource) return;
+        e.preventDefault();
+        box.classList.remove("drag-over");
+        document.body.classList.remove("drag-active");
+        moveItem(dragSource.cat, dragSource.item, box.getAttribute("data-catid"));
+        dragSource = null;
+      });
+    });
+
+    // "Verschieben nach…"-Menü (Klick-Alternative zum Ziehen).
+    document.querySelectorAll('[data-action="moveItem"]').forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.stopPropagation();
+        openMoveMenu(el.getAttribute("data-cat"), el.getAttribute("data-item"), el);
+      });
+    });
+
     // Öffnet das Status-Dropdown eines Artikels über die Hover-Aktion.
     document.querySelectorAll('[data-action="openStatusMenu"]').forEach(function (el) {
       el.addEventListener("click", function () {
@@ -2978,6 +3248,40 @@
         }
       });
     });
+  }
+
+  // ---- "Verschieben nach…"-Menü (schwebend, wird bei Klick daneben geschlossen) ----
+  var moveMenuEl = null;
+  function closeMoveMenu() {
+    if (moveMenuEl) { moveMenuEl.remove(); moveMenuEl = null; }
+  }
+  document.addEventListener("click", function (e) {
+    if (moveMenuEl && !moveMenuEl.contains(e.target)) closeMoveMenu();
+  });
+  function openMoveMenu(catId, itemId, anchor) {
+    closeMoveMenu();
+    var menu = document.createElement("div");
+    menu.className = "move-menu";
+    var title = document.createElement("div");
+    title.className = "move-menu-title";
+    title.textContent = "Verschieben nach…";
+    menu.appendChild(title);
+    data.categories.forEach(function (c) {
+      if (c.id === catId) return;
+      var b = document.createElement("button");
+      b.className = "move-menu-option";
+      b.textContent = c.label;
+      b.addEventListener("click", function () {
+        closeMoveMenu();
+        moveItem(catId, itemId, c.id);
+      });
+      menu.appendChild(b);
+    });
+    document.body.appendChild(menu);
+    var r = anchor.getBoundingClientRect();
+    menu.style.top = Math.max(8, Math.min(r.bottom + 4, window.innerHeight - menu.offsetHeight - 8)) + "px";
+    menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + "px";
+    moveMenuEl = menu;
   }
 
   // ---- top-level controls ----
@@ -3129,6 +3433,21 @@
     return a.kunde || a.title || "Auftrag";
   }
 
+  // Marke eines Auftrags, abgeleitet aus den Positionen:
+  // "engers" | "vb" | "gemischt" | null (keine erkennbare Marke).
+  function auftragMarke(a) {
+    var hatEngers = false, hatVb = false;
+    (a.positionen || []).forEach(function (p) {
+      var m = p.marke || markeFuerCode(p.code);
+      if (m === "engers") hatEngers = true;
+      else if (m === "vb") hatVb = true;
+    });
+    if (hatEngers && hatVb) return "gemischt";
+    if (hatEngers) return "engers";
+    if (hatVb) return "vb";
+    return null;
+  }
+
   function setAuftragStatus(id, status) {
     var a = findAuftrag(id);
     if (!a || !AUFTRAG_STATUS[status]) return;
@@ -3179,6 +3498,17 @@
   // der Auftragsprüfer: ok/pending = verfügbar, alles andere blockiert).
   function applyVerfuegbarkeit(positionen, index) {
     (positionen || []).forEach(function (p) {
+      p.marke = markeFuerCode(p.code);
+      // engers-Tafeln werden immer frisch geklebt — der Tafel-Bestand (fertig
+      // geklebte Tafeln) gilt nur für V&B. engers-Positionen deshalb gar nicht
+      // erst gegen den Bestand prüfen: sie sind reine Klebe-Aufgaben.
+      if (p.marke === "engers") {
+        p.lagerStatus = null;
+        p.lagerNote = "";
+        p.lagerLabel = "";
+        p.verfuegbar = null;
+        return;
+      }
       var entry = index[normalizeCode(p.code).replace(/-/g, "")];
       var status = entry ? entry.status : "unknown";
       p.lagerStatus = status;
@@ -3206,6 +3536,20 @@
       : auftragDisplayName(a) + ": " + blocked + " Position(en) weiterhin blockiert.");
   }
 
+  // Fallback: findeKatalogEintraege wurde früher von katalog.js mitgeliefert;
+  // seit dem Zwei-Marken-Neubau enthält katalog.js nur noch Daten. Hier selbst
+  // definieren (nur wenn nicht vorhanden), damit der Klebe-Abgleich unabhängig
+  // von der katalog.js-Version funktioniert.
+  if (typeof window.findeKatalogEintraege !== "function" && Array.isArray(window.KATALOG_DATA)) {
+    window.findeKatalogEintraege = function (code) {
+      var norm = function (s) { return String(s).toLowerCase().replace(/[\s\-]/g, ""); };
+      var n = norm(code);
+      return window.KATALOG_DATA.filter(function (eintrag) {
+        return (eintrag.codes || []).some(function (c) { return norm(c) === n; });
+      });
+    };
+  }
+
   // Katalog-Eintrag zu einem Auftragscode (tolerant): Lager-Codes sind am
   // "-10" abgeschnitten, Katalog-Codes enthalten es — beide Formen probieren.
   // null, wenn katalog.js fehlt oder der Code nicht im Katalog ist.
@@ -3214,6 +3558,52 @@
     var hits = window.findeKatalogEintraege(code);
     if (!hits.length) hits = window.findeKatalogEintraege(code + "-10");
     return hits[0] || null;
+  }
+
+  // Marke ("engers" | "vb") eines Mustertafel-Codes: bevorzugt aus dem Katalog
+  // (Feld "marke" seit dem Zwei-Marken-Umbau), sonst über das Code-Präfix —
+  // 93xx/95xx = engers, 97xx/98xx = V&B; die Präfixe trennen die Marken im
+  // Katalog vollständig. null = unbekannt (z. B. Fliesen-Code).
+  function markeFuerCode(code) {
+    var eintrag = katalogEintragFuer(code);
+    if (eintrag && (eintrag.marke === "engers" || eintrag.marke === "vb")) return eintrag.marke;
+    var m = /^9([3578])/.exec(normalizeCode(code));
+    if (!m) return null;
+    return (m[1] === "3" || m[1] === "5") ? "engers" : "vb";
+  }
+
+  // Marken-Zone eines Fliesen-Stellplatzes: 7/8/9 lagern nur V&B-Material,
+  // 1–6 engers; Sonderzonen (bricks, leere Tafeln) sind markenneutral.
+  function fliesenZoneMarke(catId) {
+    if (/^position_[789]$/.test(catId)) return "vb";
+    if (/^position_[1-6]$/.test(catId)) return "engers";
+    return null;
+  }
+
+  // Marke eines Fliesen-Artikels laut Katalog (über die Artikel-Listen aller
+  // Katalog-Einträge). "beide" = Artikel kommt in beiden Marken vor,
+  // null = im Katalog unbekannt. Map wird lazy aufgebaut und gecacht.
+  var _artikelMarkeMap = null;
+  function markeFuerArtikel(code) {
+    if (!Array.isArray(window.KATALOG_DATA)) return null;
+    if (!_artikelMarkeMap) {
+      _artikelMarkeMap = {};
+      window.KATALOG_DATA.forEach(function (e) {
+        if (e.marke !== "engers" && e.marke !== "vb") return;
+        (e.artikel || []).forEach(function (a) {
+          if (!a.artnr) return;
+          var k = String(a.artnr).toLowerCase().replace(/[\s\-]/g, "");
+          if (_artikelMarkeMap[k] && _artikelMarkeMap[k] !== e.marke) _artikelMarkeMap[k] = "beide";
+          else if (!_artikelMarkeMap[k]) _artikelMarkeMap[k] = e.marke;
+        });
+      });
+    }
+    var norm = normalizeCode(code);
+    var voll = norm.toLowerCase().replace(/[\s\-]/g, "");
+    if (_artikelMarkeMap[voll]) return _artikelMarkeMap[voll];
+    // Fallback ohne Farb-/Format-Zusatz: erste zwei Code-Segmente.
+    var basis = norm.split("-").slice(0, 2).join("").toLowerCase();
+    return _artikelMarkeMap[basis] || null;
   }
 
   // --- Kleben-Hilfsfunktionen (Blanko-Tafel & Poster) ---
@@ -3281,7 +3671,8 @@
         artnr: a.artnr,
         stueck: a.stueck || "",
         farbe: a.farbe || "",
-        lagerStatus: entry ? entry.status : "unknown"
+        lagerStatus: entry ? entry.status : "unknown",
+        fundort: entry ? (entry.label || "") : ""
       };
     });
     var blanko = blankoTafelStatus(code, index);
@@ -3305,6 +3696,8 @@
   // nicht (mehr) im Lager stehen ("unknown") oder als leer markiert sind
   // ("empty" → neu bekleben). Bestellte/defekte Codes betrifft es nicht.
   function klebeInfoFuer(p, index) {
+    // engers: Tafel-Bestand ist irrelevant, jede Position ist eine Klebe-Aufgabe.
+    if (p.marke === "engers") return klebeInfoForCode(p.code, index);
     if (p.verfuegbar === true) return null;
     if (p.lagerStatus && p.lagerStatus !== "unknown" && p.lagerStatus !== "empty") return null;
     return klebeInfoForCode(p.code, index);
@@ -3313,6 +3706,12 @@
   // Eine Position blockiert den Auftrag nur, wenn sie weder direkt verfügbar
   // noch durch Kleben machbar ist. (Kleben ist Standard, kein Blocker.)
   function istBlockiert(p, index) {
+    if (p.marke === "engers") {
+      // Kleben ist der einzige Weg: blockiert nur, wenn laut Katalog Material
+      // fehlt. Ohne Katalog-Eintrag keine Aussage möglich → nicht blockieren.
+      var ke = index ? klebeInfoFuer(p, index) : null;
+      return !!(ke && !ke.moeglich);
+    }
     if (p.verfuegbar !== false) return false;   // verfügbar oder noch ungeprüft
     var k = index ? klebeInfoFuer(p, index) : null;
     if (k && k.moeglich) return false;
@@ -3471,7 +3870,8 @@
       var ok = klebenNutzbar(a.lagerStatus);
       return '<span class="klebe-art ' + (ok ? "klebe-ok" : "klebe-miss") + '" ' +
         'data-action="jumpCode" data-code="' + escapeHtml(a.artnr) + '" ' +
-        'title="' + escapeHtml("Art. " + a.artnr + (a.farbe ? " · " + a.farbe : "") + " — " + da.text + " · im Lager anzeigen") + '">' +
+        'title="' + escapeHtml("Art. " + a.artnr + (a.farbe ? " · " + a.farbe : "") + " — " + da.text +
+          (a.fundort ? " · " + a.fundort : "") + " · im Lager anzeigen") + '">' +
         da.icon + ' ' + escapeHtml(a.artnr) + (a.stueck ? ' (' + escapeHtml(a.stueck) + ' St.)' : '') + '</span>';
     }).join(" ") : '<span style="opacity:0.7;">keine Artikel im Katalogeintrag</span>';
     html += '<div class="pos-klebe"><span class="klebe-label">Bausteine (Katalog S. ' + klebe.seite +
@@ -3560,10 +3960,18 @@
         'title="Status setzen: ' + s.label + '">' + s.label + '</button>';
     }).join("");
 
+    var marke = auftragMarke(a);
+
     var rows = pos.map(function (p, i) {
       var badge;
       var klebe = lagerIndex ? klebeInfoFuer(p, lagerIndex) : null;
-      if (p.verfuegbar === true) {
+      if (p.marke === "engers") {
+        // engers: kein Tafel-Bestand-Abgleich — immer Klebe-Aufgabe.
+        badge = klebe
+          ? '<span class="auftrag-pos-badge avail-klebe">🧩 ' +
+            (klebe.moeglich ? "kleben möglich" : "kleben – Material fehlt") + '</span>'
+          : '<span class="auftrag-pos-badge avail-unk">🧩 kleben (nicht im Katalog)</span>';
+      } else if (p.verfuegbar === true) {
         badge = '<span class="auftrag-pos-badge avail-yes">✓ verfügbar</span>';
       } else if (klebe) {
         badge = '<span class="auftrag-pos-badge avail-klebe">🧩 ' +
@@ -3593,7 +4001,12 @@
           '</button>' +
         '</td>' +
         '<td class="pos-nr">' + escapeHtml(p.pos || "") + '</td>' +
-        '<td class="pos-code"><span class="pos-code-link" data-action="jumpCode" data-code="' + escapeHtml(p.code || "") + '" title="Im Lager anzeigen">' + escapeHtml(p.code || "") + '</span>' +
+        '<td class="pos-code">' +
+          // Bei Mischaufträgen die Marke pro Position sichtbar machen.
+          (marke === "gemischt" && (p.marke === "engers" || p.marke === "vb")
+            ? '<span class="pos-marke-badge marke-' + p.marke + '">' + (p.marke === "vb" ? "V&B" : "engers") + '</span> '
+            : "") +
+          '<span class="pos-code-link" data-action="jumpCode" data-code="' + escapeHtml(p.code || "") + '" title="Im Lager anzeigen">' + escapeHtml(p.code || "") + '</span>' +
           '<button type="button" class="icon-btn katalog-btn pos-katalog-btn" data-action="openKatalog" data-code="' + escapeHtml(p.code || "") + '" title="Im Katalog öffnen"><span class="icon">' + ICONS.katalog + '</span></button></td>' +
         '<td class="pos-menge">' + escapeHtml(p.menge ? String(p.menge) + " " + (p.einheit || "") : "") + '</td>' +
         '<td class="pos-avail">' + badge + extra + '</td>' +
@@ -3614,6 +4027,10 @@
         '<summary class="auftrag-summary">' +
           '<span class="chevron icon">' + ICONS.chevron + '</span>' +
           '<span class="auftrag-name">' + escapeHtml(auftragDisplayName(a)) + '</span>' +
+          (marke
+            ? '<span class="auftrag-marke-badge marke-' + marke + '">' +
+              (marke === "vb" ? "V&B" : marke === "engers" ? "engers" : "engers + V&B") + '</span>'
+            : "") +
           '<span class="auftrag-date">' + formatDateTime(a.importiertAm || a.savedAt) + '</span>' +
           availBanner +
           progress +
@@ -3667,8 +4084,25 @@
     var visible = auftraege.filter(function (a) {
       var st = AUFTRAG_STATUS[a.status] ? a.status : "offen";
       if (auftragFilter !== "alle" && st !== auftragFilter) return false;
+      // Marken-Filter: Mischaufträge erscheinen unter beiden Marken.
+      if (auftragMarkeFilter !== "alle") {
+        var am = auftragMarke(a);
+        if (am !== auftragMarkeFilter && am !== "gemischt") return false;
+      }
       return auftragMatchesSearch(a, term);
     });
+
+    // Marken-Chips mit Zählern beschriften (gemischt zählt zu beiden).
+    var nEngers = 0, nVb = 0;
+    auftraege.forEach(function (a) {
+      var am = auftragMarke(a);
+      if (am === "engers" || am === "gemischt") nEngers++;
+      if (am === "vb" || am === "gemischt") nVb++;
+    });
+    var chipE = document.querySelector('[data-auftrag-marke="engers"]');
+    var chipV = document.querySelector('[data-auftrag-marke="vb"]');
+    if (chipE) chipE.textContent = "engers" + (nEngers ? " (" + nEngers + ")" : "");
+    if (chipV) chipV.textContent = "V&B" + (nVb ? " (" + nVb + ")" : "");
 
     // Offene zuerst, Versendete zuletzt; innerhalb einer Gruppe neueste zuerst.
     visible.sort(function (x, y) {
@@ -3767,6 +4201,15 @@
     chip.addEventListener("click", function () {
       auftragFilter = chip.getAttribute("data-auftrag-filter");
       document.querySelectorAll("[data-auftrag-filter]").forEach(function (c) {
+        c.classList.toggle("active", c === chip);
+      });
+      renderAuftraege();
+    });
+  });
+  document.querySelectorAll("[data-auftrag-marke]").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      auftragMarkeFilter = chip.getAttribute("data-auftrag-marke");
+      document.querySelectorAll("[data-auftrag-marke]").forEach(function (c) {
         c.classList.toggle("active", c === chip);
       });
       renderAuftraege();
