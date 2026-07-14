@@ -2301,6 +2301,24 @@
     "STE-1480"
   ];
 
+  // Fliesen-Lieferung vom 14.07.2026, noch ohne Stellplatz — wird über
+  // migrate() einmalig als eigene Kategorie in den Fliesen-Bestand
+  // eingetragen (Flag lieferung20260714). Bild-Nr. als Notiz, damit die
+  // Herkunft beim Einsortieren nachvollziehbar bleibt.
+  var LIEFERUNG_2026_07_14 = [
+    { code: "KAV-2420", note: "Bild 2" },
+    { code: "KAV-2421", note: "Bild 2" },
+    { code: "STE-1220", note: "Bild 2" },
+    { code: "STE-1240", note: "Bild 2" },
+    { code: "STE-1250", note: "Bild 2" },
+    { code: "BRI-3160", note: "Bild 4" },
+    { code: "KAV-1480", note: "Bild 1" },
+    { code: "KAV-1490", note: "Bild 1" },
+    { code: "STE-1470", note: "Bild 1" },
+    { code: "BRI-3170", note: "Bild 1" },
+    { code: "UND-2880", note: "Bild 3" }
+  ];
+
   function genId() {
     return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
   }
@@ -2483,6 +2501,21 @@
         LIEFERUNG_2026_07_10_TEIL2.forEach(function (code) {
           var exists = lieferCat.items.some(function (it) { return it.code === code; });
           if (!exists) lieferCat.items.push(makeItem(code));
+        });
+      }
+
+      // Neue Fliesen-Lieferung vom 14.07.2026, noch ohne Stellplatz.
+      if (!result.lieferung20260714) {
+        changed = true;
+        result.lieferung20260714 = true;
+        categories.push({
+          id: "lieferung_2026_07_14",
+          label: "Neue Lieferung 14.07.2026 (noch ohne Stellplatz)",
+          zone: "eingang",
+          circled: false,
+          items: LIEFERUNG_2026_07_14.map(function (e) {
+            return makeItem(e.code, { note: e.note });
+          })
         });
       }
     }
