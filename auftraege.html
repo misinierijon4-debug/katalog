@@ -13,6 +13,12 @@
   --shadow-lg:0 8px 40px rgba(0,0,0,.22);
   --radius:14px;
 }
+body[data-marke="vb"]{--bg:#eef2f6;--card:#ffffff;--ink:#17243a;--muted:#607086;--line:#d8dfe8;--accent:#1d3a6b;--badge:#1d3a6b;--chip:#e3e9f1;--chip-on:#17243a}
+body{transition:background-color .2s,color .2s}
+body[data-marke="vb"] header{background:rgba(238,242,246,.9)}
+.marktabs{display:flex;gap:5px;align-items:center}
+.marktab{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 13px;font-size:13px;font-weight:700;cursor:pointer}
+.marktab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -103,6 +109,10 @@ table.arts tr:last-child td{border-bottom:0}
 .mnotes{font-size:13px;color:var(--muted)}
 .mlabel{font-size:13.5px}
 .mlabel b{letter-spacing:.3px}
+#codebanner{margin:0 0 14px;padding:9px 12px;background:#fdf3e4;border:1px solid #f0d9ae;
+  color:#8a5b12;border-radius:10px;font-size:13px;display:flex;align-items:center;gap:10px}
+#codebanner button{margin-left:auto;border:0;background:transparent;color:inherit;
+  font-size:16px;line-height:1;cursor:pointer;padding:4px 8px}
 .warn{background:#fdf3e4;border:1px solid #f0d9ae;color:#8a5b12;border-radius:10px;
   padding:9px 12px;font-size:12.5px}
 footer{max-width:1400px;margin:8px auto 30px;padding:0 16px;color:var(--muted);font-size:12px}
@@ -140,10 +150,6 @@ footer{max-width:1400px;margin:8px auto 30px;padding:0 16px;color:var(--muted);f
 .af-status{border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
 .af-status.offen{background:#fdf3e4;color:#8a5b12}
 .af-status.erledigt{background:#e4f3e6;color:#1e6b2a}
-.af-status.inArbeit{background:#e3edf8;color:#1f5088}
-.af-status.verpackt{background:#efe6f7;color:#5b2d86}
-.af-status.versendet{background:#e4f3e6;color:#1e6b2a}
-#syncStatus{font-size:14px;line-height:1}
 .af-rowbtns{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
 .af-empty{color:var(--muted);font-size:13.5px;padding:6px 2px}
 /* Hinweis-Balken aktiver Auftrag */
@@ -243,9 +249,10 @@ table.af-pos input.stk{width:64px;text-align:center}
 <div id="afBar">
   <div class="af-hrow">
     <button class="af-toggle" id="afToggle">▸ 📋 Aufträge <span class="af-count" id="afN">0</span></button>
-    <span id="syncStatus" style="display:none;cursor:default"></span>
+    <button class="af-btn" id="afNew">+ Neuer Auftrag</button>
     <button class="af-btn sec" id="afExpAll" title="Alle Aufträge als JSON-Datei sichern">⬇ Export JSON</button>
-    <span class="af-note">Anlage &amp; Import passieren in der <b>Lagerkarte</b> – diese Seite zeigt dieselben Aufträge (Legacy: eigene Neuanlage/Text-Import/OCR entfernt).</span>
+    <button class="af-btn sec" id="afImp" title="Aufträge aus JSON-Datei laden">⬆ Import JSON</button>
+    <input type="file" id="afImpFile" accept=".json,application/json" style="display:none">
   </div>
   <div id="afList" style="display:none"></div>
 </div>
@@ -253,8 +260,8 @@ table.af-pos input.stk{width:64px;text-align:center}
 <header>
   <div class="hrow">
     <div>
-      <div class="brand">engers <small>·</small> Mustertafeln <small>· Aufträge</small></div>
-      <div class="subtitle" id="subtitle"></div>
+      <div><div class="brand"><span id="brandMarke">engers</span> <small>·</small> Mustertafeln <small>· Aufträge</small></div><div class="subtitle" id="subtitle"></div></div>
+    <div class="marktabs" role="tablist" aria-label="Marke"><button class="marktab" data-marke="engers" role="tab">engers</button><button class="marktab" data-marke="vb" role="tab">V&amp;B</button></div>
     </div>
     <div class="searchwrap">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -277,6 +284,63 @@ table.af-pos input.stk{width:64px;text-align:center}
 <main><div id="afBanner" style="display:none"></div><div id="grid"></div><div class="empty" id="empty" style="display:none"><b>∅</b>Keine Tafeln gefunden.<br>Suche oder Filter anpassen.</div></main>
 <footer id="foot"></footer>
 
+
+<div class="af-overlay" id="afEditOv">
+  <div class="af-dlg">
+    <button class="af-x" data-close="afEditOv">✕</button>
+    <h2 id="afEditTitle">Neuer Auftrag</h2>
+    <div class="af-form">
+      <label>Auftragsnummer *<input id="afFnr" autocomplete="off" placeholder="z.B. 168546"></label>
+      <label>Kunde<input id="afFkunde" autocomplete="off" placeholder="Name / Firma"></label>
+      <label>Datum<input id="afFdatum" type="date"></label>
+    </div>
+    <div class="sect">Positionen</div>
+    <table class="af-pos"><thead><tr><th>Code</th><th>Stück</th><th class="hidem">Notiz</th><th>Katalog</th><th></th></tr></thead>
+      <tbody id="afPosBody"></tbody></table>
+    <div class="af-form" style="margin-top:10px">
+      <div class="af-acwrap">
+        <input id="afAc" autocomplete="off" placeholder="Code suchen und hinzufügen … (z.B. 9552 IR80)">
+        <div class="af-aclist" id="afAcList"></div>
+      </div>
+    </div>
+    <div class="sect">Text-Import</div>
+    <textarea id="afTa" placeholder="Auftragstext hier einfügen (z.B. aus Scan/E-Mail) – Codes wie 9552-IR80-0C-10 werden automatisch erkannt, auch ohne Bindestriche."></textarea>
+    <div class="af-footbtns" style="justify-content:flex-start;margin-top:8px">
+      <button class="af-btn sec" id="afAnalyze">Text analysieren</button>
+      <span class="af-note" id="afTaInfo"></span>
+    </div>
+    <div class="sect">Foto scannen (OCR)</div>
+    <div id="afOcrZone">
+      <button class="af-btn" id="afOcrPick">📷 Foto aufnehmen / auswählen</button>
+      <span class="af-note">… oder Bild hierher ziehen. Mehrere Fotos nacheinander möglich (mehrseitige Aufträge).</span>
+      <input type="file" id="afOcrFile" accept="image/*" capture="environment" multiple style="display:none">
+    </div>
+    <div id="afOcrProg">
+      <span class="af-note" id="afOcrStat">–</span>
+      <div class="af-pbar"><i id="afOcrBar"></i></div>
+      <button class="af-btn sec" id="afOcrCancel">✕ Abbrechen</button>
+    </div>
+    <div class="af-note" style="margin-top:6px">🔒 Die Bilder werden ausschließlich lokal im Browser verarbeitet und verlassen das Gerät nicht.
+      <span id="afOcrNet" style="display:none;color:var(--accent);font-weight:700"> OCR benötigt Internet (lokale OCR-Dateien nicht gefunden).</span></div>
+    <div class="af-footbtns" style="justify-content:flex-start;margin-top:6px">
+      <button class="af-btn sec" id="afOcrRawBtn" style="display:none">Rohtext anzeigen</button>
+    </div>
+    <pre id="afOcrRaw"></pre>
+    <div id="afPrevWrap" style="display:none">
+      <div class="sect">Vorschau – erkannte Positionen prüfen</div>
+      <table class="af-pos"><thead><tr><th>Übernehmen</th><th>Code</th><th>Stück</th><th>Katalog-Treffer</th></tr></thead>
+        <tbody id="afPrevBody"></tbody></table>
+      <div class="af-footbtns" style="justify-content:flex-start">
+        <button class="af-btn" id="afPrevTake">Positionen übernehmen</button>
+        <button class="af-btn sec" id="afPrevDrop">Vorschau verwerfen</button>
+      </div>
+    </div>
+    <div class="af-footbtns">
+      <button class="af-btn sec" data-close="afEditOv">Abbrechen</button>
+      <button class="af-btn acc" id="afSaveBtn">💾 Auftrag speichern</button>
+    </div>
+  </div>
+</div>
 
 <div class="af-overlay" id="afPrintOv">
   <div class="af-dlg" style="max-width:520px">
@@ -302,8 +366,8 @@ table.af-pos input.stk{width:64px;text-align:center}
 
 <script src="katalog.js"></script>
 <script>
-const DATA = window.KATALOG_DATA;
-const COVERS = {"ironlux":"IRONLUX","glowline":"GLOWLINE","phoenix":"PHOENIX","terra":"TERRA","mineral-wall-gardener":"MINERAL WALL/GARDENER","gardener":"GARDENER","mineral-wall-brick-stick":"MINERAL WALL/BRICK STICK","independent":"INDEPENDENT","enjoy":"ENJOY","kavala":"KAVALA","step-up":"STEP UP","brick-stick":"BRICK STICK","eo":"EO","treasure":"TREASURE","best-choice":"BEST CHOICE","underground":"UNDERGROUND","spa-2-0":"SPA 2.0","panello":"PANELLO","color-it":"COLOR IT","carrara":"CARRARA","wood":"WOOD","urban-pulse":"URBAN PULSE"};
+const DATA = window.KATALOG_DATA || [];
+const COVERS = {};
 
 /* ---------- helpers ---------- */
 const norm = s => (s||"").toString().toLowerCase()
@@ -325,10 +389,29 @@ DATA.forEach(e=>{
 
 /* ---------- state ---------- */
 let q="", serieF="", typF="", sort="seite";
-
-const serien=[...new Set(DATA.map(e=>e.serie).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"de"));
+let aktiveMarke=localStorage.getItem("katalog-marke")==="vb" ? "vb" : "engers";
 const serieSel=document.getElementById("serieSel");
-serien.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;serieSel.appendChild(o);});
+const brandMarke=document.getElementById("brandMarke");
+const markTabs=[...document.querySelectorAll(".marktab")];
+let serien=[];
+function aktiveDaten(){return DATA.filter(e=>e.marke===aktiveMarke);}
+function setMarke(marke){
+  aktiveMarke=marke==="vb" ? "vb" : "engers";
+  localStorage.setItem("katalog-marke",aktiveMarke);
+  document.body.dataset.marke=aktiveMarke;
+  document.title=aktiveMarke==="vb" ? "Mustertafeln-Katalog · V&B" : "Mustertafeln-Katalog · engers";
+  brandMarke.textContent=aktiveMarke==="vb" ? "V&B" : "engers";
+  markTabs.forEach(t=>{t.classList.toggle("active",t.dataset.marke===aktiveMarke);t.setAttribute("aria-selected",t.dataset.marke===aktiveMarke ? "true" : "false");});
+  serieF=""; typF="";
+  serieSel.innerHTML='<option value="">Alle Serien</option>';
+  serien=[...new Set(aktiveDaten().map(e=>e.serie).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"de"));
+  serien.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;serieSel.appendChild(o);});
+  [...chipsBox.children].forEach(x=>x.classList.toggle("on",x.dataset.v===""));
+  document.getElementById("subtitle").textContent=
+    `${aktiveDaten().length} Mustertafeln · ${serien.length} Serien · Quelle: ${aktiveMarke==="vb" ? "V&B" : "engers"}`;
+  render();
+}
+markTabs.forEach(t=>t.onclick=()=>setMarke(t.dataset.marke));
 
 const TYPES=[["","Alle"],["tafel","Mustertafeln"],["gt","GT (Grifftafel)"],["display","Displays"]];
 const chipsBox=document.getElementById("typChips");
@@ -350,6 +433,7 @@ document.getElementById("sortSel").onchange=ev=>{sort=ev.target.value;render();}
 /* ---------- filtering ---------- */
 function filtered(){
   let out=DATA.filter(e=>{
+    if(e.marke!==aktiveMarke) return false;
     if(serieF && e.serie!==serieF) return false;
     if(typF==="gt" && !e.gt) return false;
     if(typF==="display" && !e.display) return false;
@@ -369,7 +453,7 @@ function render(){
   const list=filtered();
   grid.innerHTML="";
   document.getElementById("empty").style.display=list.length?"none":"block";
-  document.getElementById("count").innerHTML=`<b>${list.length}</b> von ${DATA.length} Tafeln`;
+  document.getElementById("count").innerHTML=`<b>${list.length}</b> von ${aktiveDaten().length} Tafeln`;
   const frag=document.createDocumentFragment();
   list.forEach(e=>{
     const card=el("div","card");
@@ -384,7 +468,7 @@ function render(){
     tb.appendChild(el("span","pagebadge","Seite "+e.seite));
     const pb=el("button","printbtn","🖨");
     pb.title="Katalogseite "+e.seite+" drucken";
-    pb.onclick=ev=>{ev.stopPropagation();printPage(e.seite);};
+    pb.onclick=ev=>{ev.stopPropagation();printPage(e.seite,e.marke,e.pdf_pfad);};
     tb.appendChild(pb);
     if(e.gt) tb.appendChild(el("span","gtbadge","GT"));
     else if(e.display) tb.appendChild(el("span","gtbadge","DISPLAY"));
@@ -451,7 +535,7 @@ function openModal(e){
     const pr=el("div","mprint");
     pagesOf(e).forEach(pn=>{
       const b=el("button","","🖨 Seite "+pn+" drucken");
-      b.onclick=()=>printPage(pn);
+      b.onclick=()=>printPage(pn,e.marke,e.pdf_pfad);
       pr.appendChild(b);
     });
     info.appendChild(pr);
@@ -497,10 +581,10 @@ function pagesOf(e){
   (e.codes||[]).forEach(c=>(codePages[c]||[]).forEach(p=>s.add(p)));
   return [...s].sort((a,b)=>a-b);
 }
-function pdfUrl(pn){return "pages/seite-"+String(pn).padStart(3,"0")+".pdf";}
+function pdfUrl(pn,marke=aktiveMarke,pdfPath=null){return pdfPath || (marke==="vb" ? "pages/vb/seite-"+String(pn).padStart(3,"0")+".pdf" : "pages/seite-"+String(pn).padStart(3,"0")+".pdf");}
 let printFrame=null, printTimer=null;
-function printPage(pn){
-  const url=pdfUrl(pn);
+function printPage(pn,marke=aktiveMarke,pdfPath=null){
+  const url=pdfUrl(pn,marke,pdfPath);
   /* Bei file:// blockiert Chrome/Edge den PDF-Viewer in iframes -
      contentWindow.print() würde die (leere) App-Seite drucken statt der PDF.
      Daher: PDF direkt im neuen Tab öffnen, dort druckt der Browser die Katalogseite. */
@@ -530,278 +614,35 @@ function printPage(pn){
 }
 
 /* ---------- init ---------- */
-document.getElementById("subtitle").textContent=
-  `${DATA.length} Mustertafeln · ${serien.length} Serien · Quelle: Mustertafeln engers.pdf`;
 document.getElementById("foot").innerHTML=
-  "Digitaler Katalog, automatisch aus dem PDF extrahiert. Seitenzahlen beziehen sich auf die PDF-Datei.";
-render();
+  "Digitaler Katalog, automatisch aus den PDF-Dateien extrahiert. Seitenzahlen beziehen sich auf die jeweilige Quelle.";
+setMarke(aktiveMarke);
 
-/* ================== Aufträge (aus der Lagerkarte, via Supabase) ==================
-   Diese Seite ist reine Katalog-/Druckansicht der Aufträge aus der Lagerkarte.
-   Es wird EXAKT dieselbe Supabase-Struktur verwendet wie dort:
-     Tabelle public.lager_state (key text primary key, data jsonb,
-                                 updated_at timestamptz, device_id text)
-     → Zeile key='auftraege' enthält das komplette Aufträge-Array
-       im Lagerkarten-Format. KEINE SQL-Migration nötig.
-   Konflikte: last-write-wins über updated_at (wie in der Lagerkarte).
-   Offline: letzter Stand liegt im localStorage-Cache; lokale Änderungen
-   (Pick-Haken, Status) werden bei Wiederverbindung nachgesynct. */
-
-/* Supabase JS Client v2 laden (CDN mit Fallback) — ohne ihn läuft die
-   Seite mit dem lokalen Cache weiter (gleiches Muster wie die Lagerkarte). */
-(function(){
-  const srcs=[
-    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
-    "https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js"
-  ];
-  let i=0;
-  window.__sbLoadState="loading";
-  (function next(){
-    if(i>=srcs.length){window.__sbLoadState="failed";return;}
-    const s=document.createElement("script");
-    s.src=srcs[i++];
-    s.onload=()=>{window.__sbLoadState="ok";};
-    s.onerror=()=>{s.remove();next();};
-    document.head.appendChild(s);
-  })();
-})();
-
-/* Gleiche Werte wie in der Lagerkarte: */
-const SUPABASE_URL="https://wegebtwwkwbndcnrfzdj.supabase.co";
-const SUPABASE_ANON_KEY="sb_publishable_Vjjd_AzNdRnEzeRAYQzZNg_yY7pIqz8";
-const SYNC_TABLE="lager_state";
-const SYNC_REMOTE_KEY="auftraege";
-const SYNC_PUSH_DELAY=2000;
-
-/* Eigene lokale Schlüssel (bewusst NICHT die der Lagerkarte, damit sich die
-   beiden Apps in Browsern mit gemeinsamem file://-localStorage nicht in die
-   Sync-Metadaten pfuschen — geteilt wird nur der Supabase-Stand): */
-const AF_CACHE_KEY="af_katalog_cache_v1";    // letzter bekannter Aufträge-Stand
-const AF_META_KEY="af_katalog_sync_meta_v1"; // {ts,dirty}
-const AF_DEVICE_KEY="af_katalog_device_id";
-const AF_LEGACY_KEY="auftraege_v1";          // alte lokale Auftragsverwaltung
-const AF_LEGACY_FLAG="auftraege_v1_migration"; // "done" | "declined"
-
+/* ================== Auftragsverwaltung ================== */
+const AF_KEY="auftraege_v1";
 const afById=Object.fromEntries(DATA.map(e=>[e.id,e]));
 const afNormCode=s=>(s||"").toString().toUpperCase().replace(/[^A-Z0-9]/g,"");
 const AF_CODEMAP={};
 DATA.forEach(e=>(e.codes||[]).forEach(c=>{const k=afNormCode(c);(AF_CODEMAP[k]=AF_CODEMAP[k]||[]).push(e.id);}));
-/* Lagerkarten-Codes sind am "-10" abgeschnitten (z.B. "9552-IR80-0C"),
-   Katalog-Codes enthalten es ("9552-IR80-0C-10") → beide Formen matchen. */
-function afMatch(code){
-  const k=afNormCode(code);
-  return AF_CODEMAP[k]||AF_CODEMAP[k+"10"]||[];
+const AF_CODES=[];
+{const seen=new Set();
+ DATA.forEach(e=>(e.codes||[]).forEach(c=>{const k=afNormCode(c);if(seen.has(k))return;seen.add(k);
+   AF_CODES.push({code:c,norm:k,serie:e.serie||"",seite:e.seite});}));}
+function afMatch(code){return AF_CODEMAP[afNormCode(code)]||[];}
+
+let afStoreOk=true, auftraege=[];
+try{auftraege=JSON.parse(localStorage.getItem(AF_KEY)||"[]");if(!Array.isArray(auftraege))auftraege=[];}
+catch(err){afStoreOk=false;}
+function afSave(){
+  auftraege.forEach(o=>{const[d,t]=afProg(o);o.status=(t>0&&d===t)?"erledigt":"offen";});
+  try{localStorage.setItem(AF_KEY,JSON.stringify(auftraege));}
+  catch(err){afToast("⚠️ Speichern fehlgeschlagen (Speicher voll oder blockiert). Bitte Export JSON zur Sicherung nutzen!");}
 }
-
-const AF_STATUS={
-  offen:     "⚪ Offen",
-  inArbeit:  "🔄 In Arbeit",
-  verpackt:  "📦 Verpackt",
-  versendet: "🚚 Versendet"
-};
-
-let auftraege=[];
-function afProg(o){const P=o.positionen||[];return[P.filter(p=>p.gepickt).length,P.length];}
-function afNr(o){return o.auftragsnummer||o.auftragsnr||o.title||"?";}
-function afStk(p){return parseFloat(String(p.menge||p.stueck||"").replace(",","."))||1;}
+function afProg(o){return [o.positionen.filter(p=>p.erledigt).length,o.positionen.length];}
 function afFmtDate(iso){if(!iso)return"–";const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(iso);return m?`${m[3]}.${m[2]}.${m[1]}`:iso;}
 let afToastTimer=null;
 function afToast(msg){const t=document.getElementById("afToast");t.textContent=msg;t.style.display="block";
   clearTimeout(afToastTimer);afToastTimer=setTimeout(()=>t.style.display="none",4500);}
-
-/* ---------- Sync-Kern (kompakter Spiegel der Lagerkarten-Logik, 1 Key) ---------- */
-let syncClient=null,syncDeviceId=null,syncMeta={ts:0,dirty:false};
-let syncLastPushed=null,syncPushTimer=null,syncApplying=false,syncPushing=0,syncLastOkTs=null,syncSubscribedOnce=false,syncFirstOk=false;
-
-function afLoadCache(){
-  try{const raw=localStorage.getItem(AF_CACHE_KEY);
-    if(raw){const arr=JSON.parse(raw);if(Array.isArray(arr))auftraege=arr;}}catch(e){}
-}
-function afSaveCache(){try{localStorage.setItem(AF_CACHE_KEY,JSON.stringify(auftraege));}catch(e){}}
-function syncLoadMeta(){try{const m=JSON.parse(localStorage.getItem(AF_META_KEY));if(m&&typeof m.ts==="number")syncMeta=m;}catch(e){}}
-function syncSaveMeta(){try{localStorage.setItem(AF_META_KEY,JSON.stringify(syncMeta));}catch(e){}}
-function syncGetDeviceId(){
-  let id=null;
-  try{id=localStorage.getItem(AF_DEVICE_KEY);}catch(e){}
-  if(!id){id="dev-"+Math.random().toString(36).slice(2,10)+"-"+Date.now().toString(36);
-    try{localStorage.setItem(AF_DEVICE_KEY,id);}catch(e){}}
-  return id;
-}
-function setSyncStatus(state){
-  const el=document.getElementById("syncStatus");
-  if(!el)return;
-  const map={
-    ok:["🟢","Sync: synchron mit der Lagerkarte"],
-    busy:["🔄","Sync: synchronisiert…"],
-    offline:["⚪","Sync: offline — zuletzt geladener Stand, Änderungen werden nachgesynct"],
-    error:["🔴","Sync: Fehler — Änderungen bleiben lokal gespeichert"]
-  };
-  const m=map[state]||map.offline;
-  el.style.display="inline-block";
-  el.textContent=m[0];
-  el.title=m[1]+(syncLastOkTs?" · Letzter Sync: "+new Date(syncLastOkTs).toLocaleString("de-DE"):"");
-}
-function syncHandleNetError(err){
-  setSyncStatus(navigator.onLine===false?"offline":"error");
-  try{console.warn("Aufträge-Sync:",err&&(err.message||err));}catch(e){}
-}
-function syncMarkOk(){
-  syncLastOkTs=Date.now();
-  if(syncPushing<=0)setSyncStatus("ok");
-  if(!syncFirstOk){syncFirstOk=true;afLegacyCheck();}
-}
-/* Jede lokale Änderung (Pick-Haken, Status) läuft hier durch. */
-function afMarkDirty(){
-  afSaveCache();
-  if(syncApplying)return;
-  const str=JSON.stringify(auftraege);
-  if(str===syncLastPushed)return;
-  syncMeta.ts=Date.now();syncMeta.dirty=true;syncSaveMeta();
-  if(syncClient)syncQueuePush();
-}
-function syncQueuePush(){clearTimeout(syncPushTimer);syncPushTimer=setTimeout(syncPushNow,SYNC_PUSH_DELAY);}
-function syncPushNow(){
-  if(!syncClient)return;
-  const str=JSON.stringify(auftraege);
-  let payload;
-  try{payload=JSON.parse(str);}catch(e){return;}
-  syncPushing++;setSyncStatus("busy");
-  syncClient.from(SYNC_TABLE)
-    .upsert({key:SYNC_REMOTE_KEY,data:payload,device_id:syncDeviceId},{onConflict:"key"})
-    .select("updated_at")
-    .then(res=>{
-      syncPushing--;
-      if(res.error){syncHandleNetError(res.error);return;}
-      syncLastPushed=str;
-      syncMeta.dirty=false;
-      const row=res.data&&res.data[0];
-      if(row&&row.updated_at)syncMeta.ts=Date.parse(row.updated_at)||syncMeta.ts;
-      syncSaveMeta();syncMarkOk();
-    },err=>{syncPushing--;syncHandleNetError(err);});
-}
-function syncApplyRemote(remoteData,remoteTs){
-  if(!Array.isArray(remoteData))return;
-  syncApplying=true;
-  try{
-    auftraege=remoteData;
-    afSaveCache();
-    syncLastPushed=JSON.stringify(auftraege);
-    syncMeta.ts=remoteTs||Date.now();syncMeta.dirty=false;syncSaveMeta();
-    if(afActive){
-      const cur=auftraege.find(o=>o.id===afActive.id);
-      if(cur){afActive=cur;afActiveIds=new Set(cur.positionen.flatMap(p=>afMatch(p.code)));}
-      else{afActive=null;afActiveIds=new Set();}
-    }
-    render();
-  }finally{syncApplying=false;}
-}
-function syncHandleRealtime(payload){
-  const row=payload&&payload.new;
-  if(!row||row.key!==SYNC_REMOTE_KEY)return;
-  if(row.device_id===syncDeviceId)return; // eigenes Echo
-  syncApplyRemote(row.data,Date.parse(row.updated_at)||Date.now());
-  syncMarkOk();
-}
-function syncPullAll(){
-  if(!syncClient)return;
-  setSyncStatus("busy");
-  syncClient.from(SYNC_TABLE)
-    .select("key,data,updated_at,device_id")
-    .eq("key",SYNC_REMOTE_KEY)
-    .then(res=>{
-      if(res.error){syncHandleNetError(res.error);return;}
-      const row=(res.data||[])[0];
-      const remoteTs=row?(Date.parse(row.updated_at)||0):0;
-      if(row&&remoteTs>syncMeta.ts){
-        syncApplyRemote(row.data,remoteTs);
-      }else if(syncMeta.dirty){
-        syncQueuePush();
-      }else{
-        syncLastPushed=JSON.stringify(auftraege);
-      }
-      syncMarkOk();
-    },err=>syncHandleNetError(err));
-}
-function syncSubscribe(){
-  syncClient.channel("auftraege-katalog-sync")
-    .on("postgres_changes",{event:"*",schema:"public",table:SYNC_TABLE,filter:"key=eq."+SYNC_REMOTE_KEY},syncHandleRealtime)
-    .subscribe(status=>{
-      if(status==="SUBSCRIBED"){
-        if(syncSubscribedOnce)syncPullAll(); // nach Reconnect Verpasstes nachladen
-        else syncSubscribedOnce=true;
-      }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
-        setSyncStatus(navigator.onLine===false?"offline":"error");
-      }
-    });
-}
-window.addEventListener("online",()=>{if(syncClient)syncPullAll();});
-window.addEventListener("offline",()=>{if(syncClient)setSyncStatus("offline");});
-
-function startSyncClient(){
-  try{
-    syncDeviceId=syncGetDeviceId();
-    syncClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-    setSyncStatus(navigator.onLine===false?"offline":"busy");
-    syncPullAll();
-    syncSubscribe();
-  }catch(e){
-    syncClient=null;setSyncStatus("error");
-    try{console.warn("Aufträge-Sync: Start fehlgeschlagen:",e);}catch(e2){}
-  }
-}
-function initSync(){
-  let waited=0;
-  (function waitForLib(){
-    if(window.supabase&&window.supabase.createClient){startSyncClient();return;}
-    if(window.__sbLoadState==="failed"||waited>15000){setSyncStatus("offline");afLegacyCheck();return;}
-    waited+=300;setTimeout(waitForLib,300);
-  })();
-}
-
-/* ---------- Einmalige Migration alter localStorage-Aufträge ---------- */
-function afLegacyCheck(){
-  let flag=null,raw=null;
-  try{flag=localStorage.getItem(AF_LEGACY_FLAG);raw=localStorage.getItem(AF_LEGACY_KEY);}catch(e){return;}
-  if(flag||!raw)return;
-  let alte=[];
-  try{alte=JSON.parse(raw);}catch(e){return;}
-  if(!Array.isArray(alte)||!alte.length)return;
-  if(!confirm(alte.length+" alte Aufträge aus der bisherigen lokalen Verwaltung gefunden – nach Supabase übernehmen?\n\n(Die alten Daten bleiben in jedem Fall unverändert im Browser gespeichert.)")){
-    try{localStorage.setItem(AF_LEGACY_FLAG,"declined");}catch(e){}
-    afToast("Alte Aufträge nicht übernommen – sie bleiben lokal erhalten.");
-    return;
-  }
-  const now=new Date().toISOString();
-  let uebernommen=0,uebersprungen=0;
-  alte.forEach(o=>{
-    if(!o||!Array.isArray(o.positionen))return;
-    const nr=String(o.auftragsnr||"");
-    if(nr&&auftraege.some(x=>String(x.auftragsnummer||"")===nr)){uebersprungen++;return;}
-    auftraege.push({
-      id:o.id||("a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)),
-      auftragsnummer:nr,
-      datum:o.datum?o.datum+"T00:00:00.000Z":(o.angelegt||now),
-      kunde:o.kunde||("Auftrag "+nr),
-      warenempfaenger:"",ort:"",bestellnr:"",
-      importiertAm:o.angelegt||now,
-      geprueftAm:null,
-      status:o.status==="erledigt"?"verpackt":"offen",
-      verpacktAm:null,versendetAm:null,notiz:"",
-      title:"Auftrag "+nr,savedAt:now,
-      positionen:o.positionen.map((p,i)=>({
-        pos:("000"+((i+1)*10)).slice(-4),
-        code:String(p.code||""),termin:"",
-        menge:String(p.stueck||1),einheit:"ST",
-        gepickt:!!p.erledigt,gepicktAm:null,verfuegbar:null,
-        notiz:p.notiz||""
-      }))
-    });
-    uebernommen++;
-  });
-  try{localStorage.setItem(AF_LEGACY_FLAG,"done");}catch(e){}
-  afMarkDirty();render();
-  afToast(uebernommen+" Auftrag/Aufträge übernommen"+(uebersprungen?", "+uebersprungen+" übersprungen (Nummer existiert schon)":"")+".");
-}
 
 /* ---------- aktiver Auftrag: Filter- und Render-Hooks ---------- */
 let afActive=null, afActiveIds=new Set();
@@ -812,7 +653,7 @@ render=function(){_afRender();afDecorate();afBanner();afList();};
 
 function afOpen(o){
   afActive=o;
-  afActiveIds=new Set(o.positionen.flatMap(p=>afMatch(p.code)));
+  afActiveIds=new Set(o.positionen.flatMap(p=>p.matchIds||[]));
   sort="seite";document.getElementById("sortSel").value="seite";
   q="";document.getElementById("search").value="";document.getElementById("clearBtn").style.display="none";
   serieF="";serieSel.value="";
@@ -821,44 +662,26 @@ function afOpen(o){
 }
 function afClose(){afActive=null;afActiveIds=new Set();render();}
 
-/* Pick-Haken: schreibt auf DASSELBE Feld (positionen[].gepickt) wie der
-   Pick-Toggle der Lagerkarte — der Sync verteilt es an alle Geräte. */
-function afSetPicked(positionen,checked){
-  const now=new Date().toISOString();
-  positionen.forEach(p=>{p.gepickt=checked;p.gepicktAm=checked?now:null;});
-  afMarkDirty();
-  afSuggestVerpackt();
-  render();
-}
-/* Unaufdringlicher Vorschlag, KEIN Automatismus: nur Toast-Hinweis; der
-   eigentliche Button steht im Auftrags-Banner. */
-function afSuggestVerpackt(){
-  if(!afActive)return;
-  const[d,t]=afProg(afActive);
-  if(t>0&&d===t&&(afActive.status==="offen"||afActive.status==="inArbeit"))
-    afToast("Alle Positionen erledigt – oben im Banner: „Auf Verpackt setzen?“");
-}
-
 function afDecorate(){
   if(!afActive)return;
   const list=filtered();
   [...grid.children].forEach((card,i)=>{
     const e=list[i];if(!e)return;
-    const poss=afActive.positionen.filter(p=>afMatch(p.code).includes(e.id));
+    const poss=afActive.positionen.filter(p=>(p.matchIds||[]).includes(e.id));
     if(!poss.length)return;
     const tb=card.querySelector(".thumbbox");
-    const stk=poss.reduce((s,p)=>s+afStk(p),0);
+    const stk=poss.reduce((s,p)=>s+(parseInt(p.stueck)||1),0);
     const sb=el("span","af-stk"+(tb.querySelector(".gtbadge")?" shift":""),stk+" Stk");
     tb.appendChild(sb);
-    const done=poss.every(p=>p.gepickt);
+    const done=poss.every(p=>p.erledigt);
     if(done)card.classList.add("af-done");
     const lab=el("label","af-chk");
     const cb=document.createElement("input");cb.type="checkbox";cb.checked=done;
-    cb.onchange=()=>afSetPicked(poss,cb.checked);
+    cb.onchange=()=>{poss.forEach(p=>p.erledigt=cb.checked);afSave();render();};
     lab.appendChild(cb);lab.appendChild(document.createTextNode(" erledigt"));
     lab.onclick=ev=>ev.stopPropagation();
     tb.appendChild(lab);
-    const notes=poss.map(p=>p.notiz||p.lagerNote).filter(Boolean);
+    const notes=poss.map(p=>p.notiz).filter(Boolean);
     if(notes.length){const nb=card.querySelector(".cbody");
       nb.appendChild(el("div","csize","📝 "+esc(notes.join(" · "))));}
   });
@@ -869,28 +692,17 @@ function afBanner(){
   if(!afActive){b.style.display="none";return;}
   const o=afActive,[d,t]=afProg(o);
   b.style.display="flex";b.innerHTML="";
-  b.appendChild(el("b","",`Auftrag ${esc(afNr(o))}`));
-  b.appendChild(el("span","",esc(o.kunde||"–")+" · "+afFmtDate(o.datum||o.importiertAm)));
-  b.appendChild(el("span","af-status "+esc(o.status||"offen"),AF_STATUS[o.status]||o.status||"?"));
+  b.appendChild(el("b","",`Auftrag ${esc(o.auftragsnr)}`));
+  b.appendChild(el("span","",esc(o.kunde||"–")+" · "+afFmtDate(o.datum)));
   b.appendChild(el("span","af-prog",`${t} Positionen · ${d}/${t} erledigt`));
-  const unk=o.positionen.filter(p=>!afMatch(p.code).length);
+  const unk=o.positionen.filter(p=>!(p.matchIds||[]).length);
   unk.forEach(p=>{
-    const u=el("button","af-unk"+(p.gepickt?" done":""),
-      "⚠ "+esc(p.code)+" ("+afStk(p)+" Stk) – nicht im Katalog");
+    const u=el("button","af-unk"+(p.erledigt?" done":""),
+      "⚠ "+esc(p.code)+" ("+(p.stueck||1)+" Stk) – nicht im Katalog");
     u.title="Klicken zum Abhaken";
-    u.onclick=()=>afSetPicked([p],!p.gepickt);
+    u.onclick=()=>{p.erledigt=!p.erledigt;afSave();render();};
     b.appendChild(u);
   });
-  /* Vorschlag statt Automatismus: alle gepickt → Button anbieten. */
-  if(t>0&&d===t&&(o.status==="offen"||o.status==="inArbeit")){
-    const v=el("button","af-btn acc","📦 Auf Verpackt setzen?");
-    v.onclick=()=>{
-      o.status="verpackt";o.verpacktAm=new Date().toISOString();
-      afMarkDirty();render();
-      afToast(`Auftrag ${afNr(o)} auf „Verpackt“ gesetzt.`);
-    };
-    b.appendChild(v);
-  }
   const pr=el("button","af-btn sec","🖨 Alle Seiten drucken");pr.onclick=afPrintAll;
   const cl=el("button","af-btn sec","✕ Auftrag schließen");cl.onclick=afClose;
   const sp=el("span","");sp.style.marginLeft="auto";
@@ -906,38 +718,296 @@ function afList(){
   box.style.display=afBarOpen?"flex":"none";
   if(!afBarOpen)return;
   box.innerHTML="";
-  if(!auftraege.length){box.appendChild(el("div","af-empty","Noch keine Aufträge. Aufträge werden in der Lagerkarte importiert und erscheinen hier automatisch."));return;}
-  [...auftraege].sort((a,b)=>(b.importiertAm||b.savedAt||"").localeCompare(a.importiertAm||a.savedAt||"")).forEach(o=>{
+  if(!auftraege.length){box.appendChild(el("div","af-empty","Noch keine Aufträge. Mit „+ Neuer Auftrag“ anlegen oder JSON importieren."));return;}
+  [...auftraege].sort((a,b)=>(b.angelegt||"").localeCompare(a.angelegt||"")).forEach(o=>{
     const[d,t]=afProg(o);
-    const st=AF_STATUS[o.status]?o.status:"offen";
-    const r=el("div","af-row"+(st==="versendet"?" done":""));
-    r.appendChild(el("span","af-nr",esc(afNr(o))));
-    r.appendChild(el("span","af-meta",esc(o.kunde||"–")+" · "+afFmtDate(o.datum||o.importiertAm)));
+    const r=el("div","af-row"+(o.status==="erledigt"?" done":""));
+    r.appendChild(el("span","af-nr",esc(o.auftragsnr)));
+    r.appendChild(el("span","af-meta",esc(o.kunde||"–")+" · "+afFmtDate(o.datum)));
     r.appendChild(el("span","af-prog",`${d}/${t} Tafeln`));
-    r.appendChild(el("span","af-status "+st,AF_STATUS[st]));
+    r.appendChild(el("span","af-status "+o.status,o.status));
     const btns=el("div","af-rowbtns");
     const mk=(lbl,cls,fn,title)=>{const x=el("button","af-btn "+cls,lbl);x.onclick=fn;if(title)x.title=title;btns.appendChild(x);};
     mk("Öffnen","",()=>{afOpen(o);});
+    mk("Bearbeiten","sec",()=>afEdit(o));
     mk("⬇","sec",()=>afExportOne(o),"Diesen Auftrag als JSON exportieren");
+    mk("Löschen","sec",()=>{
+      if(confirm(`Auftrag ${o.auftragsnr} wirklich löschen?`)){
+        auftraege=auftraege.filter(x=>x!==o);
+        if(afActive===o)afClose();
+        afSave();render();
+      }});
     r.appendChild(btns);
     box.appendChild(r);
   });
 }
 document.getElementById("afToggle").onclick=()=>{afBarOpen=!afBarOpen;afList();};
 
+/* ---------- Editor ---------- */
+let edId=null, edPos=[], edPrev=[];
+function afEdit(o){
+  edId=o?o.id:null;
+  edPos=o?o.positionen.map(p=>({...p,matchIds:afMatch(p.code)})):[];
+  edPrev=[];
+  document.getElementById("afEditTitle").textContent=o?`Auftrag ${o.auftragsnr} bearbeiten`:"Neuer Auftrag";
+  document.getElementById("afFnr").value=o?o.auftragsnr:"";
+  document.getElementById("afFkunde").value=o?(o.kunde||""):"";
+  document.getElementById("afFdatum").value=o?(o.datum||""):new Date().toISOString().slice(0,10);
+  document.getElementById("afTa").value="";document.getElementById("afTaInfo").textContent="";
+  afRenderPrev();afRenderPos();
+  document.getElementById("afEditOv").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+document.getElementById("afNew").onclick=()=>afEdit(null);
+
+function afRenderPos(){
+  const tb=document.getElementById("afPosBody");tb.innerHTML="";
+  if(!edPos.length){tb.innerHTML='<tr><td colspan="5" class="af-empty">Noch keine Positionen.</td></tr>';return;}
+  edPos.forEach((p,i)=>{
+    const tr=document.createElement("tr");
+    const tdC=document.createElement("td");
+    const ic=document.createElement("input");ic.value=p.code;
+    ic.onchange=()=>{p.code=ic.value.trim();p.matchIds=afMatch(p.code);afRenderPos();};
+    tdC.appendChild(ic);tr.appendChild(tdC);
+    const tdS=document.createElement("td");
+    const is=document.createElement("input");is.className="stk";is.type="number";is.min="1";is.value=p.stueck||1;
+    is.onchange=()=>{p.stueck=Math.max(1,parseInt(is.value)||1);is.value=p.stueck;};
+    tdS.appendChild(is);tr.appendChild(tdS);
+    const tdN=document.createElement("td");tdN.className="hidem";
+    const inn=document.createElement("input");inn.value=p.notiz||"";inn.placeholder="Notiz";
+    inn.onchange=()=>{p.notiz=inn.value.trim();};
+    tdN.appendChild(inn);tr.appendChild(tdN);
+    const ids=p.matchIds||[];
+    tr.appendChild(el("td","",ids.length
+      ?`<span class="af-ok">✓ ${ids.length} Tafel${ids.length>1?"n":""}</span> <span class="m" style="color:var(--muted);font-size:12px">${ids.map(id=>"S."+afById[id].seite).join(", ")}</span>`
+      :'<span class="af-bad">✗ NICHT im Katalog</span>'));
+    const tdX=document.createElement("td");
+    const bx=el("button","af-del","✕");bx.title="Position entfernen";
+    bx.onclick=()=>{edPos.splice(i,1);afRenderPos();};
+    tdX.appendChild(bx);tr.appendChild(tdX);
+    tb.appendChild(tr);
+  });
+}
+
+/* Autocomplete */
+const afAc=document.getElementById("afAc"), afAcList=document.getElementById("afAcList");
+let acSel=-1;
+function afAcRender(){
+  const nq=afNormCode(afAc.value);
+  afAcList.innerHTML="";acSel=-1;
+  if(nq.length<2){afAcList.classList.remove("open");return;}
+  const hits=AF_CODES.filter(c=>c.norm.includes(nq)).slice(0,12);
+  if(!hits.length){afAcList.classList.remove("open");return;}
+  hits.forEach(h=>{
+    const b=el("button","",`<b>${esc(h.code)}</b> <span class="m">${esc(h.serie)} · Seite ${h.seite}</span>`);
+    b.onmousedown=ev=>{ev.preventDefault();afAddPos(h.code);};
+    afAcList.appendChild(b);
+  });
+  afAcList.classList.add("open");
+}
+function afAddPos(code){
+  edPos.push({code:code,stueck:1,notiz:"",erledigt:false,matchIds:afMatch(code)});
+  afAc.value="";afAcList.classList.remove("open");afRenderPos();afAc.focus();
+}
+afAc.addEventListener("input",afAcRender);
+afAc.addEventListener("blur",()=>setTimeout(()=>afAcList.classList.remove("open"),150));
+afAc.addEventListener("keydown",ev=>{
+  const btns=[...afAcList.children];
+  if(ev.key==="ArrowDown"&&btns.length){ev.preventDefault();acSel=Math.min(acSel+1,btns.length-1);btns.forEach((b,i)=>b.classList.toggle("sel",i===acSel));}
+  if(ev.key==="ArrowUp"&&btns.length){ev.preventDefault();acSel=Math.max(acSel-1,0);btns.forEach((b,i)=>b.classList.toggle("sel",i===acSel));}
+  if(ev.key==="Enter"){ev.preventDefault();
+    if(acSel>=0&&btns[acSel]){btns[acSel].onmousedown(ev);}
+    else if(afNormCode(afAc.value).length>=8){afAddPos(afAc.value.trim());}
+    else if(afAc.value.trim()){afToast("Code zu kurz – bitte aus der Liste wählen oder vollständigen Code eingeben.");}}
+});
+
+/* Text-Import (+ OCR-Nachbearbeitung: Verwechslungs-Korrektur, Fuzzy-Vorschläge, Konfidenz) */
+const AF_CODE_RE=/(\d{4})[\s-]*([A-Za-z][A-Za-z0-9]{3})[\s-]*([A-Za-z0-9]{2})[\s-]*(\d{2})/g;
+/* lockere Variante für OCR: in Ziffern-Gruppen auch typische Buchstaben-Verwechslungen zulassen */
+const AF_CODE_LOOSE=/([0-9OIlSBZG]{4})[\s\-.]*([A-Za-z0-9]{4})[\s\-.]*([A-Za-z0-9]{2})[\s\-.]*([0-9OIlSBZG]{2})/g;
+const AF_L2D={O:"0",Q:"0",D:"0",I:"1",L:"1",S:"5",B:"8",Z:"2",G:"6"};
+const AF_ALT={O:["0"],Q:["0"],D:["0"],I:["1"],L:["1"],S:["5"],B:["8"],Z:["2"],G:["6"],
+  "0":["O","D"],"1":["I","L"],"5":["S"],"8":["B"],"2":["Z"],"6":["G"]};
+function afCoerce(raw){ /* Ziffern-Gruppen (Pos 0-3, 10-11) hart koerzieren */
+  const n=afNormCode(raw);
+  if(n.length!==12)return n;
+  const a=n.split("");
+  for(const i of[0,1,2,3,10,11])if(AF_L2D[a[i]])a[i]=AF_L2D[a[i]];
+  return a.join("");
+}
+function afResolveCode(raw){ /* -> exakter Katalog-Norm-Code oder null */
+  const n=afNormCode(raw);
+  if(AF_CODEMAP[n])return n;
+  if(n.length!==12)return null;
+  const co=afCoerce(n);
+  if(AF_CODEMAP[co])return co;
+  /* mittlere Gruppen (Pos 4-9): ambivalente Zeichen in allen Varianten durchprobieren */
+  let cands=[co];
+  for(let i=4;i<=9;i++){
+    const next=[];
+    for(const c of cands){
+      next.push(c);
+      (AF_ALT[c[i]]||[]).forEach(alt=>next.push(c.slice(0,i)+alt+c.slice(i+1)));
+    }
+    cands=next.slice(0,256);
+  }
+  for(const c of cands)if(AF_CODEMAP[c])return c;
+  return null;
+}
+function afLev(a,b,max){ /* Levenshtein mit Abbruch > max */
+  if(Math.abs(a.length-b.length)>max)return max+1;
+  let prev=[...Array(b.length+1).keys()];
+  for(let i=1;i<=a.length;i++){
+    const cur=[i];let best=i;
+    for(let j=1;j<=b.length;j++){
+      cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+      best=Math.min(best,cur[j]);
+    }
+    if(best>max)return max+1;
+    prev=cur;
+  }
+  return prev[b.length];
+}
+function afFuzzy(raw){ /* Vorschläge mit Distanz <= 2, nie automatisch übernehmen */
+  const n=afCoerce(raw);
+  return AF_CODES.map(c=>({c,d:afLev(n,c.norm,2)})).filter(x=>x.d<=2)
+    .sort((x,y)=>x.d-y.d).slice(0,3).map(x=>x.c.code);
+}
+function afCanon(normOrRaw){ /* Katalog-Schreibweise zu einem Norm-Code */
+  const ids=afMatch(normOrRaw);
+  if(!ids.length)return null;
+  const e=afById[ids[0]];
+  return (e.codes||[]).find(c=>afNormCode(c)===afNormCode(normOrRaw))||e.codes[0];
+}
+function afQty(rest,isOcr){
+  let mm;
+  if((mm=rest.match(/(\d{1,3})\s*(?:x(?!\s*\d)|stk\.?|st(?:ü|ue)ck\b|\bST\b)/i)))return +mm[1];
+  if((mm=rest.match(/(?:(?<![0-9])x|stk\.?|st(?:ü|ue)ck|menge)[.:\s]*(\d{1,3})\b/i)))return +mm[1];
+  if((mm=rest.match(/(?:^|\s)(\d{1,3})\s*$/)))return +mm[1]; /* Zahl am Zeilenende */
+  return isOcr?"":1; /* OCR: bei Unsicherheit leer lassen statt raten */
+}
+function afAnalyze(){
+  const txt=document.getElementById("afTa").value;
+  edPrev=[];
+  const lines=txt.split(/\r?\n/);
+  lines.forEach(line=>{
+    const conf=afOcrConf[afLineKey(line)];
+    const isOcr=conf!==undefined;
+    const strict=[...line.matchAll(AF_CODE_RE)];
+    const loose=isOcr?[...line.matchAll(AF_CODE_LOOSE)]
+      .filter(m=>!strict.some(s=>m.index<s.index+s[0].length&&s.index<m.index+m[0].length)):[];
+    const found=[...strict.map(m=>({m,loose:false})),...loose.map(m=>({m,loose:true}))];
+    if(!found.length)return;
+    let rest=line;
+    found.forEach(f=>{rest=rest.replace(f.m[0],"");});
+    const stk=afQty(rest,isOcr);
+    found.forEach(f=>{
+      const m=f.m;
+      const raw=(m[1]+"-"+m[2]+"-"+m[3]+"-"+m[4]).toUpperCase();
+      const resolved=afResolveCode(raw);
+      let sugg=[];
+      if(!resolved){
+        sugg=afFuzzy(raw);
+        if(f.loose&&!sugg.length)return; /* lockerer Treffer ohne jeden Katalog-Bezug = Rauschen */
+      }
+      const row={code:resolved?afCanon(resolved):raw,stueck:stk,keep:true,line:line.trim(),conf:conf,sugg:sugg};
+      if(resolved&&afNormCode(raw)!==resolved)row.fixed=raw;
+      edPrev.push(row);
+    });
+  });
+  document.getElementById("afTaInfo").textContent=edPrev.length
+    ?`${edPrev.length} Code(s) erkannt – bitte unten prüfen.`
+    :"Keine Tafel-Codes im Text gefunden.";
+  afRenderPrev();
+}
+document.getElementById("afAnalyze").onclick=afAnalyze;
+function afRenderPrev(){
+  const wrap=document.getElementById("afPrevWrap");
+  wrap.style.display=edPrev.length?"block":"none";
+  const tb=document.getElementById("afPrevBody");tb.innerHTML="";
+  edPrev.forEach(r=>{
+    const ids=afMatch(r.code);
+    const tr=document.createElement("tr");
+    const tdK=document.createElement("td");
+    const ck=document.createElement("input");ck.type="checkbox";ck.checked=r.keep;
+    ck.style.cssText="width:20px;height:20px;accent-color:var(--accent)";
+    ck.onchange=()=>{r.keep=ck.checked;};
+    tdK.appendChild(ck);tr.appendChild(tdK);
+    const tdC=document.createElement("td");
+    const ic=document.createElement("input");ic.value=r.code;ic.title=r.line;
+    ic.onchange=()=>{r.code=ic.value.trim();afRenderPrev();};
+    tdC.appendChild(ic);
+    if(r.fixed)tdC.appendChild(el("div","af-fixnote","korrigiert aus "+esc(r.fixed)));
+    tr.appendChild(tdC);
+    const tdS=document.createElement("td");
+    const is=document.createElement("input");is.className="stk";is.type="number";is.min="1";is.value=r.stueck;
+    is.placeholder="?";
+    is.onchange=()=>{r.stueck=is.value===""?"":Math.max(1,parseInt(is.value)||1);is.value=r.stueck;};
+    tdS.appendChild(is);tr.appendChild(tdS);
+    const tdM=document.createElement("td");
+    let dot="";
+    if(r.conf!==undefined){
+      const cls=r.conf>=85?"g":(r.conf>=60?"y":"r");
+      dot=`<span class="af-conf ${cls}" title="OCR-Konfidenz ${Math.round(r.conf)}%"></span>`;
+    }
+    if(ids.length){
+      tdM.innerHTML=dot+`<span class="af-ok">✓ ${ids.map(id=>{const e=afById[id];return esc((e.serie||"")+" S."+e.seite);}).join(", ")}</span>`;
+    }else{
+      tdM.innerHTML=dot+'<span class="af-bad">✗ NICHT im Katalog</span>';
+      (r.sugg||[]).forEach(s=>{
+        const b=el("button","af-sugg","Meintest du "+esc(s)+"?");
+        b.onclick=()=>{r.code=s;r.sugg=[];afRenderPrev();};
+        tdM.appendChild(document.createElement("br"));
+        tdM.appendChild(b);
+      });
+    }
+    tr.appendChild(tdM);
+    tb.appendChild(tr);
+  });
+}
+document.getElementById("afPrevTake").onclick=()=>{
+  const take=edPrev.filter(r=>r.keep);
+  take.forEach(r=>edPos.push({code:r.code,stueck:parseInt(r.stueck)||1,notiz:"",erledigt:false,matchIds:afMatch(r.code)}));
+  const dropped=edPrev.length-take.length;
+  edPrev=[];document.getElementById("afTa").value="";document.getElementById("afTaInfo").textContent="";
+  afRenderPrev();afRenderPos();
+  afToast(`${take.length} Position(en) übernommen${dropped?`, ${dropped} bewusst verworfen`:""}.`);
+};
+document.getElementById("afPrevDrop").onclick=()=>{edPrev=[];afRenderPrev();};
+
+/* Speichern */
+document.getElementById("afSaveBtn").onclick=()=>{
+  const nr=document.getElementById("afFnr").value.trim();
+  if(!nr){afToast("Bitte Auftragsnummer eingeben.");return;}
+  if(edPrev.length&&!confirm("Die Text-Import-Vorschau wurde noch nicht übernommen und geht verloren. Trotzdem speichern?"))return;
+  if(!edId&&auftraege.some(o=>o.auftragsnr===nr)
+     &&!confirm(`Ein Auftrag mit Nummer ${nr} existiert bereits. Trotzdem als zusätzlichen Auftrag speichern?`))return;
+  edPos.forEach(p=>{p.matchIds=afMatch(p.code);});
+  if(edId){
+    const o=auftraege.find(x=>x.id===edId);
+    Object.assign(o,{auftragsnr:nr,kunde:document.getElementById("afFkunde").value.trim(),
+      datum:document.getElementById("afFdatum").value,positionen:edPos});
+    if(afActive&&afActive.id===edId)afOpen(o);
+  }else{
+    const o={id:"a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+      auftragsnr:nr,kunde:document.getElementById("afFkunde").value.trim(),
+      datum:document.getElementById("afFdatum").value,angelegt:new Date().toISOString(),
+      positionen:edPos,status:"offen"};
+    auftraege.push(o);
+  }
+  afSave();afBarOpen=true;
+  document.getElementById("afEditOv").classList.remove("open");document.body.style.overflow="";
+  render();afToast(`Auftrag ${nr} gespeichert (${edPos.length} Positionen).`);
+  if(!afStoreOk)afToast("⚠️ Hinweis: localStorage nicht verfügbar – Auftrag geht beim Schließen verloren. Bitte Export JSON nutzen.");
+};
+
 /* ---------- Sammeldruck ---------- */
 function afPrintAll(){
   if(!afActive)return;
-  /* Minimal-Kopplung: erster Sammeldruck eines offenen Auftrags → In Arbeit. */
-  if(afActive.status==="offen"){
-    afActive.status="inArbeit";
-    afMarkDirty();render();
-    afToast(`Auftrag ${afNr(afActive)} auf „In Arbeit“ gesetzt.`);
-  }
-  const pages=[...new Set(afActive.positionen.flatMap(p=>afMatch(p.code).map(id=>afById[id].seite)))].sort((a,b)=>a-b);
+  const pages=[...new Set(afActive.positionen.flatMap(p=>(p.matchIds||[]).map(id=>afById[id].seite)))].sort((a,b)=>a-b);
   const info=document.getElementById("afPrintInfo");
   info.textContent=pages.length
-    ?`${pages.length} Katalogseite(n) für Auftrag ${afNr(afActive)}. Einzeln drucken oder nacheinander (der Browser kann Mehrfach-Dialoge blockieren – dann bitte einzeln abhaken).`
+    ?`${pages.length} Katalogseite(n) für Auftrag ${afActive.auftragsnr}. Einzeln drucken oder nacheinander (der Browser kann Mehrfach-Dialoge blockieren – dann bitte einzeln abhaken).`
     :"Keine Katalogseiten – der Auftrag enthält nur unbekannte Codes.";
   const listBox=document.getElementById("afPrintList");listBox.innerHTML="";
   pages.forEach(pn=>{
@@ -960,7 +1030,7 @@ function afPrintAll(){
   document.body.style.overflow="hidden";
 }
 
-/* ---------- Export JSON (Sicherung; Import/Anlage nur noch in der Lagerkarte) ---------- */
+/* ---------- Export / Import JSON ---------- */
 function afDownload(obj,name){
   const blob=new Blob([JSON.stringify(obj,null,1)],{type:"application/json"});
   const a=document.createElement("a");
@@ -968,11 +1038,251 @@ function afDownload(obj,name){
   document.body.appendChild(a);a.click();
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
 }
-function afExportOne(o){afDownload(o,`auftrag_${(afNr(o)||"x").replace(/[^\w.-]+/g,"_")}.json`);}
+function afExportOne(o){afDownload(o,`auftrag_${(o.auftragsnr||"x").replace(/[^\w.-]+/g,"_")}_${o.datum||"ohne-datum"}.json`);}
 document.getElementById("afExpAll").onclick=()=>{
   if(!auftraege.length){afToast("Keine Aufträge zum Exportieren.");return;}
   afDownload(auftraege,`auftraege_${new Date().toISOString().slice(0,10)}.json`);
 };
+document.getElementById("afImp").onclick=()=>document.getElementById("afImpFile").click();
+document.getElementById("afImpFile").addEventListener("change",ev=>{
+  const f=ev.target.files[0];ev.target.value="";
+  if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    let arr;
+    try{arr=JSON.parse(rd.result);}catch(err){afToast("⚠️ Datei ist kein gültiges JSON.");return;}
+    if(!Array.isArray(arr))arr=[arr];
+    let ok=0;
+    for(const raw of arr){
+      if(!raw||typeof raw!=="object"||!raw.auftragsnr||!Array.isArray(raw.positionen)){
+        afToast("⚠️ Eintrag ohne auftragsnr/positionen übersprungen.");continue;}
+      const o={id:raw.id||("a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)),
+        auftragsnr:String(raw.auftragsnr),kunde:raw.kunde||"",datum:raw.datum||"",
+        angelegt:raw.angelegt||new Date().toISOString(),status:raw.status||"offen",
+        positionen:raw.positionen.map(p=>({code:String(p.code||""),stueck:parseInt(p.stueck)||1,
+          notiz:p.notiz||"",erledigt:!!p.erledigt,matchIds:afMatch(p.code)}))};
+      const ex=auftraege.find(x=>x.id===o.id||x.auftragsnr===o.auftragsnr);
+      if(ex){
+        if(confirm(`Auftrag ${o.auftragsnr} existiert bereits. Ersetzen?\n(Abbrechen = als Kopie zusätzlich anlegen)`)){
+          auftraege[auftraege.indexOf(ex)]=o;
+          if(afActive===ex)afClose();
+        }else{o.id="a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);auftraege.push(o);}
+      }else auftraege.push(o);
+      ok++;
+    }
+    afSave();afBarOpen=true;render();
+    afToast(`${ok} Auftrag/Aufträge importiert.`);
+  };
+  rd.readAsText(f);
+});
+
+/* ---------- OCR: Foto scannen ---------- */
+const afOcrConf={};              /* Zeilentext -> OCR-Konfidenz (0..100) */
+let afOcrRawAll="", afOcrBusy=false, afOcrCancel=false, afOcrWorker=null;
+const afLineKey=s=>(s||"").trim().replace(/\s+/g," ");
+const AF_OCR_BASE=new URL("ocr/",location.href).href;
+const AF_WHITELIST="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÄÖÜäöüß.,:-/& ";
+
+function afSimd(){ /* WebAssembly-SIMD-Erkennung für Core-Auswahl */
+  try{return WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,10,1,8,0,65,0,253,15,253,98,11]));}
+  catch(e){return false;}
+}
+let afOcrLocal=null; /* null=ungeprüft, true=lokale Dateien, false=CDN */
+async function afOcrEnsureLib(){
+  if(window.Tesseract)return;
+  if(afOcrLocal===null){
+    try{const r=await fetch(AF_OCR_BASE+"tesseract.min.js",{method:"HEAD"});afOcrLocal=r.ok;}
+    catch(e){afOcrLocal=false;}
+  }
+  document.getElementById("afOcrNet").style.display=afOcrLocal?"none":"inline";
+  const src=afOcrLocal?AF_OCR_BASE+"tesseract.min.js"
+    :"https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+  await new Promise((res,rej)=>{
+    const s=document.createElement("script");
+    s.src=src;s.onload=res;
+    s.onerror=()=>rej(new Error(afOcrLocal?"ocr/tesseract.min.js nicht ladbar":"Kein Internet – OCR benötigt online die CDN-Dateien."));
+    document.head.appendChild(s);
+  });
+}
+async function afOcrMakeWorker(){
+  const opts={logger:m=>{
+    if(m.status==="recognizing text")afOcrSetBar(Math.round(m.progress*100));
+  }};
+  if(afOcrLocal){
+    opts.workerPath=AF_OCR_BASE+"worker.min.js";
+    opts.corePath=AF_OCR_BASE+"tesseract-core-"+(afSimd()?"simd-":"")+"lstm.wasm.js";
+    opts.langPath=AF_OCR_BASE.replace(/\/$/,"");
+    opts.gzip=true;
+  }
+  const w=await Tesseract.createWorker("deu+eng",1,opts);
+  await w.setParameters({tessedit_pageseg_mode:"6",tessedit_char_whitelist:AF_WHITELIST});
+  return w;
+}
+function afOcrSetBar(p){document.getElementById("afOcrBar").style.width=p+"%";}
+function afOcrStat(t){document.getElementById("afOcrStat").textContent=t;}
+
+/* Bildvorverarbeitung: EXIF, Graustufen, Kontrast, Blur, adaptive Binarisierung, <=2500px */
+async function afOcrPrep(file){
+  let bmp;
+  try{bmp=await createImageBitmap(file,{imageOrientation:"from-image"});}
+  catch(e){bmp=await createImageBitmap(file);}
+  const long=Math.max(bmp.width,bmp.height), f=Math.min(1,2500/long);
+  const w=Math.round(bmp.width*f), h=Math.round(bmp.height*f);
+  const cv=document.createElement("canvas");cv.width=w;cv.height=h;
+  const cx=cv.getContext("2d",{willReadFrequently:true});
+  cx.drawImage(bmp,0,0,w,h);bmp.close&&bmp.close();
+  const id=cx.getImageData(0,0,w,h),d=id.data,n=w*h;
+  const g=new Float32Array(n);
+  for(let i=0;i<n;i++)g[i]=0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2];
+  /* Kontrast: 2%/98%-Perzentile strecken */
+  const hist=new Uint32Array(256);
+  for(let i=0;i<n;i++)hist[g[i]|0]++;
+  let lo=0,hi=255,acc=0;
+  for(let v=0;v<256;v++){acc+=hist[v];if(acc>=n*0.02){lo=v;break;}}
+  acc=0;for(let v=255;v>=0;v--){acc+=hist[v];if(acc>=n*0.02){hi=v;break;}}
+  const span=Math.max(1,hi-lo);
+  for(let i=0;i<n;i++)g[i]=Math.max(0,Math.min(255,(g[i]-lo)*255/span));
+  /* leichtes 3x3-Blur, damit Nadeldruck-Punkte zu Linien verschmelzen */
+  const b=new Float32Array(n);
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+    let s=0,c=0;
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+      const yy=y+dy,xx=x+dx;
+      if(yy>=0&&yy<h&&xx>=0&&xx<w){s+=g[yy*w+xx];c++;}
+    }
+    b[y*w+x]=s/c;
+  }
+  /* adaptive Schwellwert-Binarisierung über Integralbild (Fenster 31, C=10) */
+  const I=new Float64Array((w+1)*(h+1));
+  for(let y=0;y<h;y++){let rs=0;
+    for(let x=0;x<w;x++){rs+=b[y*w+x];I[(y+1)*(w+1)+x+1]=I[y*(w+1)+x+1]+rs;}}
+  const R=15;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+    const x0=Math.max(0,x-R),x1=Math.min(w-1,x+R),y0=Math.max(0,y-R),y1=Math.min(h-1,y+R);
+    const area=(x1-x0+1)*(y1-y0+1);
+    const sum=I[(y1+1)*(w+1)+x1+1]-I[y0*(w+1)+x1+1]-I[(y1+1)*(w+1)+x0]+I[y0*(w+1)+x0];
+    const v=b[y*w+x]<sum/area-10?0:255;
+    d[(y*w+x)*4]=d[(y*w+x)*4+1]=d[(y*w+x)*4+2]=v;d[(y*w+x)*4+3]=255;
+  }
+  cx.putImageData(id,0,0);
+  return cv;
+}
+function afOcrRot(cv,deg){
+  if(deg===0)return cv;
+  const r=document.createElement("canvas");
+  if(deg===180){r.width=cv.width;r.height=cv.height;}
+  else{r.width=cv.height;r.height=cv.width;}
+  const c=r.getContext("2d");
+  c.translate(r.width/2,r.height/2);c.rotate(deg*Math.PI/180);
+  c.drawImage(cv,-cv.width/2,-cv.height/2);
+  return r;
+}
+function afOcrSmall(cv,max){
+  const f=Math.min(1,max/Math.max(cv.width,cv.height));
+  if(f===1)return cv;
+  const s=document.createElement("canvas");
+  s.width=Math.round(cv.width*f);s.height=Math.round(cv.height*f);
+  s.getContext("2d").drawImage(cv,0,0,s.width,s.height);
+  return s;
+}
+/* Kopfdaten (Auftragsnr/Datum/Kunde) vorschlagen – nur leere Felder füllen */
+function afOcrHeads(text){
+  const noCodes=l=>l.replace(AF_CODE_RE,"");
+  for(const l of text.split(/\r?\n/)){
+    if(/auftrag/i.test(l)&&!document.getElementById("afFnr").value.trim()){
+      const m=noCodes(l).match(/(\d{4,})/);
+      if(m)document.getElementById("afFnr").value=m[1];
+    }
+    if(/kunde/i.test(l)&&!document.getElementById("afFkunde").value.trim()){
+      const m=l.match(/kunde[:.\s]*([^\n]{2,60})/i);
+      if(m)document.getElementById("afFkunde").value=m[1].replace(/^[^A-Za-zÄÖÜäöü]+/,"").trim();
+    }
+    const dm=l.match(/\b(\d{1,2})[.,](\d{1,2})[.,](\d{2,4})\b/);
+    if(dm&&document.getElementById("afFdatum").dataset.ocrOpen==="1"){
+      let[,dd,mo,yy]=dm;if(yy.length===2)yy="20"+yy;
+      document.getElementById("afFdatum").value=`${yy}-${mo.padStart(2,"0")}-${dd.padStart(2,"0")}`;
+      delete document.getElementById("afFdatum").dataset.ocrOpen;
+    }
+  }
+}
+async function afOcrRun(files){
+  if(afOcrBusy){afToast("OCR läuft bereits – bitte warten oder abbrechen.");return;}
+  afOcrBusy=true;afOcrCancel=false;
+  const prog=document.getElementById("afOcrProg");prog.style.display="flex";afOcrSetBar(0);
+  /* Datumsfeld nur überschreiben, wenn es noch auf "heute" steht (frischer Dialog) */
+  document.getElementById("afFdatum").dataset.ocrOpen="1";
+  try{
+    afOcrStat("OCR-Modul laden …");
+    await afOcrEnsureLib();
+    for(let fi=0;fi<files.length;fi++){
+      if(afOcrCancel)break;
+      const label=`Bild ${fi+1}/${files.length}`;
+      afOcrStat(label+" – Vorverarbeitung …");afOcrSetBar(0);
+      const cv=await afOcrPrep(files[fi]);
+      afOcrWorker=await afOcrMakeWorker();
+      /* Rotationserkennung: Probelauf 0/90/180/270 auf verkleinertem Bild */
+      const small=afOcrSmall(cv,800);
+      let bestDeg=0,bestConf=-1;
+      for(const deg of[0,90,180,270]){
+        if(afOcrCancel)break;
+        afOcrStat(`${label} – Ausrichtung prüfen (${deg}°) …`);
+        try{
+          const r=await afOcrWorker.recognize(afOcrRot(small,deg));
+          if(r.data.confidence>bestConf){bestConf=r.data.confidence;bestDeg=deg;}
+        }catch(e){if(afOcrCancel)break;throw e;}
+      }
+      if(afOcrCancel)break;
+      afOcrStat(`${label} – Texterkennung (${bestDeg}° gedreht) …`);afOcrSetBar(0);
+      const res=await afOcrWorker.recognize(afOcrRot(cv,bestDeg));
+      await afOcrWorker.terminate();afOcrWorker=null;
+      (res.data.lines||[]).forEach(l=>{afOcrConf[afLineKey(l.text)]=l.confidence;});
+      const text=res.data.text||"";
+      afOcrRawAll+=(afOcrRawAll?"\n":"")+`--- ${label} (Drehung ${bestDeg}°, Konfidenz ${Math.round(res.data.confidence)}%) ---\n`+text;
+      const ta=document.getElementById("afTa");
+      ta.value=(ta.value?ta.value+"\n":"")+text;
+      afOcrHeads(text);
+      afAnalyze();
+      document.getElementById("afOcrRawBtn").style.display="";
+      document.getElementById("afOcrRaw").textContent=afOcrRawAll;
+      afToast(`${label}: Text erkannt (Gesamt-Konfidenz ${Math.round(res.data.confidence)}%) – bitte Vorschau prüfen.`);
+    }
+    if(afOcrCancel)afToast("OCR abgebrochen.");
+  }catch(err){
+    if(location.protocol==="file:")
+      afToast("⚠️ OCR ist über file:// nicht möglich – bitte die Seite über einen lokalen Server oder gehostet öffnen.");
+    else afToast("⚠️ OCR fehlgeschlagen: "+(err&&err.message||err));
+  }finally{
+    if(afOcrWorker){try{await afOcrWorker.terminate();}catch(e){}afOcrWorker=null;}
+    delete document.getElementById("afFdatum").dataset.ocrOpen;
+    afOcrBusy=false;
+    prog.style.display="none";
+  }
+}
+document.getElementById("afOcrPick").onclick=()=>document.getElementById("afOcrFile").click();
+document.getElementById("afOcrFile").addEventListener("change",ev=>{
+  const fs=[...ev.target.files];ev.target.value="";
+  if(fs.length)afOcrRun(fs);
+});
+document.getElementById("afOcrCancel").onclick=async()=>{
+  afOcrCancel=true;
+  if(afOcrWorker){try{await afOcrWorker.terminate();}catch(e){}afOcrWorker=null;}
+};
+document.getElementById("afOcrRawBtn").onclick=()=>{
+  const p=document.getElementById("afOcrRaw");
+  const show=p.style.display!=="block";
+  p.style.display=show?"block":"none";
+  document.getElementById("afOcrRawBtn").textContent=show?"Rohtext ausblenden":"Rohtext anzeigen";
+};
+{
+  const z=document.getElementById("afOcrZone");
+  z.addEventListener("dragover",ev=>{ev.preventDefault();z.classList.add("drag");});
+  z.addEventListener("dragleave",()=>z.classList.remove("drag"));
+  z.addEventListener("drop",ev=>{
+    ev.preventDefault();z.classList.remove("drag");
+    const fs=[...ev.dataTransfer.files].filter(f=>/^image\//.test(f.type));
+    if(fs.length)afOcrRun(fs);else afToast("Bitte Bilddatei(en) ablegen.");
+  });
+}
 
 /* ---------- Overlays schließen ---------- */
 document.querySelectorAll("[data-close]").forEach(b=>{
@@ -986,12 +1296,40 @@ document.addEventListener("keydown",ev=>{
   document.querySelectorAll(".af-overlay.open").forEach(ov=>{ov.classList.remove("open");document.body.style.overflow="";});
 });
 
-/* ---------- Start: Cache anzeigen, dann Supabase abgleichen ---------- */
-afLoadCache();
-syncLoadMeta();
+if(!afStoreOk)afToast("⚠️ localStorage nicht verfügbar – Aufträge können nicht dauerhaft gespeichert werden.");
 render();
-initSync();
 
+
+/* ---------- Deep-Link: ?code=XXXX (z.B. von der Lagerkarte) ---------- */
+(function(){
+  const codeParam=(new URLSearchParams(location.search).get("code")||"").trim();
+  if(!codeParam) return;
+  /* tolerant wie die Suche: Groß/klein egal, Bindestriche/Leerzeichen optional */
+  const key=codeParam.toLowerCase().replace(/[\s\-]/g,"");
+  /* Die Lagerkarte schneidet Codes ab "-10" ab ("9557-PH41-04" statt
+     "9557-PH41-04-10") — deshalb zählt auch ein Präfix-Treffer, exakter
+     Treffer hat Vorrang. */
+  const codeMatch=c=>{const n=c.toLowerCase().replace(/[\s\-]/g,"");return n===key||(key.length>=8&&n.startsWith(key));};
+  const entry=DATA.find(e=>(e.codes||[]).some(c=>c.toLowerCase().replace(/[\s\-]/g,"")===key))
+             ||DATA.find(e=>(e.codes||[]).some(codeMatch));
+  if(!entry){
+    const b=el("div","",`Code <b>${esc(codeParam)}</b> ist nicht im Katalog.`);
+    b.id="codebanner";
+    const x=el("button","","×"); x.title="Hinweis schließen"; x.onclick=()=>b.remove();
+    b.appendChild(x);
+    document.querySelector("main").prepend(b);
+    return;
+  }
+  const canon=entry.codes.find(c=>c.toLowerCase().replace(/[\s\-]/g,"")===key)||entry.codes.find(codeMatch)||codeParam;
+  const s=document.getElementById("search");
+  s.value=canon; q=norm(canon);
+  document.getElementById("clearBtn").style.display="block";
+  if(entry.marke!==aktiveMarke) setMarke(entry.marke);
+  render();
+  const card=grid.children[filtered().indexOf(entry)];
+  if(card) card.scrollIntoView({block:"center"});
+  openModal(entry);
+})();
 </script>
 </body>
 </html>

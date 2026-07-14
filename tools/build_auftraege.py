@@ -912,10 +912,17 @@ def main():
     splice("<body>\n<header>", "<body>\n" + BAR + "\n<header>")
     splice('<main><div id="grid">', "<main>" + BANNER + '<div id="grid">')
     splice('<div id="overlay">', DIALOGS + '\n<div id="overlay">')
-    splice("render();\n</script>", "render();\n" + JS + "\n</script>")
+    if "render();\n</script>" in html:
+        splice("render();\n</script>", "render();\n" + JS + "\n</script>")
+    else:
+        splice("setMarke(aktiveMarke);", "setMarke(aktiveMarke);\n" + JS)
     # Kennzeichnung im Kopf der Seite
-    splice('<div class="brand">engers <small>·</small> Mustertafeln</div>',
-           '<div class="brand">engers <small>·</small> Mustertafeln <small>· Aufträge</small></div>')
+    if '<div class="brand">engers <small>·</small> Mustertafeln</div>' in html:
+        splice('<div class="brand">engers <small>·</small> Mustertafeln</div>',
+               '<div class="brand">engers <small>·</small> Mustertafeln <small>· Aufträge</small></div>')
+    else:
+        splice('<span id="brandMarke">engers</span> <small>·</small> Mustertafeln</div>',
+               '<span id="brandMarke">engers</span> <small>·</small> Mustertafeln <small>· Aufträge</small></div>')
 
     with open(os.path.join(PROJ, "auftraege.html"), "w", encoding="utf-8") as f:
         f.write(html)

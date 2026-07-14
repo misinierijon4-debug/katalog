@@ -1,45 +1,20 @@
-"""Inject katalog.json into index_template.html -> index.html (single file + /images)."""
-import json, os, re
-
-HERE = os.path.dirname(os.path.abspath(__file__))
-PROJ = r"C:\Users\Mirsad.Karasalihovic\Desktop\Mustertafeln-Katalog"
-
-with open(os.path.join(HERE, "katalog.json"), encoding="utf-8") as f:
-    data = json.load(f)
-covers_path = os.path.join(HERE, "covers.json")
-covers = {}
-if os.path.exists(covers_path):
-    with open(covers_path, encoding="utf-8") as f:
-        covers = json.load(f)  # slug -> serie name
-
-def slug(s):
-    s = (s or "").lower().replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
-    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
-
-entries = []
-for e in data["entries"]:
-    has_img = os.path.exists(os.path.join(PROJ, "images", "thumb", e["id"] + ".jpg"))
-    sl = slug(e.get("serie"))
-    out = {
-        "id": e["id"], "seite": e["seite"], "serie": e["serie"], "name": e.get("name"),
-        "material": e["material"], "codes": e["codes"],
-        "tafel_groesse": e["tafel_groesse"], "gt": e["gt"],
-        "artikel": [{k: v for k, v in a.items() if v is not None} for a in e["artikel"]],
-        "label": e["label"], "notizen": e["notizen"],
-        "display": e["display"], "img": has_img,
-    }
-    if sl in covers:
-        out["_covkey"] = sl
-    if e.get("unklar"):
-        out["unklar"] = e["unklar"]
-    entries.append(out)
-
-with open(os.path.join(PROJ, "index_template.html"), encoding="utf-8") as f:
-    html = f.read()
-
-html = html.replace("/*__DATA__*/[]", json.dumps(entries, ensure_ascii=False, separators=(",", ":")))
-html = html.replace("/*__COVERS__*/{}", json.dumps(covers, ensure_ascii=False, separators=(",", ":")))
-
-with open(os.path.join(PROJ, "index.html"), "w", encoding="utf-8") as f:
-    f.write(html)
-print("built index.html with", len(entries), "entries,", sum(1 for e in entries if e["img"]), "with images")
+import json, re
+from pathlib import Path
+ROOT=Path(__file__).resolve().parent.parent
+data=json.loads((ROOT/"katalog.json").read_text(encoding="utf-8"))
+key=next(k for k in data if "eintr" in k)
+entries=data[key]
+covers={}
+c=ROOT/"tools"/"covers.json"
+if c.exists(): covers=json.loads(c.read_text(encoding="utf-8"))
+def slug(s): return re.sub(r"[^a-z0-9]+","-",(s or "").lower().translate(str.maketrans({"ä":"ae","ö":"oe","ü":"ue","ß":"ss"}))).strip("-")
+out=[]
+for e in entries:
+ x=dict(e); x["img"]=(ROOT/"images"/"thumb"/(e["id"]+".jpg")).exists(); x.pop("board_px200",None)
+ if slug(e.get("serie")) in covers: x["_covkey"]=slug(e.get("serie"))
+ out.append(x)
+(ROOT/"katalog.js").write_text("window.KATALOG_DATA = "+json.dumps(out,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+t=(ROOT/"index_template.html").read_text(encoding="utf-8")
+t=t.replace("/*__COVERS__*/{}",json.dumps(covers,ensure_ascii=False,separators=(",",":")))
+(ROOT/"index.html").write_text(t,encoding="utf-8")
+print("built",len(out),"entries; engers",sum(e.get("marke")=="engers" for e in out),"vb",sum(e.get("marke")=="vb" for e in out))

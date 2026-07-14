@@ -13,6 +13,12 @@
   --shadow-lg:0 8px 40px rgba(0,0,0,.22);
   --radius:14px;
 }
+body[data-marke="vb"]{--bg:#eef2f6;--card:#ffffff;--ink:#17243a;--muted:#607086;--line:#d8dfe8;--accent:#1d3a6b;--badge:#1d3a6b;--chip:#e3e9f1;--chip-on:#17243a}
+body{transition:background-color .2s,color .2s}
+body[data-marke="vb"] header{background:rgba(238,242,246,.9)}
+.marktabs{display:flex;gap:5px;align-items:center}
+.marktab{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 13px;font-size:13px;font-weight:700;cursor:pointer}
+.marktab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -126,8 +132,8 @@ footer{max-width:1400px;margin:8px auto 30px;padding:0 16px;color:var(--muted);f
 <header>
   <div class="hrow">
     <div>
-      <div class="brand">engers <small>·</small> Mustertafeln</div>
-      <div class="subtitle" id="subtitle"></div>
+      <div><div class="brand"><span id="brandMarke">engers</span> <small>·</small> Mustertafeln</div><div class="subtitle" id="subtitle"></div></div>
+    <div class="marktabs" role="tablist" aria-label="Marke"><button class="marktab" data-marke="engers" role="tab">engers</button><button class="marktab" data-marke="vb" role="tab">V&amp;B</button></div>
     </div>
     <div class="searchwrap">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -158,8 +164,9 @@ footer{max-width:1400px;margin:8px auto 30px;padding:0 16px;color:var(--muted);f
   </div>
 </div>
 
+<script src="katalog.js"></script>
 <script>
-const DATA = /*__DATA__*/[];
+const DATA = window.KATALOG_DATA || [];
 const COVERS = /*__COVERS__*/{};
 
 /* ---------- helpers ---------- */
@@ -182,10 +189,29 @@ DATA.forEach(e=>{
 
 /* ---------- state ---------- */
 let q="", serieF="", typF="", sort="seite";
-
-const serien=[...new Set(DATA.map(e=>e.serie).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"de"));
+let aktiveMarke=localStorage.getItem("katalog-marke")==="vb" ? "vb" : "engers";
 const serieSel=document.getElementById("serieSel");
-serien.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;serieSel.appendChild(o);});
+const brandMarke=document.getElementById("brandMarke");
+const markTabs=[...document.querySelectorAll(".marktab")];
+let serien=[];
+function aktiveDaten(){return DATA.filter(e=>e.marke===aktiveMarke);}
+function setMarke(marke){
+  aktiveMarke=marke==="vb" ? "vb" : "engers";
+  localStorage.setItem("katalog-marke",aktiveMarke);
+  document.body.dataset.marke=aktiveMarke;
+  document.title=aktiveMarke==="vb" ? "Mustertafeln-Katalog · V&B" : "Mustertafeln-Katalog · engers";
+  brandMarke.textContent=aktiveMarke==="vb" ? "V&B" : "engers";
+  markTabs.forEach(t=>{t.classList.toggle("active",t.dataset.marke===aktiveMarke);t.setAttribute("aria-selected",t.dataset.marke===aktiveMarke ? "true" : "false");});
+  serieF=""; typF="";
+  serieSel.innerHTML='<option value="">Alle Serien</option>';
+  serien=[...new Set(aktiveDaten().map(e=>e.serie).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"de"));
+  serien.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;serieSel.appendChild(o);});
+  [...chipsBox.children].forEach(x=>x.classList.toggle("on",x.dataset.v===""));
+  document.getElementById("subtitle").textContent=
+    `${aktiveDaten().length} Mustertafeln · ${serien.length} Serien · Quelle: ${aktiveMarke==="vb" ? "V&B" : "engers"}`;
+  render();
+}
+markTabs.forEach(t=>t.onclick=()=>setMarke(t.dataset.marke));
 
 const TYPES=[["","Alle"],["tafel","Mustertafeln"],["gt","GT (Grifftafel)"],["display","Displays"]];
 const chipsBox=document.getElementById("typChips");
@@ -207,6 +233,7 @@ document.getElementById("sortSel").onchange=ev=>{sort=ev.target.value;render();}
 /* ---------- filtering ---------- */
 function filtered(){
   let out=DATA.filter(e=>{
+    if(e.marke!==aktiveMarke) return false;
     if(serieF && e.serie!==serieF) return false;
     if(typF==="gt" && !e.gt) return false;
     if(typF==="display" && !e.display) return false;
@@ -226,7 +253,7 @@ function render(){
   const list=filtered();
   grid.innerHTML="";
   document.getElementById("empty").style.display=list.length?"none":"block";
-  document.getElementById("count").innerHTML=`<b>${list.length}</b> von ${DATA.length} Tafeln`;
+  document.getElementById("count").innerHTML=`<b>${list.length}</b> von ${aktiveDaten().length} Tafeln`;
   const frag=document.createDocumentFragment();
   list.forEach(e=>{
     const card=el("div","card");
@@ -241,7 +268,7 @@ function render(){
     tb.appendChild(el("span","pagebadge","Seite "+e.seite));
     const pb=el("button","printbtn","🖨");
     pb.title="Katalogseite "+e.seite+" drucken";
-    pb.onclick=ev=>{ev.stopPropagation();printPage(e.seite);};
+    pb.onclick=ev=>{ev.stopPropagation();printPage(e.seite,e.marke,e.pdf_pfad);};
     tb.appendChild(pb);
     if(e.gt) tb.appendChild(el("span","gtbadge","GT"));
     else if(e.display) tb.appendChild(el("span","gtbadge","DISPLAY"));
@@ -308,7 +335,7 @@ function openModal(e){
     const pr=el("div","mprint");
     pagesOf(e).forEach(pn=>{
       const b=el("button","","🖨 Seite "+pn+" drucken");
-      b.onclick=()=>printPage(pn);
+      b.onclick=()=>printPage(pn,e.marke,e.pdf_pfad);
       pr.appendChild(b);
     });
     info.appendChild(pr);
@@ -354,10 +381,10 @@ function pagesOf(e){
   (e.codes||[]).forEach(c=>(codePages[c]||[]).forEach(p=>s.add(p)));
   return [...s].sort((a,b)=>a-b);
 }
-function pdfUrl(pn){return "pages/seite-"+String(pn).padStart(3,"0")+".pdf";}
+function pdfUrl(pn,marke=aktiveMarke,pdfPath=null){return pdfPath || (marke==="vb" ? "pages/vb/seite-"+String(pn).padStart(3,"0")+".pdf" : "pages/seite-"+String(pn).padStart(3,"0")+".pdf");}
 let printFrame=null, printTimer=null;
-function printPage(pn){
-  const url=pdfUrl(pn);
+function printPage(pn,marke=aktiveMarke,pdfPath=null){
+  const url=pdfUrl(pn,marke,pdfPath);
   /* Bei file:// blockiert Chrome/Edge den PDF-Viewer in iframes -
      contentWindow.print() würde die (leere) App-Seite drucken statt der PDF.
      Daher: PDF direkt im neuen Tab öffnen, dort druckt der Browser die Katalogseite. */
@@ -387,11 +414,9 @@ function printPage(pn){
 }
 
 /* ---------- init ---------- */
-document.getElementById("subtitle").textContent=
-  `${DATA.length} Mustertafeln · ${serien.length} Serien · Quelle: Mustertafeln engers.pdf`;
 document.getElementById("foot").innerHTML=
-  "Digitaler Katalog, automatisch aus dem PDF extrahiert. Seitenzahlen beziehen sich auf die PDF-Datei.";
-render();
+  "Digitaler Katalog, automatisch aus den PDF-Dateien extrahiert. Seitenzahlen beziehen sich auf die jeweilige Quelle.";
+setMarke(aktiveMarke);
 
 /* ---------- Deep-Link: ?code=XXXX (z.B. von der Lagerkarte) ---------- */
 (function(){
@@ -417,6 +442,7 @@ render();
   const s=document.getElementById("search");
   s.value=canon; q=norm(canon);
   document.getElementById("clearBtn").style.display="block";
+  if(entry.marke!==aktiveMarke) setMarke(entry.marke);
   render();
   const card=grid.children[filtered().indexOf(entry)];
   if(card) card.scrollIntoView({block:"center"});

@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kemmler Sonderanfertigung 2026 - Mustertafeln</title>
+<style>
+:root {
+  --bg:#f4f3f0; --card:#fff; --ink:#1c1c1e; --muted:#69696f; --line:#dedbd4;
+  --accent:#b02e2c; --accent-soft:#f6e8e6; --chip:#eceae5; --dark:#2d2d30;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.08);
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; }
+header { position:sticky; top:0; z-index:200; background:rgba(244,243,240,.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); box-shadow:0 2px 10px rgba(0,0,0,.05); }
+.topbar { max-width:1420px; margin:0 auto; padding:14px 18px 10px; display:grid; grid-template-columns:1fr auto; gap:14px; align-items:end; }
+.brand { font-family:Georgia,"Times New Roman",serif; font-size:26px; font-weight:700; letter-spacing:-.3px; }
+.brand span { color:var(--accent); }
+.sub { color:var(--muted); font-size:13px; }
+.actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+button, select, input { font:inherit; }
+.btn { border:0; border-radius:999px; background:var(--dark); color:#fff; padding:9px 14px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:7px; }
+.btn.light { background:var(--card); color:var(--ink); border:1px solid var(--line); }
+.filters { max-width:1420px; margin:0 auto; padding:0 18px 14px; display:grid; grid-template-columns:minmax(220px,1fr) repeat(3,minmax(150px,210px)); gap:8px; }
+input, select { border:1px solid var(--line); background:var(--card); border-radius:10px; padding:10px 12px; min-width:0; color:var(--ink); }
+main { max-width:1420px; margin:0 auto; padding:18px; }
+.hero { display:grid; grid-template-columns:minmax(260px,1fr) auto; gap:16px; align-items:center; margin-bottom:12px; }
+.hero-copy { padding:4px 0; }
+h1 { font-size:28px; line-height:1.08; margin:0; letter-spacing:-.25px; }
+.lead { font-size:15px; color:#424247; max-width:760px; margin:0; }
+.stats { display:grid; grid-template-columns:repeat(3,minmax(110px,145px)); gap:8px; }
+.stat { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 12px; min-height:72px; box-shadow:var(--shadow); }
+.stat b { display:block; font-size:24px; line-height:1; }
+.stat span { color:var(--muted); font-size:12.5px; }
+.notice { background:var(--accent-soft); border:1px solid #e8c9c4; color:#6f201e; border-radius:8px; padding:12px 14px; margin:10px 0 0; }
+.section-title { display:flex; align-items:end; justify-content:space-between; gap:12px; margin:22px 0 10px; }
+.section-title h2 { margin:0; font-size:21px; }
+#count { color:var(--muted); }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; align-items:start; }
+.card { position:relative; background:var(--card); border:1px solid rgba(0,0,0,.04); border-radius:8px; box-shadow:var(--shadow); overflow:visible; }
+.card-head { display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border-bottom:1px solid var(--line); background:#faf9f7; }
+.sketch { background:var(--accent); color:#fff; border-radius:999px; padding:4px 9px; font-weight:700; font-size:12px; }
+.kind { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+.board-wrap { height:220px; background:#efede9; border-bottom:1px solid var(--line); padding:8px 10px; display:flex; align-items:center; justify-content:center; }
+.layout-open { width:100%; height:100%; border:0; background:transparent; padding:0; display:flex; align-items:center; justify-content:center; cursor:zoom-in; }
+.layout-open:focus-visible { outline:3px solid rgba(176,46,44,.45); outline-offset:3px; border-radius:6px; }
+.sketch-img { width:100%; height:100%; object-fit:contain; display:block; }
+.no-sketch { color:var(--muted); font-size:13px; }
+.card-body { padding:13px; }
+.article { margin:0 0 6px; color:var(--accent); font-weight:800; letter-spacing:.3px; }
+.card h2 { margin:0; font-size:21px; }
+.color { min-height:42px; margin:4px 0 12px; color:#424247; }
+.meta { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin:0 0 12px; }
+.meta div { background:var(--chip); border-radius:8px; padding:8px; }
+dt { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+dd { margin:2px 0 0; font-weight:700; }
+.card-actions { border-top:1px solid var(--line); padding-top:10px; display:flex; gap:8px; align-items:center; justify-content:flex-end; flex-wrap:wrap; }
+.pod-link { border-radius:999px; background:var(--dark); color:#fff; padding:8px 12px; text-decoration:none; font-weight:800; font-size:13px; }
+.lightbox { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; padding:22px; background:rgba(20,20,22,.72); }
+.lightbox.open { display:flex; }
+.lightbox-inner { width:min(1100px,96vw); max-height:94vh; background:#fff; border-radius:8px; box-shadow:0 24px 80px rgba(0,0,0,.35); display:grid; grid-template-rows:auto 1fr; overflow:hidden; }
+.lightbox-head { min-height:52px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px; border-bottom:1px solid var(--line); }
+.lightbox-close { border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:999px; width:34px; height:34px; cursor:pointer; font-size:22px; line-height:1; }
+.lightbox-stage { min-height:0; background:#efede9; display:flex; align-items:center; justify-content:center; padding:14px; }
+.lightbox-stage img { max-width:100%; max-height:calc(94vh - 82px); object-fit:contain; display:block; }
+h3 { margin:0 0 7px; font-size:15px; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th, td { border-bottom:1px solid var(--line); text-align:left; padding:6px 5px; vertical-align:top; }
+th { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+ul { margin:0; padding-left:18px; }
+li { margin:3px 0; }
+.empty { display:none; text-align:center; padding:60px 20px; color:var(--muted); }
+footer { max-width:1420px; margin:10px auto 34px; padding:0 18px; color:var(--muted); font-size:12px; }
+@media (max-width:860px) {
+  .topbar, .hero { grid-template-columns:1fr; }
+  .actions { justify-content:flex-start; }
+  .filters { grid-template-columns:1fr; }
+  .stats { grid-template-columns:repeat(2,minmax(130px,1fr)); }
+  h1 { font-size:26px; }
+}
+@media (max-width:560px) {
+  main { padding:12px; }
+  .grid, .guide, .stats { grid-template-columns:1fr; }
+}
+@media print {
+  header, .actions, .filters, .notice, footer, .lightbox { display:none !important; }
+  body { background:#fff; font-size:12px; }
+  main { max-width:none; padding:0; }
+  .hero { display:block; margin-bottom:8px; }
+  .lead { font-size:13px; }
+  .grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .card { break-inside:avoid; box-shadow:none; border:1px solid #bbb; }
+  .pod-link { display:none; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <div>
+      <div class="brand">Kemmler <span>·</span> Sonderanfertigung 2026</div>
+      <div class="sub">Mustertafeln mit Fertigungshinweisen, Stücklisten und neuen Artikelnummern</div>
+    </div>
+    <div class="actions">
+      <a class="btn light" href="index.html">Zum Hauptkatalog</a>
+      <button class="btn" onclick="window.print()">Drucken / PDF</button>
+    </div>
+  </div>
+  <div class="filters">
+    <input id="search" type="search" placeholder="Suche: Skizze, Artikelnummer, Serie, Farbe, Tafelcode">
+    <select id="serie"><option value="">Alle Serien</option></select>
+    <select id="format"><option value="">Alle Tafelformate</option></select>
+    <select id="typ"><option value="">Alle Typen</option><option>Wandtafel</option><option>Bodentafel</option></select>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Übersichtlicher Fertigungskatalog für Skizze 1-41</h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>41</b><span>Skizzen / Artikel</span></div>
+      <div class="stat"><b>8</b><span>Holztafelgrößen</span></div>
+      <div class="stat"><b>2</b><span>Serien</span></div>
+    </div>
+  </section>
+  <div class="section-title">
+    <h2>Artikel und Stücklisten</h2>
+    <div id="count"></div>
+  </div>
+  <section class="grid" id="grid">
+        <article class="card" data-search="kem-9701-1997x1007-merida merida light grey wdfl
+light grey dekor 199,7 x 100,7 x 1,6 cm wandtafel 9787 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 100,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 1</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-01.png" data-title="Skizze 1 - KEM-9701-1997X1007-MERIDA" aria-label="Layout Skizze 1 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-01.png" alt="Skizze 1"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9701-1997X1007-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Light Grey WDFL<br>Light Grey Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9787</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 100,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>11 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-01.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9702-1997x1007-merida merida cream rekt. wdfl
+cream rekt. dekor 199,7 x 100,7 x 1,6 cm wandtafel 9787 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 100,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 2</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-02.png" data-title="Skizze 2 - KEM-9702-1997X1007-MERIDA" aria-label="Layout Skizze 2 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-02.png" alt="Skizze 2"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9702-1997X1007-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Cream rekt. WDFL<br>Cream rekt. Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9787</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 100,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>11 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-02.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9703-1997x1007-merida merida light grey wdfl
+light grey dekor 199,7 x 100,7 x 1,6 cm wandtafel 9787 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 100,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 3</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-03.png" data-title="Skizze 3 - KEM-9703-1997X1007-MERIDA" aria-label="Layout Skizze 3 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-03.png" alt="Skizze 3"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9703-1997X1007-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Light Grey WDFL<br>Light Grey Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9787</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 100,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>40x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>11 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-03.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9704-1997x1007-merida merida cream rekt. wdfl
+cream rekt. dekor 199,7 x 100,7 x 1,6 cm wandtafel 9787 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 100,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 4</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-04.png" data-title="Skizze 4 - KEM-9704-1997X1007-MERIDA" aria-label="Layout Skizze 4 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-04.png" alt="Skizze 4"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9704-1997X1007-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Cream rekt. WDFL<br>Cream rekt. Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9787</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 100,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>40x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>11 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-04.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9705-1997x1007-solidtones solid tones stone 199,7 x 100,7 x 1,6 cm wandtafel 9787 2737-ps00, 2737-ps10, 2737-ps70, 2737-ps61, 2737-ps62, 2737-ps60" data-serie="Solid Tones" data-format="199,7 x 100,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 5</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-05.png" data-title="Skizze 5 - KEM-9705-1997X1007-SOLIDTONES" aria-label="Layout Skizze 5 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-05.png" alt="Skizze 5"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9705-1997X1007-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Stone</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9787</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 100,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>11 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-05.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9706-1997x1007-solidtones solid tones concrete 199,7 x 100,7 x 1,6 cm wandtafel 9787 2737-pc00, 2737-pc10, 2737-pc70, 2737-pc61, 2737-pc62, 2737-pc60" data-serie="Solid Tones" data-format="199,7 x 100,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 6</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-06.png" data-title="Skizze 6 - KEM-9706-1997X1007-SOLIDTONES" aria-label="Layout Skizze 6 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-06.png" alt="Skizze 6"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9706-1997X1007-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Concrete</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9787</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 100,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>11 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-06.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9707-121x92-merida merida sand 121 x 92 x 1,3 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="121 x 92 x 1,3 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 7</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-07.png" data-title="Skizze 7 - KEM-9707-121X92-MERIDA" aria-label="Layout Skizze 7 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-07.png" alt="Skizze 7"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9707-121X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Sand</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>121 x 92 x 1,3 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>9 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-07.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9708-121x92-merida merida pebble 121 x 92 x 1,3 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="121 x 92 x 1,3 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 8</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-08.png" data-title="Skizze 8 - KEM-9708-121X92-MERIDA" aria-label="Layout Skizze 8 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-08.png" alt="Skizze 8"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9708-121X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Pebble</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>121 x 92 x 1,3 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>9 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-08.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9709-121x92-merida merida ivory 121 x 92 x 1,3 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="121 x 92 x 1,3 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 9</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-09.png" data-title="Skizze 9 - KEM-9709-121X92-MERIDA" aria-label="Layout Skizze 9 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-09.png" alt="Skizze 9"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9709-121X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Ivory</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>121 x 92 x 1,3 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>9 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-09.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9710-121x92-merida merida midnight 121 x 92 x 1,3 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="121 x 92 x 1,3 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 10</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-10.png" data-title="Skizze 10 - KEM-9710-121X92-MERIDA" aria-label="Layout Skizze 10 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-10.png" alt="Skizze 10"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9710-121X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Midnight</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>121 x 92 x 1,3 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>9 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-10.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9711-121x92-solidtones solid tones pure concrete 121 x 92 x 1,3 cm bodentafel 9752 2737-pc00, 2737-pc10, 2737-pc70, 2737-pc61, 2737-pc62, 2737-pc60" data-serie="Solid Tones" data-format="121 x 92 x 1,3 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 11</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-11.png" data-title="Skizze 11 - KEM-9711-121X92-SOLIDTONES" aria-label="Layout Skizze 11 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-11.png" alt="Skizze 11"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9711-121X92-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Pure Concrete</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>121 x 92 x 1,3 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>10 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-11.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9712-121x92-solidtones solid tones cool stone 121 x 92 x 1,3 cm bodentafel 9752 2737-ps00, 2737-ps10, 2737-ps70, 2737-ps61, 2737-ps62, 2737-ps60" data-serie="Solid Tones" data-format="121 x 92 x 1,3 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 12</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-12.png" data-title="Skizze 12 - KEM-9712-121X92-SOLIDTONES" aria-label="Layout Skizze 12 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-12.png" alt="Skizze 12"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9712-121X92-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Cool Stone</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>121 x 92 x 1,3 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>10 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-12.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9713-150x92-merida merida sand 150 x 92 x 1,6 cm bodentafel tafelcode prüfen 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="150 x 92 x 1,6 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 13</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-13.png" data-title="Skizze 13 - KEM-9713-150X92-MERIDA" aria-label="Layout Skizze 13 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-13.png" alt="Skizze 13"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9713-150X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Sand</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>150 x 92 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>6 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-13.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9714-150x92-merida merida pebble 150 x 92 x 1,6 cm bodentafel tafelcode prüfen 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="150 x 92 x 1,6 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 14</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-14.png" data-title="Skizze 14 - KEM-9714-150X92-MERIDA" aria-label="Layout Skizze 14 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-14.png" alt="Skizze 14"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9714-150X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Pebble</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>150 x 92 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>6 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-14.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9715-150x92-merida merida ivory 150 x 92 x 1,6 cm bodentafel tafelcode prüfen 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="150 x 92 x 1,6 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 15</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-15.png" data-title="Skizze 15 - KEM-9715-150X92-MERIDA" aria-label="Layout Skizze 15 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-15.png" alt="Skizze 15"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9715-150X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Ivory</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>150 x 92 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>6 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-15.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9716-150x92-merida merida midnight 150 x 92 x 1,6 cm bodentafel tafelcode prüfen 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="150 x 92 x 1,6 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 16</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-16.png" data-title="Skizze 16 - KEM-9716-150X92-MERIDA" aria-label="Layout Skizze 16 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-16.png" alt="Skizze 16"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9716-150X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Midnight</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>150 x 92 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>6 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-16.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9717-150x92-solidtones solid tones pure concrete 150 x 92 x 1,6 cm bodentafel tafelcode prüfen 2737-pc00, 2737-pc10, 2737-pc70, 2737-pc61, 2737-pc62, 2737-pc60" data-serie="Solid Tones" data-format="150 x 92 x 1,6 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 17</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-17.png" data-title="Skizze 17 - KEM-9717-150X92-SOLIDTONES" aria-label="Layout Skizze 17 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-17.png" alt="Skizze 17"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9717-150X92-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Pure Concrete</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>150 x 92 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-17.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9718-150x92-solidtones solid tones cool stone 150 x 92 x 1,6 cm bodentafel tafelcode prüfen 2737-ps00, 2737-ps10, 2737-ps70, 2737-ps61, 2737-ps62, 2737-ps60" data-serie="Solid Tones" data-format="150 x 92 x 1,6 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 18</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-18.png" data-title="Skizze 18 - KEM-9718-150X92-SOLIDTONES" aria-label="Layout Skizze 18 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-18.png" alt="Skizze 18"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9718-150X92-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Cool Stone</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>150 x 92 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-18.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9719-1997x1197-merida merida light grey wdfl
+light grey dekor 199,7 x 119,7 x 1,6 cm wandtafel 9789 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 119,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 19</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-19.png" data-title="Skizze 19 - KEM-9719-1997X1197-MERIDA" aria-label="Layout Skizze 19 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-19.png" alt="Skizze 19"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9719-1997X1197-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Light Grey WDFL<br>Light Grey Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9789</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 119,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-19.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9720-1997x1197-merida merida cream rekt. wdfl
+cream rekt. dekor 199,7 x 119,7 x 1,6 cm wandtafel 9789 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 119,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 20</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-20.png" data-title="Skizze 20 - KEM-9720-1997X1197-MERIDA" aria-label="Layout Skizze 20 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-20.png" alt="Skizze 20"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9720-1997X1197-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Cream rekt. WDFL<br>Cream rekt. Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9789</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 119,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-20.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9721-1997x1197-merida merida light grey wdfl
+light grey dekor 199,7 x 119,7 x 1,6 cm wandtafel 9789 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 119,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 21</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-21.png" data-title="Skizze 21 - KEM-9721-1997X1197-MERIDA" aria-label="Layout Skizze 21 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-21.png" alt="Skizze 21"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9721-1997X1197-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Light Grey WDFL<br>Light Grey Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9789</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 119,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>40x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-21.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9722-1997x1197-merida merida cream rekt. wdfl
+cream rekt. dekor 199,7 x 119,7 x 1,6 cm wandtafel 9789 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="199,7 x 119,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 22</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-22.png" data-title="Skizze 22 - KEM-9722-1997X1197-MERIDA" aria-label="Layout Skizze 22 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-22.png" alt="Skizze 22"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9722-1997X1197-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Cream rekt. WDFL<br>Cream rekt. Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9789</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 119,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>40x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-22.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9723-1997x1197-solidtones solid tones stone 199,7 x 119,7 x 1,6 cm wandtafel 9789 2737-ps00, 2737-ps10, 2737-ps70, 2737-ps61, 2737-ps62, 2737-ps60" data-serie="Solid Tones" data-format="199,7 x 119,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 23</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-23.png" data-title="Skizze 23 - KEM-9723-1997X1197-SOLIDTONES" aria-label="Layout Skizze 23 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-23.png" alt="Skizze 23"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9723-1997X1197-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Stone</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9789</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 119,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-23.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9724-1997x1197-solidtones solid tones concrete 199,7 x 119,7 x 1,6 cm wandtafel 9789 2737-pc00, 2737-pc10, 2737-pc70, 2737-pc61, 2737-pc62, 2737-pc60" data-serie="Solid Tones" data-format="199,7 x 119,7 x 1,6 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 24</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-24.png" data-title="Skizze 24 - KEM-9724-1997X1197-SOLIDTONES" aria-label="Layout Skizze 24 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-24.png" alt="Skizze 24"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9724-1997X1197-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Concrete</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9789</dd></div>
+              <div><dt>Tafelformat</dt><dd>199,7 x 119,7 x 1,6 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>5 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-24.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9725-92x92-merida merida sand 92 x 92 x 1 cm bodentafel 9739 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 92 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 25</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-25.png" data-title="Skizze 25 - KEM-9725-92X92-MERIDA" aria-label="Layout Skizze 25 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-25.png" alt="Skizze 25"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9725-92X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Sand</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9739</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 92 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>2 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-25.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9726-92x92-merida merida pebble 92 x 92 x 1 cm bodentafel 9739 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 92 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 26</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-26.png" data-title="Skizze 26 - KEM-9726-92X92-MERIDA" aria-label="Layout Skizze 26 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-26.png" alt="Skizze 26"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9726-92X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Pebble</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9739</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 92 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>2 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-26.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9727-92x92-merida merida ivory 92 x 92 x 1 cm bodentafel 9739 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 92 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 27</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-27.png" data-title="Skizze 27 - KEM-9727-92X92-MERIDA" aria-label="Layout Skizze 27 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-27.png" alt="Skizze 27"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9727-92X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Ivory</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9739</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 92 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>2 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-27.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9728-92x92-merida merida midnight 92 x 92 x 1 cm bodentafel 9739 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 92 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 28</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-28.png" data-title="Skizze 28 - KEM-9728-92X92-MERIDA" aria-label="Layout Skizze 28 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-28.png" alt="Skizze 28"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9728-92X92-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Midnight</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9739</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 92 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>2 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-28.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9729-92x92-solidtones solid tones pure concrete 92 x 92 x 1 cm bodentafel 9739 2737-pc00, 2737-pc10, 2737-pc70, 2737-pc61, 2737-pc62, 2737-pc60" data-serie="Solid Tones" data-format="92 x 92 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 29</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-29.png" data-title="Skizze 29 - KEM-9729-92X92-SOLIDTONES" aria-label="Layout Skizze 29 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-29.png" alt="Skizze 29"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9729-92X92-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Pure Concrete</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9739</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 92 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>2 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-29.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9730-92x92-solidtones solid tones cool stone 92 x 92 x 1 cm bodentafel 9739 2737-ps00, 2737-ps10, 2737-ps70, 2737-ps61, 2737-ps62, 2737-ps60" data-serie="Solid Tones" data-format="92 x 92 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 30</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-30.png" data-title="Skizze 30 - KEM-9730-92X92-SOLIDTONES" aria-label="Layout Skizze 30 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-30.png" alt="Skizze 30"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9730-92X92-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Cool Stone</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9739</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 92 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>2 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-30.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9731-92x125-merida merida sand 92 x 125 x 1 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 125 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 31</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-31.png" data-title="Skizze 31 - KEM-9731-92X125-MERIDA" aria-label="Layout Skizze 31 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-31.png" alt="Skizze 31"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9731-92X125-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Sand</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 125 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-31.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9732-92x125-merida merida pebble 92 x 125 x 1 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 125 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 32</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-32.png" data-title="Skizze 32 - KEM-9732-92X125-MERIDA" aria-label="Layout Skizze 32 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-32.png" alt="Skizze 32"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9732-92X125-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Pebble</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 125 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-32.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9733-92x125-merida merida ivory 92 x 125 x 1 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 125 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 33</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-33.png" data-title="Skizze 33 - KEM-9733-92X125-MERIDA" aria-label="Layout Skizze 33 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-33.png" alt="Skizze 33"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9733-92X125-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Ivory</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 125 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-33.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9734-92x125-merida merida midnight 92 x 125 x 1 cm bodentafel 9752 2776-aj10 (ivory), 2776-aj20 (sand), 2776-aj60 (pebble), 2776-aj90 (midnight)" data-serie="Merida" data-format="92 x 125 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 34</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-34.png" data-title="Skizze 34 - KEM-9734-92X125-MERIDA" aria-label="Layout Skizze 34 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-34.png" alt="Skizze 34"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9734-92X125-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Midnight</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 125 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-34.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9735-92x125-solidtones solid tones pure concrete 92 x 125 x 1 cm bodentafel 9752 2737-pc00, 2737-pc10, 2737-pc70, 2737-pc61, 2737-pc62, 2737-pc60" data-serie="Solid Tones" data-format="92 x 125 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 35</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-35.png" data-title="Skizze 35 - KEM-9735-92X125-SOLIDTONES" aria-label="Layout Skizze 35 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-35.png" alt="Skizze 35"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9735-92X125-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Pure Concrete</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 125 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-35.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9736-92x125-solidtones solid tones cool stone 92 x 125 x 1 cm bodentafel 9752 2737-ps00, 2737-ps10, 2737-ps70, 2737-ps61, 2737-ps62, 2737-ps60" data-serie="Solid Tones" data-format="92 x 125 x 1 cm" data-typ="Bodentafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 36</span>
+            <span class="kind">Bodentafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-36.png" data-title="Skizze 36 - KEM-9736-92X125-SOLIDTONES" aria-label="Layout Skizze 36 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-36.png" alt="Skizze 36"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9736-92X125-SOLIDTONES</p>
+            <h2>Solid Tones</h2>
+            <p class="color">Cool Stone</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9752</dd></div>
+              <div><dt>Tafelformat</dt><dd>92 x 125 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>60x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-36.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9737-209x104-merida merida light grey wdfl
+light grey dekor 209 x 104 x 1 cm wandtafel tafelcode prüfen 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="209 x 104 x 1 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 37</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-37.png" data-title="Skizze 37 - KEM-9737-209X104-MERIDA" aria-label="Layout Skizze 37 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-37.png" alt="Skizze 37"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9737-209X104-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Light Grey WDFL<br>Light Grey Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>209 x 104 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-37.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9738-209x104-merida merida cream rekt. wdfl
+cream rekt. dekor 209 x 104 x 1 cm wandtafel tafelcode prüfen 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="209 x 104 x 1 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 38</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-38.png" data-title="Skizze 38 - KEM-9738-209X104-MERIDA" aria-label="Layout Skizze 38 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-38.png" alt="Skizze 38"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9738-209X104-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Cream rekt. WDFL<br>Cream rekt. Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>209 x 104 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-38.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9739-209x104-merida merida light grey wdfl
+light grey dekor 209 x 104 x 1 cm wandtafel tafelcode prüfen 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="209 x 104 x 1 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 39</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-39.png" data-title="Skizze 39 - KEM-9739-209X104-MERIDA" aria-label="Layout Skizze 39 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-39.png" alt="Skizze 39"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9739-209X104-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Light Grey WDFL<br>Light Grey Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>Tafelcode prüfen</dd></div>
+              <div><dt>Tafelformat</dt><dd>209 x 104 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>40x120 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-39.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9740-1836x1038-merida merida light grey wdfl
+light grey dekor 183,6 x 103,8 x 1 cm wandtafel 9762 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="183,6 x 103,8 x 1 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 40</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-40.png" data-title="Skizze 40 - KEM-9740-1836X1038-MERIDA" aria-label="Layout Skizze 40 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-40.png" alt="Skizze 40"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9740-1836X1038-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Light Grey WDFL<br>Light Grey Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9762</dd></div>
+              <div><dt>Tafelformat</dt><dd>183,6 x 103,8 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-40.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <article class="card" data-search="kem-9741-1836x1038-merida merida cream rekt. wdfl
+cream rekt. dekor 183,6 x 103,8 x 1 cm wandtafel 9762 1450-aj10 (cream), 1450-aj60 (grey), 1457-aj10 (cream), 1457-aj60 (grey), 1581-aj10 (cream), 1581-aj60 (grey), 1550-aj10 (cream), 1550-aj60 (grey)" data-serie="Merida" data-format="183,6 x 103,8 x 1 cm" data-typ="Wandtafel">
+          <div class="card-head">
+            <span class="sketch">Skizze 41</span>
+            <span class="kind">Wandtafel</span>
+          </div>
+          <div class="board-wrap"><button class="layout-open" type="button" data-src="images/sonderanfertigung/skizze-41.png" data-title="Skizze 41 - KEM-9741-1836X1038-MERIDA" aria-label="Layout Skizze 41 gross oeffnen"><img class="sketch-img" src="images/sonderanfertigung/skizze-41.png" alt="Skizze 41"></button></div>
+          <div class="card-body">
+            <p class="article">KEM-9741-1836X1038-MERIDA</p>
+            <h2>Merida</h2>
+            <p class="color">Cream rekt. WDFL<br>Cream rekt. Dekor</p>
+            <dl class="meta">
+              <div><dt>Tafelcode</dt><dd>9762</dd></div>
+              <div><dt>Tafelformat</dt><dd>183,6 x 103,8 x 1 cm</dd></div>
+              <div><dt>Fliesenformat</dt><dd>30x60 cm</dd></div>
+              <div><dt>Menge</dt><dd>1 Tafeln</dd></div>
+            </dl>
+            <div class="card-actions">
+              <a class="pod-link" href="pod/skizze-41.html" target="_blank" rel="noopener">PoD / Fertigung öffnen</a>
+            </div>
+          </div>
+        </article>
+        </section>
+  <div class="empty" id="empty">Keine passenden Tafeln gefunden.</div>
+</main>
+<div class="lightbox" id="layoutLightbox" aria-hidden="true">
+  <div class="lightbox-inner" role="dialog" aria-modal="true" aria-label="Layout Grossansicht">
+    <div class="lightbox-head">
+      <b id="layoutLightboxTitle">Layout</b>
+      <button class="lightbox-close" id="layoutLightboxClose" type="button" aria-label="Grossansicht schliessen">&times;</button>
+    </div>
+    <div class="lightbox-stage"><img id="layoutLightboxImg" alt=""></div>
+  </div>
+</div>
+<footer>Quelle: V+B 2026 Kemmler Tafel Liste EN (002) Mustertafeln Sonderanfertigung.xlsx · generiert am 10.07.2026. Original-Codes stammen aus dem Tabellenblatt "Sample boards".</footer>
+<script>
+const META = {"count": 41, "formats": ["121 x 92 x 1,3 cm", "150 x 92 x 1,6 cm", "183,6 x 103,8 x 1 cm", "199,7 x 100,7 x 1,6 cm", "199,7 x 119,7 x 1,6 cm", "209 x 104 x 1 cm", "92 x 125 x 1 cm", "92 x 92 x 1 cm"], "series": ["Merida", "Solid Tones"]};
+const cards = [...document.querySelectorAll('.card')];
+const search = document.getElementById('search');
+const serie = document.getElementById('serie');
+const format = document.getElementById('format');
+const typ = document.getElementById('typ');
+const count = document.getElementById('count');
+const empty = document.getElementById('empty');
+const lightbox = document.getElementById('layoutLightbox');
+const lightboxImg = document.getElementById('layoutLightboxImg');
+const lightboxTitle = document.getElementById('layoutLightboxTitle');
+const lightboxClose = document.getElementById('layoutLightboxClose');
+META.series.forEach(value => serie.add(new Option(value, value)));
+META.formats.forEach(value => format.add(new Option(value, value)));
+function norm(value) { return (value || '').toString().toLowerCase().replace(/\s+/g, ' ').trim(); }
+function applyFilters() {
+  const q = norm(search.value);
+  let visible = 0;
+  cards.forEach(card => {
+    const ok = (!q || q.split(' ').every(part => card.dataset.search.includes(part)))
+      && (!serie.value || card.dataset.serie === serie.value)
+      && (!format.value || card.dataset.format === format.value)
+      && (!typ.value || card.dataset.typ === typ.value);
+    card.style.display = ok ? '' : 'none';
+    if (ok) visible += 1;
+  });
+  count.textContent = `${visible} von ${cards.length} Artikeln`;
+  empty.style.display = visible ? 'none' : 'block';
+}
+[search, serie, format, typ].forEach(el => el.addEventListener('input', applyFilters));
+[serie, format, typ].forEach(el => el.addEventListener('change', applyFilters));
+applyFilters();
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  lightbox.setAttribute('aria-hidden', 'true');
+  lightboxImg.removeAttribute('src');
+  lightboxImg.alt = '';
+}
+document.querySelectorAll('.layout-open').forEach(button => {
+  button.addEventListener('click', () => {
+    const title = button.dataset.title || 'Layout';
+    lightboxTitle.textContent = title;
+    lightboxImg.src = button.dataset.src;
+    lightboxImg.alt = title;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    lightboxClose.focus();
+  });
+});
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', event => {
+  if (event.target === lightbox) closeLightbox();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+});
+</script>
+</body>
+</html>

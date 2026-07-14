@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PoD Skizze 8 - KEM-9708-121X92-MERIDA</title>
+<style>
+:root { --ink:#1c1c1e; --muted:#666; --line:#ddd8cf; --chip:#f0eee9; --accent:#b02e2c; }
+* { box-sizing:border-box; }
+body { margin:0; color:var(--ink); background:#f7f5f1; font:14px/1.42 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; }
+main { max-width:1120px; margin:0 auto; padding:18px; }
+.bar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+.btn { border:0; border-radius:999px; background:#2d2d30; color:#fff; padding:9px 14px; cursor:pointer; text-decoration:none; }
+.sheet { background:#fff; border:1px solid var(--line); border-radius:8px; padding:18px; box-shadow:0 6px 24px rgba(0,0,0,.08); }
+.head { display:grid; grid-template-columns:1fr auto; gap:14px; align-items:start; border-bottom:2px solid var(--line); padding-bottom:12px; }
+h1 { margin:0; font-size:26px; }
+.article { color:var(--accent); font-weight:800; margin:4px 0 0; }
+.grid { display:grid; grid-template-columns:360px 1fr; gap:16px; margin-top:14px; }
+.imagebox { border:1px solid var(--line); border-radius:8px; background:#f3f1ec; height:420px; display:flex; align-items:center; justify-content:center; padding:10px; }
+.imagebox img { max-width:100%; max-height:100%; object-fit:contain; }
+.meta { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px; }
+.meta div { background:var(--chip); border-radius:8px; padding:9px; }
+dt { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+dd { margin:2px 0 0; font-weight:750; }
+section { margin-top:16px; }
+h2 { margin:0 0 8px; font-size:18px; }
+table { width:100%; border-collapse:collapse; }
+th, td { text-align:left; vertical-align:top; border-bottom:1px solid var(--line); padding:7px 6px; }
+th { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+.box { width:28px; font-size:20px; line-height:1; }
+.tile-box { border:2px solid var(--accent); border-radius:8px; padding:12px; background:#fff8f7; }
+.tile-title { display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:9px; }
+.tile-title h2 { margin:0; }
+.source { border-radius:999px; background:var(--accent); color:#fff; padding:4px 9px; font-size:12px; font-weight:800; white-space:nowrap; }
+.code-chips { display:flex; flex-wrap:wrap; gap:7px; }
+.code-chips span { border:1px solid #e1bbb6; background:#fff; border-radius:999px; padding:6px 9px; font-weight:800; }
+.tile-note { margin:9px 0 0; color:var(--muted); }
+.checklist { columns:2; padding-left:0; list-style:none; }
+.checklist li { break-inside:avoid; margin:0 0 7px; }
+.checklist span { font-size:18px; margin-right:7px; }
+@media (max-width:820px) { .grid,.head { grid-template-columns:1fr; } .checklist { columns:1; } }
+@media print {
+  body { background:#fff; }
+  main { max-width:none; padding:0; }
+  .bar { display:none; }
+  .sheet { border:0; box-shadow:none; padding:0; }
+  .imagebox { height:330px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="bar">
+    <a class="btn" href="../sonderanfertigung.html">Zurück zum Katalog</a>
+    <button class="btn" onclick="window.print()">Drucken / PDF</button>
+  </div>
+  <article class="sheet">
+    <div class="head">
+      <div>
+        <h1>Print on Demand - Skizze 8</h1>
+        <p class="article">KEM-9708-121X92-MERIDA</p>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="imagebox"><img src="../images/sonderanfertigung/skizze-08.png" alt="Skizze 8"></div>
+      <div>
+        <dl class="meta">
+          <div><dt>Tafelcode</dt><dd>9752</dd></div>
+          <div><dt>Foto-Größe</dt><dd>125x92</dd></div>
+          <div><dt>Serie</dt><dd>Merida</dd></div>
+          <div><dt>Farbe</dt><dd>Pebble</dd></div>
+          <div><dt>Holztafel</dt><dd>121 x 92 x 1,3 cm</dd></div>
+          <div><dt>Fliese</dt><dd>60x120 cm</dd></div>
+          <div><dt>Menge laut Auftrag</dt><dd>9 Tafeln</dd></div>
+          <div><dt>Alte Blackboard-Nr.</dt><dd>313</dd></div>
+        </dl>
+        <section class="tile-box">
+          <div class="tile-title">
+            <h2>Fliesencodes / benötigte Fliesen</h2>
+            <span class="source">aus Layout erkannt</span>
+          </div>
+          <div class="code-chips"><span>2776-AJ10 (ivory)</span>
+<span>2776-AJ20 (sand)</span>
+<span>2776-AJ60 (pebble)</span>
+<span>2776-AJ90 (midnight)</span></div>
+          <p class="tile-note">Artikelangaben aus dem Excel-Layout übernommen</p>
+        </section>
+      </div>
+    </div>
+    <section>
+      <h2>Print on Demand Pickliste (Stüli)</h2>
+      <table>
+        <thead><tr><th></th><th>Position</th><th>je Tafel</th><th>Detail / Code</th></tr></thead>
+        <tbody><tr><td class="box">□</td><td>Holztafel</td><td>1 St.</td><td>Tafelcode 9752; Spanplatte 121 x 92 x 1,3 cm (Staerke 1,3 cm)</td></tr>
+<tr><td class="box">□</td><td>Fliese</td><td>nach Skizze</td><td>Merida - Pebble - 60x120 cm</td></tr>
+<tr><td class="box">□</td><td>Kennzeichnung</td><td>1 St.</td><td>Skizzen-Nummer vorne mit Krepp anbringen</td></tr>
+<tr><td class="box">□</td><td>Fuge/Kante</td><td>3 mm</td><td>Fugenfarbe anpassen; Sichtkante und Schnittkante laut Skizze beachten</td></tr>
+<tr><td class="box">□</td><td>10x10 Muster</td><td>3 Muster</td><td>je ein Muster der anderen Merida-Farben an die Sichtkante kleben</td></tr><tr><td class="box">□</td><td>Fliesencodes / Fliesenkennzeichnung</td><td>nach Skizze</td><td>2776-AJ10 (ivory), 2776-AJ20 (sand), 2776-AJ60 (pebble), 2776-AJ90 (midnight)</td></tr></tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Fertigungscheckliste</h2>
+      <ul class="checklist"><li><span>□</span>Tafelcode und Holztafelformat mit Auftrag abgleichen.</li>
+<li><span>□</span>Skizzenbild und Skizzen-Nummer vor Fertigungsstart prüfen.</li>
+<li><span>□</span>Fliesen laut PoD-Pickliste bereitstellen.</li>
+<li><span>□</span>Schnitt-/Sichtkante nach Skizze ausrichten.</li>
+<li><span>□</span>Fugenbild und Fugenfarbe passend zur Fliese ausführen.</li>
+<li><span>□</span>Skizzen-Nummer und KEM-Artikelnummer vorne mit Krepp anbringen.</li>
+<li><span>□</span>Endkontrolle: Maß, Farbe, Fliesenformat, Kanten und Beschriftung prüfen.</li>
+<li><span>□</span>Bodentafel: Sichtkante links/vorne, Schnittkante rechts.</li>
+<li><span>□</span>Fuge 3 mm; Fugenfarbe passend zur Fliese abstimmen.</li>
+<li><span>□</span>Bei 60 x 120 cm Fliesen rechts und links ca. 0,5 cm Rand frei lassen.</li>
+<li><span>□</span>Merida 60 x 120: immer je ein 10 x 10 cm Muster der drei anderen Farben an der Sichtkante ca. 0,5-1 cm vom Rand aufkleben.</li></ul>
+    </section>
+  </article>
+</main>
+</body>
+</html>
