@@ -1,5 +1,5 @@
 {
- "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281) | Seiten 62+100 ersetzt durch Einzelblatt-PDFs 9555-9585-9557-MW21/-EJ26 (Textlayer, 07/2026) | Mustertafeln ENIGMA 2019.pdf + Mustertafeln LINEAR.pdf (Seiten 282-305) | Mustertafeln NATURAL.pdf (Seite 306) | V&B Gesamt-PDF (641 Seiten) | Mustertafeln NATURAL.pdf Anordnungspläne (Seiten 307-309) | TREASURE B.pdf S.4 als Seite 310 (TR18-Poster) + Alt-Codes PH…-08/9560-GA21 aus Stücklisten (07/2026)",
+ "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281) | Seiten 62+100 ersetzt durch Einzelblatt-PDFs 9555-9585-9557-MW21/-EJ26 (Textlayer, 07/2026) | Mustertafeln ENIGMA 2019.pdf + Mustertafeln LINEAR.pdf (Seiten 282-305) | Mustertafeln NATURAL.pdf (Seite 306) | V&B Gesamt-PDF (641 Seiten) | Mustertafeln NATURAL.pdf Anordnungspläne (Seiten 307-309) | TREASURE B.pdf S.4 als Seite 310 (TR18-Poster) + Alt-Codes PH…-08/9560-GA21 aus Stücklisten (07/2026) | Seite 311: Serie CEMENTO 9557-CE46/-CE87 aus ENGERS_SampleBoard-Stückliste (BOM 57691/57692), kein Original-Plan – eigene Klebevorlage (07/2026)",
  "einträge": [
   {
    "id": "p002_9555IR210410",
@@ -44430,6 +44430,70 @@
     1455,
     1317
    ]
+  },
+  {
+   "id": "p311_9557CE460410",
+   "seite": 311,
+   "serie": "CEMENTO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-CE46-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEM 1240",
+     "stueck": "3,5",
+     "farbe": "beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "BRI 3160",
+     "stueck": "16",
+     "farbe": "ziegelrot matt",
+     "groesse": "5x25 cm"
+    }
+   ],
+   "label": "Poster 91E0-STE1-00-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (BOM 57691), kein Original-Plan – eigene Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (940x1340x5 mm, anthrazit m. Leiste)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p311_9557CE870410",
+   "seite": 311,
+   "serie": "CEMENTO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-CE87-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEM 1280",
+     "stueck": "3,5",
+     "farbe": "grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "BRI 3170",
+     "stueck": "16",
+     "farbe": "ozeanblau glzd.",
+     "groesse": "5x25 cm"
+    }
+   ],
+   "label": "Poster 91E0-STE2-00-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (BOM 57692), kein Original-Plan – eigene Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (940x1340x5 mm, anthrazit m. Leiste)"
+   ],
+   "display": false,
+   "marke": "engers"
   }
  ],
  "probleme": [
