@@ -266,13 +266,17 @@
 
   /* ---------- Tab-Umschalter (Tafeln / Fliesen) ---------- */
   .tabs {
-    display: inline-flex;
+    display: flex;
     gap: 4px;
     margin-top: 16px;
     padding: 4px;
     background: var(--surface-2);
     border: 1px solid var(--border);
     border-radius: var(--radius);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    scrollbar-width: thin;
   }
   .tab {
     display: inline-flex;
@@ -290,6 +294,7 @@
     cursor: pointer;
     user-select: none;
     transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+    flex: 0 0 auto;
   }
   .tab .icon { width: 16px; height: 16px; }
   .tab:hover { color: var(--text); }
@@ -316,7 +321,21 @@
   #app[data-view="auftraege"] #newCatRow,
   #app[data-view="auftraege"] .map-scroll,
   #app[data-view="auftraege"] .extra-section,
-  #app[data-view="auftraege"] #btnFab { display: none !important; }
+  #app[data-view="auftraege"] #btnFab,
+  #app[data-view="bestellungen"] .subtext,
+  #app[data-view="bestellungen"] .dashboard,
+  #app[data-view="bestellungen"] .banner:not(#bannerBackup),
+  #app[data-view="bestellungen"] #newCatRow,
+  #app[data-view="bestellungen"] .map-scroll,
+  #app[data-view="bestellungen"] .extra-section,
+  #app[data-view="bestellungen"] #btnFab,
+  #app[data-view="performance"] .subtext,
+  #app[data-view="performance"] .dashboard,
+  #app[data-view="performance"] .banner:not(#bannerBackup),
+  #app[data-view="performance"] #newCatRow,
+  #app[data-view="performance"] .map-scroll,
+  #app[data-view="performance"] .extra-section,
+  #app[data-view="performance"] #btnFab { display: none !important; }
 
   /* Der Prüf-Bereich ("Auftrag prüfen") lebt jetzt im Auftrags-Tab,
      oberhalb der Auftragsliste — kein eigener Tab mehr. */
@@ -342,6 +361,59 @@
     border: 1px dashed var(--border-strong);
     border-radius: var(--radius);
     padding: 16px;
+  }
+
+  /* ---------- Bestellungen / intelligenter Wareneingang ---------- */
+  .bestellungen-section, .performance-section { margin-bottom: 12px; }
+  .feature-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .feature-head .icon { color:var(--primary); }
+  .feature-title { font-size:14px; font-weight:800; letter-spacing:.3px; }
+  .feature-sub { font-size:11.5px; color:var(--text-muted); }
+  .lieferung-input {
+    width:100%; min-height:170px; box-sizing:border-box; resize:vertical;
+    border:1px solid var(--border-strong); border-radius:var(--radius-sm);
+    background:var(--surface); color:var(--text); padding:10px 12px;
+    font:12px/1.45 'SFMono-Regular',Consolas,'Courier New',monospace; outline:none;
+  }
+  .lieferung-input:focus { border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-bg); }
+  .lieferung-actions { display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-top:8px; }
+  .lieferung-hint { font-size:10.5px; color:var(--text-muted); }
+  .lieferung-preview { margin-top:12px; }
+  .lieferung-summary { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .lieferung-chip { font-size:11px; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--surface-2); color:var(--text-muted); }
+  .lieferung-chip.ok { background:var(--green-bg); color:var(--green-fg); }
+  .lieferung-chip.warn { background:var(--yellow-bg); color:var(--yellow-fg); }
+  .lieferung-table { width:100%; border-collapse:collapse; }
+  .lieferung-table th { font-size:10px; text-transform:uppercase; letter-spacing:.35px; color:var(--text-muted); text-align:left; padding:5px 7px; border-bottom:1px solid var(--border); }
+  .lieferung-table td { font-size:11.5px; padding:7px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .lieferung-table .lieferung-code { font:700 12px/1.3 'SFMono-Regular',Consolas,monospace; }
+  .lieferung-route { color:var(--primary-fg); font-weight:700; }
+  .lieferung-heilung { color:var(--green-fg); font-size:10.5px; font-weight:700; }
+  .lieferung-unmatched { margin-top:8px; padding:8px 10px; border-radius:var(--radius-sm); background:var(--yellow-bg); color:var(--yellow-fg); font-size:11px; }
+
+  /* ---------- Performance ---------- */
+  .performance-head-actions { margin-left:auto; }
+  .performance-dashboard { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-bottom:14px; }
+  .performance-card { border:1px solid var(--border); background:var(--surface); border-radius:var(--radius-sm); padding:11px 12px; box-shadow:var(--shadow-sm); }
+  .performance-value { display:block; font-size:22px; line-height:1.1; font-weight:850; color:var(--primary-fg); }
+  .performance-label { display:block; margin-top:4px; font-size:10.5px; color:var(--text-muted); font-weight:650; }
+  .performance-timeline { display:grid; gap:8px; }
+  .performance-day { border:1px solid var(--border); background:var(--surface); border-radius:var(--radius-sm); overflow:hidden; }
+  .performance-day-head { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 11px; background:var(--surface-2); border-bottom:1px solid var(--border); }
+  .performance-date { font-size:12px; font-weight:800; }
+  .performance-day-total { font-size:10.5px; color:var(--text-muted); }
+  .performance-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .performance-metric { padding:9px 11px; border-right:1px solid var(--border); }
+  .performance-metric:last-child { border-right:none; }
+  .performance-metric strong { display:block; font-size:17px; line-height:1.1; }
+  .performance-metric span { display:block; margin-top:3px; color:var(--text-muted); font-size:10px; }
+  .performance-orders { margin-top:4px; font-size:10.5px; line-height:1.35; color:var(--text); word-break:break-word; }
+  .performance-empty { padding:18px; text-align:center; color:var(--text-muted); font-size:12px; border:1px dashed var(--border-strong); border-radius:var(--radius-sm); }
+  @media (max-width:700px) {
+    .performance-dashboard, .performance-metrics { grid-template-columns:1fr; }
+    .performance-metric { border-right:none; border-bottom:1px solid var(--border); }
+    .performance-metric:last-child { border-bottom:none; }
+    .performance-head-actions { margin-left:0; width:100%; }
   }
 
   .auftrag-card {
@@ -1421,6 +1493,10 @@
   .auftrag-notiz:focus { border-color: var(--primary); }
   .auftrag-pos-table .pos-code-link { cursor: pointer; text-decoration: underline dotted; text-underline-offset: 2px; }
   .auftrag-pos-table .pos-code-link:hover { color: var(--primary); }
+  .auftrag-pos-table .pos-code-actions {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-left: 6px; vertical-align: middle; white-space: nowrap;
+  }
   .item-jump-flash { animation: jumpFlash 1.6s ease; }
   @keyframes jumpFlash {
     0%   { background: var(--primary-bg); box-shadow: 0 0 0 3px var(--primary-bg); }
@@ -1465,7 +1541,10 @@
   /* Ganze Positionszeile klickbar zum Picken; user-select aus, damit ein
      Doppelklick keinen Text markiert. */
   .auftrag-pos-table tr.pos-row { cursor: pointer; -webkit-user-select: none; user-select: none; }
-  .auftrag-pos-table .pos-picked { width: 48px; text-align: center; padding: 2px 4px; }
+  .auftrag-pos-table .pos-picked { width: 116px; text-align: center; padding: 2px 4px; }
+  .position-state-controls {
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
   .pick-toggle {
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; padding: 0; border: none; border-radius: 50%;
@@ -1485,6 +1564,19 @@
   }
   tr.pos-row.gepickt .pick-circle { background: var(--green-fg); border-color: var(--green-fg); }
   tr.pos-row.gepickt .pick-circle svg { transform: scale(1); }
+  .work-toggle {
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    height: 28px; padding: 0 8px; border: 1px solid var(--border-strong);
+    border-radius: 999px; background: var(--surface); color: var(--text-muted);
+    font: 700 10.5px/1 system-ui, sans-serif; cursor: pointer; white-space: nowrap;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .work-toggle:hover { background: var(--blue-bg); color: var(--blue-fg); border-color: var(--blue-border); }
+  .work-toggle:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+  .work-toggle svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+  tr.pos-row.in-arbeit .work-toggle { background: var(--blue-bg); color: var(--blue-fg); border-color: var(--blue-border); }
+  .auftrag-pos-table tr.pos-row.in-arbeit td { background: var(--blue-bg); }
+  tr.pos-row.in-arbeit .pos-code { color: var(--blue-fg); }
   /* Pop-Animation nur auf dem frisch abgehakten Toggle (Klasse setzt das JS
      nach dem Neu-Rendern), sonst würde jeder Render alle Haken animieren. */
   .pick-toggle.just-picked .pick-circle { animation: pickPop .18s ease; }
@@ -1592,7 +1684,7 @@
     .auftrag-pos-table thead { display: none; }
     .auftrag-pos-table tr.pos-row {
       display: grid;
-      grid-template-columns: 60px auto 1fr;
+      grid-template-columns: 76px auto 1fr;
       grid-template-areas:
         "toggle code  code"
         "toggle nr    menge"
@@ -1604,8 +1696,10 @@
     .auftrag-pos-table tr.pos-row td { border-bottom: none; padding: 1px 0; }
     /* Grüner Zustand liegt hier auf der Karte (tr), nicht auf den Zellen. */
     .auftrag-pos-table tr.pos-row:hover td,
-    .auftrag-pos-table tr.pos-row.gepickt td { background: none; }
+    .auftrag-pos-table tr.pos-row.gepickt td,
+    .auftrag-pos-table tr.pos-row.in-arbeit td { background: none; }
     .auftrag-pos-table tr.pos-row.gepickt { background: var(--green-bg); border-color: var(--green-fg); }
+    .auftrag-pos-table tr.pos-row.in-arbeit { background: var(--blue-bg); border-color: var(--blue-fg); }
     .auftrag-pos-table td.pos-picked { grid-area: toggle; width: auto; text-align: center; }
     .auftrag-pos-table td.pos-nr { grid-area: nr; font-size: 11px; color: var(--text-muted); }
     .auftrag-pos-table td.pos-code { grid-area: code; font-size: 13.5px; }
@@ -1614,6 +1708,8 @@
     .pick-toggle { width: 52px; height: 52px; }
     .pick-circle { width: 34px; height: 34px; }
     .pick-circle svg { width: 20px; height: 20px; }
+    .position-state-controls { flex-direction: column; gap: 2px; }
+    .work-toggle { height: 24px; padding: 0 6px; font-size: 9.5px; }
   }
 </style>
 </head>
@@ -1686,6 +1782,14 @@
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg></span>
           <span>Auftrags-Verwaltung</span>
           <span class="tab-count" id="tabAuftraegeCount" style="display:none;">0</span>
+        </button>
+        <button type="button" class="tab" id="tabBestellungen" role="tab" data-tab="bestellungen" aria-selected="false">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2 12h10l2-8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M12 5v6"/><path d="m9 8 3 3 3-3"/></svg></span>
+          <span>Bestellungen</span>
+        </button>
+        <button type="button" class="tab" id="tabPerformance" role="tab" data-tab="performance" aria-selected="false">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-7"/></svg></span>
+          <span>Performance</span>
         </button>
       </div>
     </div>
@@ -1844,6 +1948,37 @@
       </div>
     </section>
 
+    <section id="bestellungenSection" class="bestellungen-section" style="display:none;" aria-label="Bestellungen und Wareneingang">
+      <div class="feature-head">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M12 12v6"/><path d="m9 15 3 3 3-3"/></svg></span>
+        <span class="feature-title">Intelligenter Wareneingang</span>
+        <span class="feature-sub">KI-Artikelliste einfügen, Mengen erkennen und reale Lagerplätze anzeigen.</span>
+      </div>
+      <textarea id="lieferungInput" class="lieferung-input" placeholder="Beispiel:&#10;5 ST KAV-2420&#10;3x 9539-SU80-0C-10&#10;91E0-KAV1 2 ST"></textarea>
+      <div class="lieferung-actions">
+        <button type="button" id="btnLieferungPreview" class="btn btn-primary">Lieferung verarbeiten</button>
+        <button type="button" id="btnLieferungSave" class="btn btn-success" style="display:none;">✓ Wareneingang speichern</button>
+        <button type="button" id="btnLieferungClear" class="btn">Leeren</button>
+        <span class="lieferung-hint">Der Bestand wird erst mit „Wareneingang speichern“ verändert.</span>
+      </div>
+      <div id="lieferungPreview" class="lieferung-preview"></div>
+    </section>
+
+    <section id="performanceSection" class="performance-section" style="display:none;" aria-label="Performance">
+      <div class="feature-head">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-7"/></svg></span>
+        <span class="feature-title">Performance</span>
+        <span class="feature-sub">Automatische Tageschronik aus Auftragsstatus und Pick-Zeitstempeln.</span>
+        <span class="performance-head-actions"><button type="button" id="btnPerformanceReset" class="btn btn-danger">Statistik zurücksetzen</button></span>
+      </div>
+      <div class="performance-dashboard">
+        <div class="performance-card"><span id="perfMonthDone" class="performance-value">0</span><span class="performance-label">Aufträge diesen Monat erledigt</span></div>
+        <div class="performance-card"><span id="perfPickedTotal" class="performance-value">0</span><span class="performance-label">Insgesamt abgehakte Artikel</span></div>
+        <div class="performance-card"><span id="perfAvgTime" class="performance-value">–</span><span class="performance-label">Ø Bearbeitungszeit pro Auftrag</span></div>
+      </div>
+      <div id="performanceTimeline" class="performance-timeline"></div>
+    </section>
+
     <!-- OCR-Korrektur-Modal (initial versteckt) -->
     <div id="auftragOcrModal" class="auftrag-ocr-modal-overlay" style="display:none;">
       <div class="auftrag-ocr-modal">
@@ -1911,23 +2046,56 @@
     status: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>',
     more: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>',
     katalog: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+    print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
     move: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>'
   };
 
   // Pfad zum Mustertafeln-Katalog (index.html), relativ zum Speicherort
   // dieser Datei — anpassen, falls die Dateien woanders liegen.
-  var KATALOG_URL = "index.html";
+  var KATALOG_BASE = "";
+  var KATALOG_URL = KATALOG_BASE + "index.html";
   function openKatalog(code) {
     window.open(KATALOG_URL + "?code=" + encodeURIComponent(code), "_blank");
+  }
+  var katalogPrintFrame = null;
+  function printKatalogSeite(code) {
+    var eintrag = katalogEintragFuer(code);
+    if (!eintrag || !eintrag.seite) {
+      showBackupMsg("Für " + code + " wurde keine Katalogseite gefunden.");
+      return;
+    }
+    var url = KATALOG_BASE + (eintrag.pdf_pfad || (eintrag.marke === "vb"
+      ? "pages/vb/seite-" + String(eintrag.seite).padStart(3, "0") + ".pdf"
+      : "pages/seite-" + String(eintrag.seite).padStart(3, "0") + ".pdf"));
+    // Lokal darf der Browser PDF-Dateien nicht zuverlässig aus einem iframe
+    // drucken. Dann die passende Einzelseite direkt öffnen (Druckdialog dort).
+    if (location.protocol === "file:") {
+      window.open(url, "_blank");
+      return;
+    }
+    if (katalogPrintFrame) katalogPrintFrame.remove();
+    katalogPrintFrame = document.createElement("iframe");
+    katalogPrintFrame.style.cssText = "position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;visibility:hidden";
+    katalogPrintFrame.onload = function () {
+      try {
+        katalogPrintFrame.contentWindow.focus();
+        katalogPrintFrame.contentWindow.print();
+      } catch (err) {
+        window.open(url, "_blank");
+      }
+    };
+    document.body.appendChild(katalogPrintFrame);
+    katalogPrintFrame.src = url;
   }
   // Ein delegierter Handler für alle Katalog-Buttons (Bestand + Aufträge),
   // überlebt jedes Neu-Rendern der Listen.
   document.addEventListener("click", function (e) {
-    var btn = e.target.closest ? e.target.closest('[data-action="openKatalog"]') : null;
+    var btn = e.target.closest ? e.target.closest('[data-action="openKatalog"], [data-action="printKatalog"]') : null;
     if (!btn) return;
     e.preventDefault();
     e.stopPropagation();
-    openKatalog(btn.getAttribute("data-code"));
+    if (btn.getAttribute("data-action") === "printKatalog") printKatalogSeite(btn.getAttribute("data-code"));
+    else openKatalog(btn.getAttribute("data-code"));
   });
 
   var STATUS_BADGE = {
@@ -2533,13 +2701,16 @@
   var POSTER_STORAGE_KEY = "lager-poster-data-html";
   var ACTIVE_TAB_KEY = "lager-active-tab";
   var AUFTRAEGE_STORAGE_KEY = "lager-auftraege-history";
+  var PERFORMANCE_STORAGE_KEY = "lager-performance-history";
 
   var dataTafeln = null;
   var dataFliesen = null;
   var dataPoster = null;
   var auftraege = [];                 // Auftrags-Historie (neuester zuerst)
+  var performanceHistory = { version: 1, resetAt: null, events: [] };
+  var bestellungPreview = null;       // flüchtige Wareneingangs-Vorschau
   var lastCheck = null;               // Ergebnis der letzten Prüfung (für "Speichern")
-  var activeTab = "tafeln";           // "tafeln" | "fliesen" | "poster" | "auftraege"
+  var activeTab = "tafeln";           // sechs Haupt-Tabs, inkl. Bestellungen/Performance
   var data = null;                    // Zeiger auf den aktiven Bestands-Datensatz
   var search = "";
   var showNewCat = false;
@@ -2609,10 +2780,15 @@
       }
     } catch (e) { auftraege = []; }
     try {
+      var rawP = localStorage.getItem(PERFORMANCE_STORAGE_KEY);
+      performanceHistory = migratePerformanceHistory(rawP ? JSON.parse(rawP) : null);
+    } catch (e) { performanceHistory = migratePerformanceHistory(null); }
+    bootstrapPerformanceFromOrders();
+    try {
       var savedTab = localStorage.getItem(ACTIVE_TAB_KEY);
       // Der frühere Tab "pruefen" wurde in die Auftrags-Verwaltung integriert.
       if (savedTab === "pruefen") savedTab = "auftraege";
-      if (savedTab === "fliesen" || savedTab === "tafeln" || savedTab === "poster" || savedTab === "auftraege") activeTab = savedTab;
+      if (["tafeln", "fliesen", "poster", "auftraege", "bestellungen", "performance"].indexOf(savedTab) !== -1) activeTab = savedTab;
     } catch (e) {}
     data = datasetFor(activeTab);
   }
@@ -2643,7 +2819,21 @@
         a.positionen.forEach(function (p) {
           var norm = normalizeCode(p.code || "");
           if (norm !== p.code) { p.code = norm; changed = true; }
+          if (p.inArbeit === undefined) { p.inArbeit = false; changed = true; }
+          if (p.inArbeitAm === undefined) { p.inArbeitAm = null; changed = true; }
+          if (p.gepickt && p.inArbeit) { p.inArbeit = false; p.inArbeitAm = null; changed = true; }
         });
+        if (a.inArbeitAm === undefined) {
+          var startTimes = a.positionen.map(function (p) { return p.inArbeitAm || p.gepicktAm; }).filter(Boolean).sort();
+          a.inArbeitAm = startTimes[0] || null;
+          changed = true;
+        }
+        if (a.erledigtAm === undefined) {
+          var allPicked = a.positionen.length > 0 && a.positionen.every(function (p) { return p.gepickt; });
+          var pickTimes = a.positionen.map(function (p) { return p.gepicktAm; }).filter(Boolean).sort();
+          a.erledigtAm = allPicked && pickTimes.length ? pickTimes[pickTimes.length - 1] : (a.verpacktAm || a.versendetAm || null);
+          changed = true;
+        }
         if (index) applyVerfuegbarkeit(a.positionen, index);
         return a;
       }
@@ -2658,6 +2848,8 @@
           einheit: "ST",
           gepickt: false,
           gepicktAm: null,
+          inArbeit: false,
+          inArbeitAm: null,
           verfuegbar: item.status === "ok" || item.status === "pending" ? true : (item.status ? false : null)
         };
       });
@@ -2673,6 +2865,8 @@
         bestellnr: "",
         importiertAm: a.savedAt || "",
         status: statusMap[a.status] || "offen",
+        inArbeitAm: null,
+        erledigtAm: null,
         verpacktAm: null,
         versendetAm: null,
         positionen: posArray,
@@ -2702,6 +2896,355 @@
       );
     });
   }
+
+  // ---- Performance-Historie ----
+  function migratePerformanceHistory(raw) {
+    var h = raw && typeof raw === "object" ? raw : {};
+    var events = Array.isArray(h.events) ? h.events.filter(function (e) {
+      return e && (e.type === "started" || e.type === "completed" || e.type === "picked") && e.ts;
+    }) : [];
+    var seen = {};
+    events = events.filter(function (e) {
+      e.key = e.key || [e.type, e.orderId || "", e.posKey || "", e.ts].join(":");
+      if (seen[e.key]) return false;
+      seen[e.key] = true;
+      return true;
+    });
+    return { version: 1, resetAt: h.resetAt || null, events: events };
+  }
+
+  function savePerformance() {
+    noteDataChanged();
+    persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
+    if (activeTab === "performance") renderPerformance();
+  }
+
+  function performanceOrderLabel(a) {
+    return a.auftragsnummer || extractAuftragsnummer(a.title || "") || auftragDisplayName(a).replace(/^Auftrag\s+/, "");
+  }
+
+  function addPerformanceEvent(event, deferSave) {
+    if (!event || !event.ts) return false;
+    var resetMs = performanceHistory.resetAt ? Date.parse(performanceHistory.resetAt) : 0;
+    if (resetMs && Date.parse(event.ts) < resetMs) return false;
+    event.key = event.key || [event.type, event.orderId || "", event.posKey || "", event.ts].join(":");
+    if (performanceHistory.events.some(function (e) { return e.key === event.key; })) return false;
+    performanceHistory.events.push(event);
+    if (!deferSave) savePerformance();
+    return true;
+  }
+
+  function ensureAuftragStarted(a, ts, deferSave) {
+    if (!a) return false;
+    ts = ts || new Date().toISOString();
+    if (!a.inArbeitAm) a.inArbeitAm = ts;
+    return addPerformanceEvent({
+      type: "started", ts: a.inArbeitAm, orderId: a.id,
+      orderNumber: performanceOrderLabel(a), key: "started:" + a.id + ":" + a.inArbeitAm
+    }, deferSave);
+  }
+
+  function ensureAuftragCompleted(a, ts, deferSave) {
+    if (!a) return false;
+    ts = ts || new Date().toISOString();
+    if (!a.erledigtAm) a.erledigtAm = ts;
+    return addPerformanceEvent({
+      type: "completed", ts: a.erledigtAm, orderId: a.id,
+      orderNumber: performanceOrderLabel(a), key: "completed:" + a.id + ":" + a.erledigtAm
+    }, deferSave);
+  }
+
+  function recordPickedPerformance(a, p, posIdx, ts, deferSave) {
+    var qty = parseFloat(String(p.menge || "1").replace(",", "."));
+    if (!isFinite(qty) || qty <= 0) qty = 1;
+    return addPerformanceEvent({
+      type: "picked", ts: ts, orderId: a.id, orderNumber: performanceOrderLabel(a),
+      posKey: String(p.pos || posIdx) + ":" + String(p.code || ""), code: p.code || "", quantity: qty,
+      key: "picked:" + a.id + ":" + String(p.pos || posIdx) + ":" + String(p.code || "") + ":" + ts
+    }, deferSave);
+  }
+
+  function bootstrapPerformanceFromOrders() {
+    var changed = false;
+    (auftraege || []).forEach(function (a) {
+      if (a.inArbeitAm) changed = ensureAuftragStarted(a, a.inArbeitAm, true) || changed;
+      (a.positionen || []).forEach(function (p, i) {
+        if (!p.gepicktAm) return;
+        var qty = parseFloat(String(p.menge || "1").replace(",", "."));
+        if (!isFinite(qty) || qty <= 0) qty = 1;
+        changed = addPerformanceEvent({
+          type: "picked", ts: p.gepicktAm, orderId: a.id, orderNumber: performanceOrderLabel(a),
+          posKey: String(p.pos || i) + ":" + String(p.code || ""), code: p.code || "", quantity: qty,
+          key: "picked:" + a.id + ":" + String(p.pos || i) + ":" + String(p.code || "") + ":" + p.gepicktAm
+        }, true) || changed;
+      });
+      if (a.erledigtAm) changed = ensureAuftragCompleted(a, a.erledigtAm, true) || changed;
+    });
+    if (changed) persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
+  }
+
+  function localDateKey(ts) {
+    var d = new Date(ts);
+    if (isNaN(d.getTime())) return "";
+    return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+  }
+
+  function formatDuration(ms) {
+    if (!isFinite(ms) || ms < 0) return "–";
+    var mins = Math.round(ms / 60000);
+    if (mins < 60) return mins + " Min.";
+    var hours = mins / 60;
+    if (hours < 24) return (Math.round(hours * 10) / 10).toLocaleString("de-DE") + " Std.";
+    return (Math.round(hours / 24 * 10) / 10).toLocaleString("de-DE") + " Tage";
+  }
+
+  function renderPerformance() {
+    var timeline = document.getElementById("performanceTimeline");
+    if (!timeline) return;
+    var events = (performanceHistory.events || []).slice().sort(function (a, b) { return String(b.ts).localeCompare(String(a.ts)); });
+    var now = new Date();
+    var monthPrefix = now.getFullYear() + "-" + pad2(now.getMonth() + 1) + "-";
+    var completedMonth = events.filter(function (e) { return e.type === "completed" && localDateKey(e.ts).indexOf(monthPrefix) === 0; }).length;
+    var pickedTotal = events.filter(function (e) { return e.type === "picked"; }).reduce(function (sum, e) { return sum + (Number(e.quantity) || 1); }, 0);
+    var starts = {};
+    events.forEach(function (e) { if (e.type === "started" && !starts[e.orderId]) starts[e.orderId] = Date.parse(e.ts); });
+    var durations = events.filter(function (e) { return e.type === "completed" && starts[e.orderId]; }).map(function (e) { return Date.parse(e.ts) - starts[e.orderId]; }).filter(function (v) { return v >= 0; });
+    var avg = durations.length ? durations.reduce(function (a, b) { return a + b; }, 0) / durations.length : NaN;
+    document.getElementById("perfMonthDone").textContent = completedMonth;
+    document.getElementById("perfPickedTotal").textContent = formatDeliveryNumber(pickedTotal);
+    document.getElementById("perfAvgTime").textContent = formatDuration(avg);
+
+    var days = {};
+    events.forEach(function (e) {
+      var key = localDateKey(e.ts);
+      if (!key) return;
+      if (!days[key]) days[key] = { started: [], completed: [], picked: 0 };
+      if (e.type === "started") days[key].started.push(e.orderNumber || "–");
+      else if (e.type === "completed") days[key].completed.push(e.orderNumber || "–");
+      else if (e.type === "picked") days[key].picked += Number(e.quantity) || 1;
+    });
+    var keys = Object.keys(days).sort().reverse();
+    if (!keys.length) {
+      timeline.innerHTML = '<div class="performance-empty">Noch keine Leistungsdaten vorhanden. Sie entstehen automatisch beim Starten, Picken und Fertigstellen von Aufträgen.</div>';
+      return;
+    }
+    timeline.innerHTML = keys.map(function (key) {
+      var day = days[key];
+      var d = new Date(key + "T12:00:00");
+      var title = d.toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
+      var started = Array.from(new Set(day.started));
+      var completed = Array.from(new Set(day.completed));
+      return '<article class="performance-day">' +
+        '<div class="performance-day-head"><span class="performance-date">' + escapeHtml(title) + '</span><span class="performance-day-total">' + formatDeliveryNumber(day.picked) + ' Artikel</span></div>' +
+        '<div class="performance-metrics">' +
+          '<div class="performance-metric"><strong>' + started.length + '</strong><span>Angefangene Aufträge</span><div class="performance-orders">' + (started.length ? escapeHtml(started.join(", ")) : "–") + '</div></div>' +
+          '<div class="performance-metric"><strong>' + completed.length + '</strong><span>Erledigte Aufträge</span><div class="performance-orders">' + (completed.length ? escapeHtml(completed.join(", ")) : "–") + '</div></div>' +
+          '<div class="performance-metric"><strong>' + formatDeliveryNumber(day.picked) + '</strong><span>Geklebte / abgehakte Artikel</span><div class="performance-orders">nach Auftragsmenge</div></div>' +
+        '</div></article>';
+    }).join("");
+  }
+
+  function resetPerformanceHistory() {
+    var ok = window.confirm("Performance-Statistik wirklich zurücksetzen? Die bisherige Chronik wird geleert. Aufträge und Bestände bleiben erhalten.");
+    if (!ok) return;
+    takeSnapshot(true);
+    performanceHistory = { version: 1, resetAt: new Date().toISOString(), events: [] };
+    savePerformance();
+    renderPerformance();
+    showBackupMsg("Performance-Statistik zurückgesetzt.");
+  }
+
+  // ---- Bestellungen / intelligenter Wareneingang ----
+  function deliveryDatasets() {
+    return [
+      { kind: "tafeln", label: "Tafeln", data: dataTafeln, key: STORAGE_KEY },
+      { kind: "fliesen", label: "Fliesen", data: dataFliesen, key: FLIESEN_STORAGE_KEY },
+      { kind: "poster", label: "Poster", data: dataPoster, key: POSTER_STORAGE_KEY }
+    ];
+  }
+
+  function deliveryMatchKey(code) {
+    return normalizeCode(code || "").replace(/[^A-Z0-9]/g, "");
+  }
+
+  function buildDeliveryIndex() {
+    var index = {};
+    deliveryDatasets().forEach(function (ds) {
+      (ds.data && ds.data.categories || []).forEach(function (cat, catIdx) {
+        (cat.items || []).forEach(function (item, itemIdx) {
+          var key = deliveryMatchKey(item.code);
+          if (!key) return;
+          (index[key] = index[key] || []).push({
+            kind: ds.kind, label: ds.label, storageKey: ds.key, dataset: ds.data,
+            cat: cat, item: item, catIdx: catIdx, itemIdx: itemIdx
+          });
+        });
+      });
+    });
+    return index;
+  }
+
+  function parseDeliveryNumber(raw) {
+    var n = parseFloat(String(raw == null ? "" : raw).replace(",", "."));
+    return isFinite(n) ? n : 0;
+  }
+
+  function formatDeliveryNumber(n) {
+    n = Number(n) || 0;
+    return (Math.round(n * 100) / 100).toLocaleString("de-DE", { maximumFractionDigits: 2 });
+  }
+
+  function deliveryQtyFromLine(line, rawCode) {
+    var patterns = [
+      /(?:^|\s)(\d+(?:[.,]\d+)?)\s*(?:ST|STK|STÜCK|PCS)\b/i,
+      /(?:^|\s)(\d+(?:[.,]\d+)?)\s*[x×](?:\s|$)/i,
+      /(?:^|\s)[x×]\s*(\d+(?:[.,]\d+)?)(?:\s|$)/i
+    ];
+    for (var i = 0; i < patterns.length; i++) {
+      var m = patterns[i].exec(line);
+      if (m) return Math.max(0, parseDeliveryNumber(m[1]));
+    }
+    // Häufiges KI-Format: "5 KAV-2420". Nur verwenden, wenn die führende
+    // Zahl nicht Bestandteil des erkannten Codes ist.
+    var lead = /^\s*(\d+(?:[.,]\d+)?)\s+/.exec(line);
+    if (lead && String(rawCode || "").trim().indexOf(lead[1]) !== 0) return Math.max(0, parseDeliveryNumber(lead[1]));
+    return 1;
+  }
+
+  function deliveryRoute(target) {
+    var detail = target.cat.label || "Unbekannter Bereich";
+    var note = String(target.item.note || "").trim();
+    if (target.kind === "poster" && note && detail.toLowerCase().indexOf(note.toLowerCase()) === -1) detail += ", " + note;
+    return target.label + " → " + detail;
+  }
+
+  function deliveryHealingText(item) {
+    var states = [];
+    if (item.missing) states.push("Fehlend");
+    if (item.empty) states.push("Leer");
+    if (item.pending) states.push("Poster folgt");
+    return states.length ? states.join(" + ") + " → OK" : "";
+  }
+
+  function chooseDeliveryTarget(list) {
+    return list.slice().sort(function (a, b) {
+      var ah = a.item.missing || a.item.empty || a.item.pending ? 1 : 0;
+      var bh = b.item.missing || b.item.empty || b.item.pending ? 1 : 0;
+      if (ah !== bh) return bh - ah;
+      var aq = parseDeliveryNumber(a.item.qty), bq = parseDeliveryNumber(b.item.qty);
+      if ((aq > 0) !== (bq > 0)) return aq > 0 ? -1 : 1;
+      if (a.kind !== b.kind) return ["tafeln", "fliesen", "poster"].indexOf(a.kind) - ["tafeln", "fliesen", "poster"].indexOf(b.kind);
+      return a.catIdx - b.catIdx || a.itemIdx - b.itemIdx;
+    })[0];
+  }
+
+  function parseDeliveryText(text) {
+    var index = buildDeliveryIndex();
+    var keys = Object.keys(index).sort(function (a, b) { return b.length - a.length; });
+    var grouped = {}, unmatched = [];
+    String(text || "").split(/\r?\n/).forEach(function (rawLine) {
+      var line = rawLine.trim();
+      if (!line) return;
+      var compact = line.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      var matchedKey = null;
+      for (var i = 0; i < keys.length; i++) {
+        // Vierstellige Kurz-Codes nur als eigenständiges Token akzeptieren,
+        // damit Positions- oder Mengenangaben keine falschen Treffer erzeugen.
+        if (keys[i].length === 4) {
+          var shortRe = new RegExp("(?:^|[^A-Z0-9])" + keys[i] + "(?:$|[^A-Z0-9])", "i");
+          if (shortRe.test(line)) { matchedKey = keys[i]; break; }
+        } else if (compact.indexOf(keys[i]) !== -1) { matchedKey = keys[i]; break; }
+      }
+      if (!matchedKey) { unmatched.push(line); return; }
+      var targetList = index[matchedKey];
+      var target = chooseDeliveryTarget(targetList);
+      var qty = deliveryQtyFromLine(line, target.item.code);
+      if (!(qty > 0)) { unmatched.push(line + " (Menge fehlt)"); return; }
+      var groupKey = target.kind + ":" + target.cat.id + ":" + target.item.id;
+      if (!grouped[groupKey]) {
+        grouped[groupKey] = {
+          target: target, code: target.item.code, incoming: 0,
+          before: parseDeliveryNumber(target.item.qty), healing: deliveryHealingText(target.item),
+          alternatives: Math.max(0, targetList.length - 1), lines: []
+        };
+      }
+      grouped[groupKey].incoming += qty;
+      grouped[groupKey].lines.push(line);
+    });
+    return { entries: Object.keys(grouped).map(function (k) { return grouped[k]; }), unmatched: unmatched };
+  }
+
+  function renderDeliveryPreview(result) {
+    var box = document.getElementById("lieferungPreview");
+    var saveBtn = document.getElementById("btnLieferungSave");
+    if (!result || (!result.entries.length && !result.unmatched.length)) {
+      box.innerHTML = '<div class="performance-empty">Keine Artikelcodes erkannt. Bitte je Artikel eine Zeile mit Code und Menge einfügen.</div>';
+      saveBtn.style.display = "none";
+      return;
+    }
+    var totalQty = result.entries.reduce(function (sum, e) { return sum + e.incoming; }, 0);
+    var rows = result.entries.map(function (e) {
+      var after = e.before + e.incoming;
+      return '<tr><td class="lieferung-code">' + escapeHtml(e.code) + '</td>' +
+        '<td>+' + formatDeliveryNumber(e.incoming) + '</td>' +
+        '<td>' + formatDeliveryNumber(e.before) + ' → <strong>' + formatDeliveryNumber(after) + '</strong></td>' +
+        '<td><span class="lieferung-route">' + escapeHtml(deliveryRoute(e.target)) + '</span>' +
+          (e.healing ? '<div class="lieferung-heilung">✓ ' + escapeHtml(e.healing) + '</div>' : '') +
+          (e.alternatives ? '<div class="lieferung-hint">' + e.alternatives + ' weiterer Lager-Treffer; bevorzugter Platz gewählt</div>' : '') + '</td></tr>';
+    }).join("");
+    box.innerHTML = '<div class="lieferung-summary"><span class="lieferung-chip ok">' + result.entries.length + ' Artikel erkannt</span><span class="lieferung-chip">' + formatDeliveryNumber(totalQty) + ' Stück Wareneingang</span>' +
+      (result.unmatched.length ? '<span class="lieferung-chip warn">' + result.unmatched.length + ' Zeilen ungeklärt</span>' : '') + '</div>' +
+      (rows ? '<table class="lieferung-table"><thead><tr><th>Artikel</th><th>Eingang</th><th>Bestand</th><th>Einlagern</th></tr></thead><tbody>' + rows + '</tbody></table>' : '') +
+      (result.unmatched.length ? '<div class="lieferung-unmatched"><strong>Nicht erkannt:</strong><br>' + result.unmatched.map(escapeHtml).join("<br>") + '</div>' : '');
+    saveBtn.style.display = result.entries.length ? "" : "none";
+  }
+
+  function previewDelivery() {
+    var text = document.getElementById("lieferungInput").value;
+    bestellungPreview = parseDeliveryText(text);
+    renderDeliveryPreview(bestellungPreview);
+  }
+
+  function saveDelivery() {
+    if (!bestellungPreview || !bestellungPreview.entries.length) return;
+    takeSnapshot(true);
+    var changedKeys = {};
+    bestellungPreview.entries.forEach(function (e) {
+      var item = e.target.item;
+      item.qty = formatDeliveryNumber(e.before + e.incoming);
+      if (item.missing || item.empty || item.pending) {
+        item.missing = false;
+        item.empty = false;
+        item.pending = false;
+      }
+      changedKeys[e.target.storageKey] = e.target.dataset;
+    });
+    noteDataChanged();
+    Object.keys(changedKeys).forEach(function (key) { persistKey(key, JSON.stringify(changedKeys[key])); });
+    // Gespeicherte Aufträge sofort gegen den geheilten Bestand neu bewerten.
+    var lagerIndex = buildLagerIndex();
+    auftraege.forEach(function (a) { applyVerfuegbarkeit(a.positionen, lagerIndex); });
+    if (auftraege.length) saveAuftraege();
+    var count = bestellungPreview.entries.length;
+    bestellungPreview = null;
+    document.getElementById("lieferungInput").value = "";
+    document.getElementById("lieferungPreview").innerHTML = "";
+    document.getElementById("btnLieferungSave").style.display = "none";
+    render();
+    showBackupMsg(count + " Artikelposition(en) eingelagert; Mengen und Status wurden aktualisiert.");
+  }
+
+  function clearDelivery() {
+    bestellungPreview = null;
+    document.getElementById("lieferungInput").value = "";
+    document.getElementById("lieferungPreview").innerHTML = "";
+    document.getElementById("btnLieferungSave").style.display = "none";
+  }
+
+  document.getElementById("btnLieferungPreview").addEventListener("click", previewDelivery);
+  document.getElementById("btnLieferungSave").addEventListener("click", saveDelivery);
+  document.getElementById("btnLieferungClear").addEventListener("click", clearDelivery);
+  document.getElementById("btnPerformanceReset").addEventListener("click", resetPerformanceHistory);
 
   // Speichert den aktuell aktiven Datensatz (debounced) unter seinem Key —
   // nach IndexedDB (primär) und localStorage (Spiegel/Fallback).
@@ -3513,6 +4056,8 @@
     document.getElementById("app").setAttribute("data-view", activeTab);
     var auftraegeSection = document.getElementById("auftraegeSection");
     auftraegeSection.style.display = activeTab === "auftraege" ? "block" : "none";
+    document.getElementById("bestellungenSection").style.display = activeTab === "bestellungen" ? "block" : "none";
+    document.getElementById("performanceSection").style.display = activeTab === "performance" ? "block" : "none";
     var countEl = document.getElementById("tabAuftraegeCount");
     // Badge zählt alles, was noch nicht versendet ist (auch "verpackt").
     var nichtVersendet = auftraege.filter(function (a) { return a.status !== "versendet"; }).length;
@@ -3521,7 +4066,7 @@
   }
 
   function switchTab(tab) {
-    if (tab !== "tafeln" && tab !== "fliesen" && tab !== "poster" && tab !== "auftraege") return;
+    if (["tafeln", "fliesen", "poster", "auftraege", "bestellungen", "performance"].indexOf(tab) === -1) return;
     activeTab = tab;
     data = datasetFor(tab);
     persistKey(ACTIVE_TAB_KEY, tab);
@@ -3533,6 +4078,7 @@
 
     applyTabChrome();
     if (tab === "auftraege") renderAuftraege();
+    if (tab === "performance") renderPerformance();
     render();
   }
 
@@ -3596,18 +4142,26 @@
   function setAuftragStatus(id, status) {
     var a = findAuftrag(id);
     if (!a || !AUFTRAG_STATUS[status]) return;
+    var oldStatus = a.status;
+    var nowIso = new Date().toISOString();
     a.status = status;
     // Zeitstempel der gesetzten Stufe frisch setzen; bei Rückwärts-Korrektur
     // die Stempel der wieder zurückgenommenen Stufen löschen.
     if (status === "verpackt") {
-      a.verpacktAm = new Date().toISOString();
+      a.verpacktAm = nowIso;
       a.versendetAm = null;
     } else if (status === "versendet") {
-      a.versendetAm = new Date().toISOString();
+      a.versendetAm = nowIso;
     } else {
       a.verpacktAm = null;
       a.versendetAm = null;
+      if (status === "offen") a.inArbeitAm = null;
+      a.erledigtAm = null;
     }
+    var perfChanged = false;
+    if (oldStatus === "offen" && status !== "offen") perfChanged = ensureAuftragStarted(a, nowIso, true) || perfChanged;
+    if (status === "verpackt" || status === "versendet") perfChanged = ensureAuftragCompleted(a, nowIso, true) || perfChanged;
+    if (perfChanged) savePerformance();
     saveAuftraege();
     applyTabChrome();
     renderAuftraege();
@@ -3628,12 +4182,49 @@
     var a = findAuftrag(auftragId);
     if (!a || !a.positionen || !a.positionen[posIdx]) return;
     var p = a.positionen[posIdx];
+    var nowIso = new Date().toISOString();
     p.gepickt = !p.gepickt;
-    p.gepicktAm = p.gepickt ? new Date().toISOString() : null;
+    p.gepicktAm = p.gepickt ? nowIso : null;
+    if (p.gepickt) { p.inArbeit = false; p.inArbeitAm = null; }
     var picked = a.positionen.filter(function (x) { return x.gepickt; }).length;
+    var working = a.positionen.filter(function (x) { return x.inArbeit; }).length;
     if (a.status === "offen" || a.status === "inArbeit" || !AUFTRAG_STATUS[a.status]) {
-      a.status = picked > 0 ? "inArbeit" : "offen";
+      a.status = picked > 0 || working > 0 ? "inArbeit" : "offen";
     }
+    if (!p.gepickt) a.erledigtAm = null;
+    if (picked === 0 && working === 0) a.inArbeitAm = null;
+    var perfChanged = false;
+    if (p.gepickt) {
+      perfChanged = ensureAuftragStarted(a, nowIso, true) || perfChanged;
+      perfChanged = recordPickedPerformance(a, p, posIdx, nowIso, true) || perfChanged;
+      if (a.positionen.length > 0 && a.positionen.every(function (x) { return x.gepickt; })) {
+        perfChanged = ensureAuftragCompleted(a, nowIso, true) || perfChanged;
+      }
+    }
+    if (perfChanged) savePerformance();
+    saveAuftraege();
+    applyTabChrome();
+    renderAuftraege();
+  }
+
+  // Blauer Zwischenzustand für Positionen, bei denen z. B. noch eine Fliese
+  // oder ein Poster fehlt. Eine Position kann entweder in Arbeit oder gepickt
+  // sein; beim Aktivieren von "In Arbeit" wird ein vorhandener Pick entfernt.
+  function togglePositionInArbeit(auftragId, posIdx) {
+    var a = findAuftrag(auftragId);
+    if (!a || !a.positionen || !a.positionen[posIdx]) return;
+    var p = a.positionen[posIdx];
+    var nowIso = new Date().toISOString();
+    p.inArbeit = !p.inArbeit;
+    p.inArbeitAm = p.inArbeit ? nowIso : null;
+    if (p.inArbeit) { p.gepickt = false; p.gepicktAm = null; }
+    if (p.inArbeit) a.erledigtAm = null;
+    var active = a.positionen.some(function (x) { return x.gepickt || x.inArbeit; });
+    if (a.status === "offen" || a.status === "inArbeit" || !AUFTRAG_STATUS[a.status]) {
+      a.status = active ? "inArbeit" : "offen";
+    }
+    if (!active) a.inArbeitAm = null;
+    if (p.inArbeit) ensureAuftragStarted(a, nowIso, false);
     saveAuftraege();
     applyTabChrome();
     renderAuftraege();
@@ -4115,6 +4706,7 @@
     var pos = a.positionen || [];
     var total = pos.length;
     var picked = pos.filter(function (p) { return p.gepickt; }).length;
+    var working = pos.filter(function (p) { return p.inArbeit; }).length;
     // Nur echte Blocker zählen — durch Kleben machbare Positionen sind kein
     // Problem (Standard-Fall), also nicht als "blockiert" werten.
     var blocked = pos.filter(function (p) { return istBlockiert(p, lagerIndex); }).length;
@@ -4130,7 +4722,8 @@
     var progress =
       '<span class="auftrag-progress' + (allPicked ? " complete" : "") + '">' +
         '<span class="auftrag-progress-bar"><span class="auftrag-progress-fill" style="width:' + pct + '%;"></span></span>' +
-        '<span class="auftrag-progress-text">' + picked + '/' + total + (allPicked ? ' – komplett gepickt ✓' : ' gepickt') + '</span>' +
+        '<span class="auftrag-progress-text">' + picked + '/' + total + (allPicked ? ' – komplett gepickt ✓' : ' gepickt') +
+          (working ? ' · ' + working + ' in Arbeit' : '') + '</span>' +
       '</span>';
 
     var statusBtns = Object.keys(AUFTRAG_STATUS).map(function (key) {
@@ -4172,15 +4765,24 @@
       if (klebe) {
         extra += klebeDetailHtml(klebe, true);
       }
+      var katalogEintrag = katalogEintragFuer(p.code);
+      var printButton = katalogEintrag && katalogEintrag.seite
+        ? '<button type="button" class="icon-btn katalog-btn pos-print-btn" data-action="printKatalog" data-code="' + escapeHtml(p.code || "") + '" title="Katalogseite ' + escapeHtml(String(katalogEintrag.seite)) + ' drucken"><span class="icon">' + ICONS.print + '</span></button>'
+        : '';
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
-      return '<tr class="pos-row' + (p.gepickt ? " gepickt" : "") + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
+      return '<tr class="pos-row' + (p.gepickt ? " gepickt" : (p.inArbeit ? " in-arbeit" : "")) + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
         '<td class="pos-picked">' +
-          '<button type="button" class="pick-toggle" role="checkbox" aria-checked="' + (p.gepickt ? "true" : "false") + '" ' +
-            'aria-label="' + escapeHtml(p.code || "Position " + (i + 1)) + ' gepickt" ' +
-            'title="' + (p.gepickt ? "Pick zurücknehmen" : "Als gepickt markieren") + '">' +
-            '<span class="pick-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>' +
-          '</button>' +
+          '<span class="position-state-controls">' +
+            '<button type="button" class="pick-toggle" role="checkbox" aria-checked="' + (p.gepickt ? "true" : "false") + '" ' +
+              'aria-label="' + escapeHtml(p.code || "Position " + (i + 1)) + ' gepickt" ' +
+              'title="' + (p.gepickt ? "Pick zurücknehmen" : "Als gepickt markieren") + '">' +
+              '<span class="pick-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>' +
+            '</button>' +
+            '<button type="button" class="work-toggle" data-action="positionInArbeit" data-id="' + a.id + '" data-pos="' + i + '" aria-pressed="' + (p.inArbeit ? "true" : "false") + '" title="' + (p.inArbeit ? "In Arbeit zurücknehmen" : "Als In Arbeit markieren") + '">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> In Arbeit' +
+            '</button>' +
+          '</span>' +
         '</td>' +
         '<td class="pos-nr">' + escapeHtml(p.pos || "") + '</td>' +
         '<td class="pos-code">' +
@@ -4189,7 +4791,10 @@
             ? '<span class="pos-marke-badge marke-' + p.marke + '">' + (p.marke === "vb" ? "V&B" : "engers") + '</span> '
             : "") +
           '<span class="pos-code-link" data-action="jumpCode" data-code="' + escapeHtml(p.code || "") + '" title="Im Lager anzeigen">' + escapeHtml(p.code || "") + '</span>' +
-          '<button type="button" class="icon-btn katalog-btn pos-katalog-btn" data-action="openKatalog" data-code="' + escapeHtml(p.code || "") + '" title="Im Katalog öffnen"><span class="icon">' + ICONS.katalog + '</span></button></td>' +
+          '<span class="pos-code-actions">' +
+            '<button type="button" class="icon-btn katalog-btn pos-katalog-btn" data-action="openKatalog" data-code="' + escapeHtml(p.code || "") + '" title="Im Katalog öffnen"><span class="icon">' + ICONS.katalog + '</span></button>' +
+            printButton +
+          '</span></td>' +
         '<td class="pos-menge">' + escapeHtml(p.menge ? String(p.menge) + " " + (p.einheit || "") : "") + '</td>' +
         '<td class="pos-avail">' + badge + extra + '</td>' +
       '</tr>';
@@ -4349,6 +4954,13 @@
         if (!wasPicked && navigator.vibrate) {
           try { navigator.vibrate(50); } catch (err) {}
         }
+      });
+    });
+    listEl.querySelectorAll('[data-action="positionInArbeit"]').forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        togglePositionInArbeit(el.getAttribute("data-id"), parseInt(el.getAttribute("data-pos"), 10));
       });
     });
     listEl.querySelectorAll('[data-action="jumpCode"]').forEach(function (el) {
@@ -4634,7 +5246,7 @@
 
   // Legt einen Auftrag neu an ODER aktualisiert nach Rückfrage den bereits
   // gespeicherten mit derselben Auftragsnummer (Duplikat-Erkennung). Beim
-  // Aktualisieren bleiben Status, Notiz und Pick-Fortschritt (pro Code)
+  // Aktualisieren bleiben Status, Notiz und Positionsfortschritt (pro Code)
   // erhalten. Rückgabe: Meldungstext, oder null bei Abbruch durch den Nutzer.
   function upsertAuftrag(neu) {
     var existing = neu.auftragsnummer
@@ -4644,16 +5256,19 @@
     if (existing) {
       var ok = window.confirm(
         "„" + auftragDisplayName(existing) + "“ ist bereits gespeichert.\n" +
-        "Positionen und Verfügbarkeit aktualisieren? (Status, Notiz und Pick-Fortschritt bleiben erhalten.)"
+        "Positionen und Verfügbarkeit aktualisieren? (Status, Notiz und Positionsfortschritt bleiben erhalten.)"
       );
       if (!ok) return null;
-      // Pick-Zustand pro Code in die neuen Positionen übernehmen.
+      // Pick-/In-Arbeit-Zustand pro Code in die neuen Positionen übernehmen.
       var pickedByCode = {};
+      var workingByCode = {};
       (existing.positionen || []).forEach(function (p) {
         if (p.gepickt) pickedByCode[p.code] = p.gepicktAm || new Date().toISOString();
+        else if (p.inArbeit) workingByCode[p.code] = p.inArbeitAm || new Date().toISOString();
       });
       neu.positionen.forEach(function (p) {
         if (pickedByCode[p.code]) { p.gepickt = true; p.gepicktAm = pickedByCode[p.code]; }
+        else if (workingByCode[p.code]) { p.inArbeit = true; p.inArbeitAm = workingByCode[p.code]; }
       });
       existing.positionen = neu.positionen;
       existing.kunde = neu.kunde || existing.kunde;
@@ -4696,6 +5311,8 @@
       importiertAm: now.toISOString(),
       geprueftAm: now.toISOString(),
       status: "offen",
+      inArbeitAm: null,
+      erledigtAm: null,
       verpacktAm: null,
       versendetAm: null,
       notiz: "",
@@ -4891,6 +5508,8 @@
         einheit: einheit || "ST",
         gepickt: false,
         gepicktAm: null,
+        inArbeit: false,
+        inArbeitAm: null,
         verfuegbar: null
       });
     }
@@ -5310,7 +5929,7 @@
   var lastSnapshotTs = 0;
   var dirtySinceSnapshot = false;    // gab es Änderungen seit dem letzten Snapshot?
 
-  var DATA_KEYS = [STORAGE_KEY, FLIESEN_STORAGE_KEY, POSTER_STORAGE_KEY, AUFTRAEGE_STORAGE_KEY];
+  var DATA_KEYS = [STORAGE_KEY, FLIESEN_STORAGE_KEY, POSTER_STORAGE_KEY, AUFTRAEGE_STORAGE_KEY, PERFORMANCE_STORAGE_KEY];
   var MIRROR_KEYS = DATA_KEYS.concat([ACTIVE_TAB_KEY, THEME_KEY, LAST_EXPORT_KEY, FIRST_SEEN_KEY]);
 
   function idbOpen() {
@@ -5380,15 +5999,16 @@
   }
 
   function buildExportPayload() {
-    // Version 4 sichert alle drei Bestände UND die Auftrags-Historie.
+    // Version 5 sichert alle Bestände, Aufträge und die Performance-Historie.
     return {
-      version: 4,
+      version: 5,
       exportedAt: new Date().toISOString(),
       activeTab: activeTab,
       tafeln: dataTafeln,
       fliesen: dataFliesen,
       poster: dataPoster,
-      auftraege: auftraege
+      auftraege: auftraege,
+      performance: performanceHistory
     };
   }
 
@@ -5466,6 +6086,12 @@
       applyTabChrome();
       if (activeTab === "auftraege") renderAuftraege();
       loadedParts.push(auftraege.length + " Aufträge");
+    }
+    if (parsed.performance && typeof parsed.performance === "object") {
+      performanceHistory = migratePerformanceHistory(parsed.performance);
+      persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
+      if (activeTab === "performance") renderPerformance();
+      loadedParts.push("Performance");
     }
     if (loadedParts.length) {
       data = datasetFor(activeTab);
@@ -5628,6 +6254,7 @@
     persistKey(FLIESEN_STORAGE_KEY, JSON.stringify(dataFliesen));
     persistKey(POSTER_STORAGE_KEY, JSON.stringify(dataPoster));
     persistKey(AUFTRAEGE_STORAGE_KEY, JSON.stringify(auftraege));
+    persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
     if (dirtySinceSnapshot) takeSnapshot(true);
   }
   document.addEventListener("visibilitychange", function () {
@@ -5664,7 +6291,7 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showBackupMsg("Gesichert als " + name + " (Tafeln + Fliesen + Poster + Auftrags-Historie) — diese Datei auf das andere Gerät übertragen und dort mit „Laden“ öffnen.");
+      showBackupMsg("Gesichert als " + name + " (Tafeln + Fliesen + Poster + Aufträge + Performance) — diese Datei auf das andere Gerät übertragen und dort mit „Laden“ öffnen.");
       // Zeitpunkt merken und Erinnerungs-Banner ausblenden.
       persistKey(LAST_EXPORT_KEY, String(Date.now()));
       document.getElementById("bannerBackup").style.display = "none";
@@ -5715,6 +6342,15 @@
   });
 
   document.getElementById("btnReset").addEventListener("click", function () {
+    if (activeTab === "bestellungen") {
+      clearDelivery();
+      showBackupMsg("Wareneingabe geleert; Bestände wurden nicht verändert.");
+      return;
+    }
+    if (activeTab === "performance") {
+      resetPerformanceHistory();
+      return;
+    }
     // Im Auftrags-Tab leert "Zurücksetzen" die Auftrags-Historie.
     if (activeTab === "auftraege") {
       var okA = window.confirm(
@@ -5818,7 +6454,7 @@
   var SYNC_META_KEY = "lager-sync-meta";     // { tafeln:{ts,dirty}, ... } in localStorage
   var SYNC_DEVICE_KEY = "lager-device-id";   // zufällige Geräte-ID (einmal pro Browser)
   var SYNC_PUSH_DELAY = 2000;                // lokale Änderungen gebündelt pushen
-  var SYNC_REMOTE_KEYS = ["tafeln", "fliesen", "poster", "auftraege"];
+  var SYNC_REMOTE_KEYS = ["tafeln", "fliesen", "poster", "auftraege", "performance"];
 
   // Zuordnung localStorage-Key -> Zeilen-Key in der Supabase-Tabelle.
   var SYNC_KEY_MAP = {};
@@ -5826,6 +6462,7 @@
   SYNC_KEY_MAP[FLIESEN_STORAGE_KEY] = "fliesen";
   SYNC_KEY_MAP[POSTER_STORAGE_KEY] = "poster";
   SYNC_KEY_MAP[AUFTRAEGE_STORAGE_KEY] = "auftraege";
+  SYNC_KEY_MAP[PERFORMANCE_STORAGE_KEY] = "performance";
 
   var syncClient = null;          // Supabase-Client oder null (Sync aus)
   var syncDeviceId = null;
@@ -5893,6 +6530,7 @@
     if (remoteKey === "fliesen") return dataFliesen ? JSON.stringify(dataFliesen) : null;
     if (remoteKey === "poster") return dataPoster ? JSON.stringify(dataPoster) : null;
     if (remoteKey === "auftraege") return JSON.stringify(auftraege || []);
+    if (remoteKey === "performance") return JSON.stringify(performanceHistory || { version: 1, events: [] });
     return null;
   }
 
@@ -5986,6 +6624,10 @@
         persistKey(AUFTRAEGE_STORAGE_KEY, JSON.stringify(auftraege));
         applyTabChrome();
         renderAuftraege();
+      } else if (remoteKey === "performance" && typeof remoteData === "object") {
+        performanceHistory = migratePerformanceHistory(remoteData);
+        persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
+        if (activeTab === "performance") renderPerformance();
       } else {
         return; // unbekannter Key oder unerwartetes Format → ignorieren
       }
@@ -6105,6 +6747,7 @@
     // Tab-Buttons + Dashboard auf den (ggf. gespeicherten) aktiven Tab bringen.
     applyTabChrome();
     renderAuftraege();
+    renderPerformance();
     render();
     updateBackupReminder();
     initSync();

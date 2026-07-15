@@ -21175,13 +21175,13 @@
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "stueck": "2",
      "farbe": "beige",
      "groesse": null
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "stueck": "0,3",
      "farbe": "Dekor",
      "groesse": null
@@ -21190,7 +21190,7 @@
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
     "+ Ambientebild auf Rückseite",
-    "Weitere Größen als Anordnungsplan: siehe 9562-NAT-08 u. a. (Katalogseite 308)"
+    "Weitere Größen als Anordnungsplan: siehe 9562-NATU-08 u. a. (Katalogseite 308)"
    ],
    "display": false,
    "board_px200": [
@@ -21213,13 +21213,13 @@
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "stueck": "2",
      "farbe": "grau",
      "groesse": null
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "stueck": "0,3",
      "farbe": "Dekor",
      "groesse": null
@@ -21228,7 +21228,7 @@
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
     "+ Ambientebild auf Rückseite",
-    "Weitere Größen als Anordnungsplan: siehe 9562-NAT-06 u. a. (Katalogseite 307)"
+    "Weitere Größen als Anordnungsplan: siehe 9562-NATU-06 u. a. (Katalogseite 307)"
    ],
    "display": false,
    "board_px200": [
@@ -43012,22 +43012,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NAT-01"
+    "9555-NATU-01"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1220",
+     "artnr": "NATU 1220",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1222"
+     "artnr": "NATU 1222"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43046,23 +43046,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NAT-01",
-    "9540-NAT-01"
+    "9740-NATU-01",
+    "9540-NATU-01"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1220",
+     "artnr": "NATU 1220",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1222"
+     "artnr": "NATU 1222"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43081,23 +43081,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NAT-01",
-    "9539-NAT-01"
+    "9739-NATU-01",
+    "9539-NATU-01"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1220",
+     "artnr": "NATU 1220",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1222"
+     "artnr": "NATU 1222"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43116,22 +43116,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NAT-01"
+    "9552-NATU-01"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1220",
+     "artnr": "NATU 1220",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1222"
+     "artnr": "NATU 1222"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43150,22 +43150,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NAT-02"
+    "9555-NATU-02"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1270",
+     "artnr": "NATU 1270",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1272"
+     "artnr": "NATU 1272"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43184,23 +43184,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NAT-02",
-    "9540-NAT-02"
+    "9740-NATU-02",
+    "9540-NATU-02"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1270",
+     "artnr": "NATU 1270",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1272"
+     "artnr": "NATU 1272"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43219,23 +43219,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NAT-02",
-    "9539-NAT-02"
+    "9739-NATU-02",
+    "9539-NATU-02"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1270",
+     "artnr": "NATU 1270",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1272"
+     "artnr": "NATU 1272"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43254,22 +43254,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NAT-02"
+    "9552-NATU-02"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1270",
+     "artnr": "NATU 1270",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1272"
+     "artnr": "NATU 1272"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43288,22 +43288,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NAT-03"
+    "9555-NATU-03"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1250",
+     "artnr": "NATU 1250",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1252"
+     "artnr": "NATU 1252"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43322,23 +43322,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NAT-03",
-    "9540-NAT-03"
+    "9740-NATU-03",
+    "9540-NATU-03"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1250",
+     "artnr": "NATU 1250",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1252"
+     "artnr": "NATU 1252"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43357,23 +43357,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NAT-03",
-    "9539-NAT-03"
+    "9739-NATU-03",
+    "9539-NATU-03"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1250",
+     "artnr": "NATU 1250",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1252"
+     "artnr": "NATU 1252"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43392,22 +43392,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NAT-03"
+    "9552-NATU-03"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1250",
+     "artnr": "NATU 1250",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1252"
+     "artnr": "NATU 1252"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43426,22 +43426,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NAT-04"
+    "9555-NATU-04"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1260",
+     "artnr": "NATU 1260",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1262"
+     "artnr": "NATU 1262"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43460,23 +43460,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NAT-04",
-    "9540-NAT-04"
+    "9740-NATU-04",
+    "9540-NATU-04"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1260",
+     "artnr": "NATU 1260",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1262"
+     "artnr": "NATU 1262"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43495,23 +43495,23 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NAT-04",
-    "9539-NAT-04"
+    "9739-NATU-04",
+    "9539-NATU-04"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1260",
+     "artnr": "NATU 1260",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1262"
+     "artnr": "NATU 1262"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43530,22 +43530,22 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NAT-04"
+    "9552-NATU-04"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1260",
+     "artnr": "NATU 1260",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1262"
+     "artnr": "NATU 1262"
     }
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
    ],
    "marke": "engers",
@@ -43564,32 +43564,32 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NAT-05"
+    "9555-NATU-05"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1224"
+     "artnr": "NATU 1224"
     },
     {
-     "artnr": "NAT 1274"
+     "artnr": "NATU 1274"
     },
     {
-     "artnr": "NAT 1220"
+     "artnr": "NATU 1220"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43609,33 +43609,33 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9785-NAT-05",
-    "9585-NAT-05"
+    "9785-NATU-05",
+    "9585-NATU-05"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1224"
+     "artnr": "NATU 1224"
     },
     {
-     "artnr": "NAT 1274"
+     "artnr": "NATU 1274"
     },
     {
-     "artnr": "NAT 1220"
+     "artnr": "NATU 1220"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43655,32 +43655,32 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NAT-05"
+    "9557-NATU-05"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1224"
+     "artnr": "NATU 1224"
     },
     {
-     "artnr": "NAT 1274"
+     "artnr": "NATU 1274"
     },
     {
-     "artnr": "NAT 1220"
+     "artnr": "NATU 1220"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43700,34 +43700,34 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NAT-05",
-    "9566-NAT-05",
-    "9569-NAT-05"
+    "9562-NATU-05",
+    "9566-NATU-05",
+    "9569-NATU-05"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1224"
+     "artnr": "NATU 1224"
     },
     {
-     "artnr": "NAT 1274"
+     "artnr": "NATU 1274"
     },
     {
-     "artnr": "NAT 1220"
+     "artnr": "NATU 1220"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43747,33 +43747,33 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NAT-05",
-    "9587-NAT-05"
+    "9568-NATU-05",
+    "9587-NATU-05"
    ],
    "tafel_groesse": "100,5x192,5 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1224"
+     "artnr": "NATU 1224"
     },
     {
-     "artnr": "NAT 1274"
+     "artnr": "NATU 1274"
     },
     {
-     "artnr": "NAT 1220"
+     "artnr": "NATU 1220"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43793,28 +43793,28 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9785-NAT-06",
-    "9585-NAT-06"
+    "9785-NATU-06",
+    "9585-NATU-06"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43834,27 +43834,27 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NAT-06"
+    "9557-NATU-06"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43874,29 +43874,29 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NAT-06",
-    "9566-NAT-06",
-    "9569-NAT-06"
+    "9562-NATU-06",
+    "9566-NATU-06",
+    "9569-NATU-06"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43916,28 +43916,28 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NAT-06",
-    "9587-NAT-06"
+    "9568-NATU-06",
+    "9587-NATU-06"
    ],
    "tafel_groesse": "100,5x192,5 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1280",
+     "artnr": "NATU 1280",
      "farbe": "grau",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1270"
+     "artnr": "NATU 1270"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -43957,32 +43957,32 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NAT-07"
+    "9555-NATU-07"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1254"
+     "artnr": "NATU 1254"
     },
     {
-     "artnr": "NAT 1264"
+     "artnr": "NATU 1264"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44002,33 +44002,33 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9785-NAT-07",
-    "9585-NAT-07"
+    "9785-NATU-07",
+    "9585-NATU-07"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1254"
+     "artnr": "NATU 1254"
     },
     {
-     "artnr": "NAT 1264"
+     "artnr": "NATU 1264"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44048,32 +44048,32 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NAT-07"
+    "9557-NATU-01"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1254"
+     "artnr": "NATU 1254"
     },
     {
-     "artnr": "NAT 1264"
+     "artnr": "NATU 1264"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44093,34 +44093,34 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NAT-07",
-    "9566-NAT-07",
-    "9569-NAT-07"
+    "9562-NATU-07",
+    "9566-NATU-07",
+    "9569-NATU-07"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1254"
+     "artnr": "NATU 1254"
     },
     {
-     "artnr": "NAT 1264"
+     "artnr": "NATU 1264"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44140,33 +44140,33 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NAT-07",
-    "9587-NAT-07"
+    "9568-NATU-07",
+    "9587-NATU-07"
    ],
    "tafel_groesse": "100,5x192,5 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1254"
+     "artnr": "NATU 1254"
     },
     {
-     "artnr": "NAT 1264"
+     "artnr": "NATU 1264"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44186,31 +44186,31 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9785-NAT-08",
-    "9585-NAT-08"
+    "9785-NATU-08",
+    "9585-NATU-08"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44230,30 +44230,30 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NAT-08"
+    "9557-NATU-03"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44273,32 +44273,32 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NAT-08",
-    "9566-NAT-08",
-    "9569-NAT-08"
+    "9562-NATU-08",
+    "9566-NATU-08",
+    "9569-NATU-08"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
@@ -44318,31 +44318,31 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NAT-08",
-    "9587-NAT-08"
+    "9568-NATU-08",
+    "9587-NATU-08"
    ],
    "tafel_groesse": "100,5x192,5 cm",
    "gt": false,
    "artikel": [
     {
-     "artnr": "NAT 1240",
+     "artnr": "NATU 1240",
      "farbe": "beige",
      "groesse": "30x60 cm"
     },
     {
-     "artnr": "NAT 1214",
+     "artnr": "NATU 1214",
      "groesse": "ca 9x60 cm"
     },
     {
-     "artnr": "NAT 1250"
+     "artnr": "NATU 1250"
     },
     {
-     "artnr": "NAT 1260"
+     "artnr": "NATU 1260"
     }
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NAT-01…08)",
+    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
     "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
     "Sonderanfertigung möglich"
    ],
