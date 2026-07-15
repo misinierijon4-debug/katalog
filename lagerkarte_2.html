@@ -3094,6 +3094,17 @@
     return (Math.round(n * 100) / 100).toLocaleString("de-DE", { maximumFractionDigits: 2 });
   }
 
+  // Lieferscheine kommen häufig als "ARI 0650 – 110 ST". Für die
+  // Code-Suche wird der Teil vor der Mengenangabe separat betrachtet, damit
+  // Leerzeichen, Gedankenstriche und optionale Code-Endungen (z. B. -80)
+  // nicht verhindern, dass der vorhandene Lagercode gefunden wird.
+  function deliveryCodePart(line) {
+    var text = String(line || "").trim();
+    var qtyStart = text.search(/(?:[-–—]\s*|\s+)(?=\d+(?:[.,]\d+)?\s*(?:ST|STK|STÜCK|PCS|[x×])\b)/i);
+    if (qtyStart < 0) return text.replace(/^[•◦o○]\s*/, "").trim();
+    return text.slice(0, qtyStart).replace(/^[•◦o○]\s*/, "").trim();
+  }
+
   function deliveryQtyFromLine(line, rawCode) {
     var patterns = [
       /(?:^|\s)(\d+(?:[.,]\d+)?)\s*(?:ST|STK|STÜCK|PCS)\b/i,
@@ -3146,6 +3157,7 @@
       var line = rawLine.trim();
       if (!line) return;
       var compact = line.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      var codeCompact = deliveryMatchKey(deliveryCodePart(line));
       var matchedKey = null;
       for (var i = 0; i < keys.length; i++) {
         // Vierstellige Kurz-Codes nur als eigenständiges Token akzeptieren,
@@ -3154,6 +3166,17 @@
           var shortRe = new RegExp("(?:^|[^A-Z0-9])" + keys[i] + "(?:$|[^A-Z0-9])", "i");
           if (shortRe.test(line)) { matchedKey = keys[i]; break; }
         } else if (compact.indexOf(keys[i]) !== -1) { matchedKey = keys[i]; break; }
+      }
+      // Wenn der Lieferschein den Kurzcode ohne Endung enthält (z. B.
+      // "ARI 0650", Lagercode aber "ARI-0650-80"), den eindeutig passenden
+      // Präfix-Treffer verwenden.
+      if (!matchedKey && codeCompact) {
+        for (var p = 0; p < keys.length; p++) {
+          if (keys[p].indexOf(codeCompact) === 0 || codeCompact.indexOf(keys[p]) === 0) {
+            matchedKey = keys[p];
+            break;
+          }
+        }
       }
       if (!matchedKey) { unmatched.push(line); return; }
       var targetList = index[matchedKey];
