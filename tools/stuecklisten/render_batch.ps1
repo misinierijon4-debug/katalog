@@ -1,6 +1,6 @@
 ﻿# Rendert Seiten-HTMLs -> pages/seite-NNN.pdf und Board-HTMLs -> thumb/large JPG.
 # Aufruf: powershell -File render_batch.ps1 -WorkDir <..> -RepoDir <..>
-param([string]$WorkDir, [string]$RepoDir)
+param([string]$WorkDir, [string]$RepoDir, [switch]$PdfOnly)
 $ErrorActionPreference = "Continue"   # Edge schreibt Fortschritt auf stderr -> nicht als Fehler werten
 Add-Type -AssemblyName System.Drawing
 $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
@@ -21,6 +21,7 @@ foreach($h in $pageHtmls){
   Start-Sleep -Milliseconds 300
 }
 Write-Host "PDFs: $($pageHtmls.Count)"
+if($PdfOnly){ Write-Host "PdfOnly - Thumbnails uebersprungen"; return }
 
 # 2) Boards -> PNG -> thumb/large JPG (auf Board zugeschnitten)
 $jpeg = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq "image/jpeg" }

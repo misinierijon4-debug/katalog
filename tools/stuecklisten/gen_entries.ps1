@@ -84,6 +84,7 @@ foreach ($code in $codesBySerie) {
   $tiles = $rows | Where-Object typ -eq 'Tiles'
   $board = $rows | Where-Object typ -eq 'Wooden Board' | Select-Object -First 1
   $poster = $rows | Where-Object typ -eq 'POSTER' | Select-Object -First 1
+  $etikett = $rows | Where-Object typ -eq 'ETIKETT' | Select-Object -First 1
   $hasFoto = ($first.tafeldesc -match 'FOTO')
 
   $artikel = @()
@@ -98,7 +99,11 @@ foreach ($code in $codesBySerie) {
   # Material = haeufigste Fliesengroesse (nach Stück); Fallback 30x60
   $material = 'Steingut 30x60cm'
   if ($sizeCount.Count -gt 0) { $material = ($sizeCount.GetEnumerator() | Sort-Object Value -Descending | Select-Object -First 1).Key -replace ' cm','cm' }
-  $label = if ($poster) { "Poster $($poster.art)" } else { '' }
+  # Poster-Zeile fuers Druckblatt: Reihenfolge Poster > Foto/Ambientebild > Etikett > Platzhalter
+  $label = if ($poster) { "Poster $($poster.art)" }
+           elseif ($hasFoto) { "Poster/Foto: Ambientebild (Nr. nicht in Stückliste)" }
+           elseif ($etikett) { "Etikett $($etikett.art)" }
+           else { "Poster: ________ (bitte eintragen)" }
   $notizen = @("aus ENGERS_SampleBoard-Stückliste ($($first.bom)), kein Original-Plan – schematische Klebevorlage 07/2026")
   if ($board) { $notizen += "Trägerplatte $($board.art) ($($board.artdesc.Trim()))" }
   if ($hasFoto) { $notizen += "Tafel enthält Ambientebild/Foto" }
