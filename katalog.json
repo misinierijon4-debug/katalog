@@ -44494,6 +44494,2080 @@
    ],
    "display": false,
    "marke": "engers"
+  },
+  {
+   "id": "p312_9539CTRO0010",
+   "seite": 312,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9539-CTRO-00-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1240",
+     "stueck": "5",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (49889), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9739-SOTF-00-10 (MT 1-TLG.  920X920X10 MM, O.BOHRUNG anth)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p312_9539CTRO0110",
+   "seite": 312,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9539-CTRO-01-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1270",
+     "stueck": "5",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (49890), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9739-SOTF-00-10 (MT 1-TLG.  920X920X10 MM, O.BOHRUNG anth)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p313_9539CTRO0210",
+   "seite": 313,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9539-CTRO-02-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1290",
+     "stueck": "5",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (49891), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9739-SOTF-00-10 (MT 1-TLG.  920X920X10 MM, O.BOHRUNG anth)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p313_9539CTRO0310",
+   "seite": 313,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9539-CTRO-03-10"
+   ],
+   "tafel_groesse": "92x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1250",
+     "stueck": "5",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (49892), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9739-SOTF-00-10 (MT 1-TLG.  920X920X10 MM, O.BOHRUNG anth)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p314_9540CTRO0010",
+   "seite": 314,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9540-CTRO-00-10"
+   ],
+   "tafel_groesse": "65x65 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (49966), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9740-SOTF-G0-10 (MT 1-TLG.  650X650X5 MM, anthrazit, M.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p314_9540CTRO0110",
+   "seite": 314,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9540-CTRO-01-10"
+   ],
+   "tafel_groesse": "65x65 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (49967), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9740-SOTF-G0-10 (MT 1-TLG.  650X650X5 MM, anthrazit, M.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p315_9552CTRO0010",
+   "seite": 315,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9552-CTRO-00-10"
+   ],
+   "tafel_groesse": "125x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1240",
+     "stueck": "6",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50070), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9752-SOTF-00-10 (MT 1-TLG.  920 X 1250 X 10 MM, O.BOHRUNG)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p315_9552CTRO0210",
+   "seite": 315,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9552-CTRO-02-10"
+   ],
+   "tafel_groesse": "125x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1250",
+     "stueck": "6",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50071), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9752-SOTF-00-10 (MT 1-TLG.  920 X 1250 X 10 MM, O.BOHRUNG)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p316_9552CTRO0310",
+   "seite": 316,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9552-CTRO-03-10"
+   ],
+   "tafel_groesse": "125x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1270",
+     "stueck": "6",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50072), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9752-SOTF-00-10 (MT 1-TLG.  920 X 1250 X 10 MM, O.BOHRUNG)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p316_9552CTRO0410",
+   "seite": 316,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9552-CTRO-04-10"
+   ],
+   "tafel_groesse": "125x92 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1290",
+     "stueck": "6",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50073), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9752-SOTF-00-10 (MT 1-TLG.  920 X 1250 X 10 MM, O.BOHRUNG)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p317_9555CTRO0010",
+   "seite": 317,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9555-CTRO-00-10"
+   ],
+   "tafel_groesse": "72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "2",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50182), kein Original-Plan – schematische Klebevorlage 07/2026"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p317_9555CTRO0110",
+   "seite": 317,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9555-CTRO-01-10"
+   ],
+   "tafel_groesse": "72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "2",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50183), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9755-SOTF-G0-10 (MT 1-TLG. 780 X 720 X 5 MM GT Engers)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p318_9557CTRO0010",
+   "seite": 318,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-CTRO-00-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "5",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50329), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p318_9557CTRO0110",
+   "seite": 318,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-CTRO-01-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "4,5",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50330), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p319_9562CTRO0010",
+   "seite": 319,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9562-CTRO-00-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "6",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50419), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p319_9562CTRO0110",
+   "seite": 319,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9562-CTRO-01-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "6",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50420), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p320_9564CTRO0010",
+   "seite": 320,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9564-CTRO-00-10"
+   ],
+   "tafel_groesse": "62x68 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50535), kein Original-Plan – schematische Klebevorlage 07/2026"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p320_9564CTRO0110",
+   "seite": 320,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9564-CTRO-01-10"
+   ],
+   "tafel_groesse": "62x68 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50536), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9764-SOTF-G0-10 (MT 1-TLG. 680 X 620 X 5 MM ENGERS)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p321_9566CTRO0010",
+   "seite": 321,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9566-CTRO-00-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "7",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1244",
+     "stueck": "0,5",
+     "farbe": "kombibord. sand",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50555), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p321_9566CTRO0110",
+   "seite": 321,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9566-CTRO-01-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "6",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50556), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p322_9568CTRO0010",
+   "seite": 322,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9568-CTRO-00-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "7",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50688), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p322_9568CTRO0110",
+   "seite": 322,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9568-CTRO-01-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "6",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50689), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p323_9569CTRO0010",
+   "seite": 323,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9569-CTRO-00-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "6",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50822), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p323_9569CTRO0110",
+   "seite": 323,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9569-CTRO-01-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "6",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50823), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p324_9585CTRO0010",
+   "seite": 324,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9585-CTRO-00-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "3",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "0,5",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "0,5",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50954), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9785-SOTF-G0-10 (MT 1-TLG.1300X650X5 MM, anthrazit, M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p324_9585CTRO0110",
+   "seite": 324,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9585-CTRO-01-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "3",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50955), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9785-SOTF-G0-10 (MT 1-TLG.1300X650X5 MM, anthrazit, M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p325_9587CTRO0010",
+   "seite": 325,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9587-CTRO-00-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1220",
+     "stueck": "8",
+     "farbe": "vintage-look beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51030), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p325_9587CTRO0110",
+   "seite": 325,
+   "serie": "CENTRO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9587-CTRO-01-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "CEN 1280",
+     "stueck": "6",
+     "farbe": "vintage-look grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51031), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p326_9555NEPO0010",
+   "seite": 326,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9555-NEPO-00-10"
+   ],
+   "tafel_groesse": "72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "2",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50246), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9755-SOTF-G0-10 (MT 1-TLG. 780 X 720 X 5 MM GT Engers)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p326_9555NEPO0110",
+   "seite": 326,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9555-NEPO-01-10"
+   ],
+   "tafel_groesse": "78x72 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "2",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50247), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9755-SOTF-G0-10 (MT 1-TLG. 780 X 720 X 5 MM GT Engers)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p327_9555NEPO0210",
+   "seite": 327,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9555-NEPO-02-10"
+   ],
+   "tafel_groesse": "72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "1",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "6",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50248), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9755-SOTF-G0-10 (MT 1-TLG. 780 X 720 X 5 MM GT Engers)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p327_9555NEPO0310",
+   "seite": 327,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9555-NEPO-03-10"
+   ],
+   "tafel_groesse": "72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "1",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "6",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50249), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9755-SOTF-G0-10 (MT 1-TLG. 780 X 720 X 5 MM GT Engers)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p328_9557NEPO0010",
+   "seite": 328,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-NEPO-00-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50377), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p328_9557NEPO0110",
+   "seite": 328,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-NEPO-01-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50378), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p329_9557NEPO0210",
+   "seite": 329,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-NEPO-02-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "6",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50379), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p329_9557NEPO0310",
+   "seite": 329,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9557-NEPO-03-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "6",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50380), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p330_9562NEPO0010",
+   "seite": 330,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9562-NEPO-00-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "6,5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1270",
+     "stueck": "1,5",
+     "farbe": "antikgrau beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50481), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p330_9562NEPO0110",
+   "seite": 330,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9562-NEPO-01-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1250",
+     "stueck": "1",
+     "farbe": "naturbeige beton-holz",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1260",
+     "stueck": "1",
+     "farbe": "tabakbraun beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50482), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p331_9562NEPO0210",
+   "seite": 331,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9562-NEPO-02-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "9",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "0,5",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "0,5",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50483), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p331_9562NEPO0310",
+   "seite": 331,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9562-NEPO-03-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "9",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50484), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p332_9566NEPO0010",
+   "seite": 332,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9566-NEPO-00-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "7,5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1270",
+     "stueck": "2",
+     "farbe": "antikgrau beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50617), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p332_9566NEPO0110",
+   "seite": 332,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9566-NEPO-01-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1250",
+     "stueck": "1",
+     "farbe": "naturbeige beton-holz",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1260",
+     "stueck": "1",
+     "farbe": "tabakbraun beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50618), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p333_9566NEPO0210",
+   "seite": 333,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9566-NEPO-02-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "9",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50619), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p333_9566NEPO0310",
+   "seite": 333,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9566-NEPO-03-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "9",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50620), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p334_9568NEPO0010",
+   "seite": 334,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9568-NEPO-00-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "7,5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1270",
+     "stueck": "2",
+     "farbe": "antikgrau beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50750), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p334_9568NEPO0110",
+   "seite": 334,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9568-NEPO-01-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1250",
+     "stueck": "1",
+     "farbe": "naturbeige beton-holz",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1260",
+     "stueck": "1",
+     "farbe": "tabakbraun beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50751), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p335_9568NEPO0210",
+   "seite": 335,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9568-NEPO-02-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "9",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50752), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p335_9568NEPO0310",
+   "seite": 335,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9568-NEPO-03-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "9",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50753), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p336_9569NEPO0010",
+   "seite": 336,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9569-NEPO-00-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "6,5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1270",
+     "stueck": "2",
+     "farbe": "antikgrau beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50882), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p336_9569NEPO0110",
+   "seite": 336,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9569-NEPO-01-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "6,5",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1250",
+     "stueck": "1",
+     "farbe": "naturbeige beton-holz",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1260",
+     "stueck": "1",
+     "farbe": "tabakbraun beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50883), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p337_9569NEPO0210",
+   "seite": 337,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9569-NEPO-02-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "11",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50884), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p337_9569NEPO0310",
+   "seite": 337,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9569-NEPO-03-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "11",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50885), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p338_9585NEPO0010",
+   "seite": 338,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9585-NEPO-00-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "3",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50994), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9785-SOTF-G0-10 (MT 1-TLG.1300X650X5 MM, anthrazit, M.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p338_9585NEPO0110",
+   "seite": 338,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9585-NEPO-01-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "3",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50995), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9785-SOTF-G0-10 (MT 1-TLG.1300X650X5 MM, anthrazit, M.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p339_9585NEPO0210",
+   "seite": 339,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9585-NEPO-02-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "2",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "6",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50996), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9785-SOTF-G0-10 (MT 1-TLG.1300X650X5 MM, anthrazit, M.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p339_9585NEPO0310",
+   "seite": 339,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9585-NEPO-03-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "2",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "6",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50997), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9785-SOTF-G0-10 (MT 1-TLG.1300X650X5 MM, anthrazit, M.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p340_9587NEPO0010",
+   "seite": 340,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9587-NEPO-00-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "7,5",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1270",
+     "stueck": "2",
+     "farbe": "antikgrau beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51092), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p340_9587NEPO0110",
+   "seite": 340,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9587-NEPO-01-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1250",
+     "stueck": "1",
+     "farbe": "naturbeige beton-holz",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "NAT 1260",
+     "stueck": "1",
+     "farbe": "tabakbraun beton-holz",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51093), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p341_9587NEPO0210",
+   "seite": 341,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9587-NEPO-02-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1240",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-beige",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2540",
+     "stueck": "9",
+     "farbe": "di-bricks beige",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1240",
+     "stueck": "1",
+     "farbe": "vintage-look sand",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1250",
+     "stueck": "1",
+     "farbe": "vintage-look schoko",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51094), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p341_9587NEPO0310",
+   "seite": 341,
+   "serie": "NEO",
+   "material": "Steingut 30x60cm",
+   "codes": [
+    "9587-NEPO-03-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "NEO 1280",
+     "stueck": "7",
+     "farbe": "lasuroptik weiß-grau",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "DOM 2580",
+     "stueck": "9",
+     "farbe": "di-bricks grau",
+     "groesse": "7,5x30 cm"
+    },
+    {
+     "artnr": "CEN 1270",
+     "stueck": "1",
+     "farbe": "vintage-look zement",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "CEN 1290",
+     "stueck": "1",
+     "farbe": "vintage-look graphit",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51095), kein Original-Plan – schematische Klebevorlage 07/2026",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)"
+   ],
+   "display": false,
+   "marke": "engers"
   }
  ],
  "probleme": [
