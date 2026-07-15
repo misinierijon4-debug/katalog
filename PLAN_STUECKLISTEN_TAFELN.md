@@ -3,6 +3,22 @@
 Stand: 15.07.2026 · Analyse der `ENGERS_SampleBoard_Stuecklisten_Eingabeliste.xlsx`
 (Blatt „Masterdaten", aus `Downloads\MuTa Kataloge (1).zip\01_ENGERS`)
 
+## Fortschritt (erledigt)
+
+| Serie | Tafeln | Seiten | Commit |
+|---|---|---|---|
+| CEMENTO (CE46/CE87) | 2 | 311 | ee0e1ec |
+| CENTRO | 28 | 312–325 | cd190a6 |
+| NEO | 32 | 326–341 | cd190a6 |
+| COLOR IT (inkl. EO) | 58 | 342–370 | 43a0570 |
+
+Pipeline steht in `tools/stuecklisten/`: `gen_entries.ps1` (BOM→Einträge+Farben),
+`gen_svg.ps1` (Board-SVG + A4-Seiten im Engers-Format), `render_batch.ps1`
+(Edge-headless → seite-NNN.pdf + Thumbnails, direkte `& $edge`-Aufrufe mit
+ErrorAction=Continue!), `insert_entries.ps1` (CRLF-toleranter Textsplice in
+katalog.json + katalog.js). Nächste Serie: BOM extrahieren → gen_entries mit
+`-StartSeite 371 -SerieName "<X>"` → gen_svg → render_batch → insert → commit.
+
 ## Befund
 
 | | Anzahl |
