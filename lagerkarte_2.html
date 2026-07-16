@@ -3283,6 +3283,14 @@
     return /\d+(?:[.,]\d+)?\s*(?:ST|STK|STÜCK|PCS|[x×])\b/i.test(String(line || ""));
   }
 
+  // Fliesen beginnen mit vier Ziffern (z. B. 2420-0J). Poster/Etiketten
+  // beginnen dagegen mit einer Zahlen-Buchstaben-Kombination (z. B.
+  // 91E1-IND1-00). Diese Unterscheidung gilt auch für neue, noch nicht im
+  // Bestand angelegte Lieferscheinartikel.
+  function deliveryUnknownKind(code) {
+    return /^\d+[A-Z]/i.test(String(code || "").trim()) ? "poster" : "fliesen";
+  }
+
   function deliveryQtyFromLine(line, rawCode) {
     var patterns = [
       /(?:^|\s)(\d+(?:[.,]\d+)?)\s*(?:ST|STK|STÜCK|PCS)\b/i,
@@ -3336,6 +3344,8 @@
       if (!line) return;
       var transport = deliveryTransportNumber(line);
       if (transport) { currentTransport = transport; return; }
+      // Überschriften/Metadaten des Lieferscheins sind keine Positionen.
+      if (/^(?:Lieferschein|Bestellung|Auftrag)\b/i.test(line)) return;
       var compact = line.toUpperCase().replace(/[^A-Z0-9]/g, "");
       var codeCompact = deliveryMatchKey(deliveryCodePart(line));
       var matchedKey = null;
@@ -3362,7 +3372,7 @@
         if (codeCompact && deliveryLooksLikeItem(line)) {
           var unknownCode = deliveryDisplayCode(line);
           var unknownKey = (currentTransport || "ohne-transport") + ":" + unknownCode;
-          if (!unknown[unknownKey]) unknown[unknownKey] = { code: unknownCode, incoming: 0, transport: currentTransport, lines: [] };
+          if (!unknown[unknownKey]) unknown[unknownKey] = { code: unknownCode, kind: deliveryUnknownKind(unknownCode), incoming: 0, transport: currentTransport, lines: [] };
           unknown[unknownKey].incoming += deliveryQtyFromLine(line, unknownCode);
           unknown[unknownKey].lines.push(line);
           return;
@@ -3407,7 +3417,8 @@
           (e.alternatives ? '<div class="lieferung-hint">' + e.alternatives + ' weiterer Lager-Treffer; bevorzugter Platz gewählt</div>' : '') + '</td></tr>';
     }).join("");
     rows += result.unknown.map(function (e) {
-      return '<tr><td class="lieferung-code">' + escapeHtml(e.code) + '</td><td>+' + formatDeliveryNumber(e.incoming) + '</td><td>neu</td><td><span class="lieferung-route">Fliesen → Neue Lieferung' + (e.transport ? ' ' + escapeHtml(e.transport) : '') + ' (noch ohne Stellplatz)</span></td></tr>';
+      var kindLabel = e.kind === "poster" ? "Poster/Etiketten" : "Fliesen";
+      return '<tr><td class="lieferung-code">' + escapeHtml(e.code) + '</td><td>+' + formatDeliveryNumber(e.incoming) + '</td><td>neu</td><td><span class="lieferung-route">' + kindLabel + ' → Neue Lieferung' + (e.transport ? ' ' + escapeHtml(e.transport) : '') + ' (noch ohne Stellplatz)</span></td></tr>';
     }).join("");
     box.innerHTML = '<div class="lieferung-summary"><span class="lieferung-chip ok">' + (result.entries.length + result.unknown.length) + ' Artikel erkannt</span><span class="lieferung-chip">' + formatDeliveryNumber(totalQty) + ' Stück Wareneingang</span>' +
       (result.unknown.length ? '<span class="lieferung-chip warn">' + result.unknown.length + ' ohne Stellplatz</span>' : '') +
@@ -3440,18 +3451,22 @@
     if (bestellungPreview.unknown.length) {
       var unknownByTransport = {};
       bestellungPreview.unknown.forEach(function (e) {
-        var key = e.transport || "ohne-transport";
+        var key = (e.kind || "fliesen") + ":" + (e.transport || "ohne-transport");
         if (!unknownByTransport[key]) unknownByTransport[key] = [];
         unknownByTransport[key].push(e);
       });
-      Object.keys(unknownByTransport).forEach(function (transport) {
-        var catId = "lieferung_eingang_" + transport.replace(/[^0-9a-z]+/gi, "_");
-        var cat = dataFliesen.categories.filter(function (c) { return c.id === catId; })[0];
+      Object.keys(unknownByTransport).forEach(function (groupKey) {
+        var split = groupKey.indexOf(":");
+        var kind = split < 0 ? "fliesen" : groupKey.slice(0, split);
+        var transport = split < 0 ? groupKey : groupKey.slice(split + 1);
+        var dataset = kind === "poster" ? dataPoster : dataFliesen;
+        var catId = "lieferung_" + kind + "_" + transport.replace(/[^0-9a-z]+/gi, "_");
+        var cat = dataset.categories.filter(function (c) { return c.id === catId; })[0];
         if (!cat) {
-          cat = { id: catId, label: "Neue Lieferung" + (transport === "ohne-transport" ? "" : " " + transport) + " (noch ohne Stellplatz)", zone: "eingang", circled: false, items: [] };
-          dataFliesen.categories.push(cat);
+          cat = { id: catId, label: (kind === "poster" ? "Neue Poster/Etikettenlieferung" : "Neue Fliesenlieferung") + (transport === "ohne-transport" ? "" : " " + transport) + " (noch ohne Stellplatz)", zone: "eingang", circled: false, items: [] };
+          dataset.categories.push(cat);
         }
-        unknownByTransport[transport].forEach(function (e) {
+        unknownByTransport[groupKey].forEach(function (e) {
           var item = cat.items.filter(function (it) { return deliveryMatchKey(it.code) === deliveryMatchKey(e.code); })[0];
           if (!item) {
             item = makeItem(e.code, { note: transport === "ohne-transport" ? "Wareneingang" : "Transport " + transport });
@@ -3460,7 +3475,10 @@
           item.qty = formatDeliveryNumber(parseDeliveryNumber(item.qty) + e.incoming);
         });
       });
-      changedKeys[FLIESEN_STORAGE_KEY] = dataFliesen;
+      Object.keys(unknownByTransport).forEach(function (groupKey) {
+        var kind = groupKey.indexOf(":") < 0 ? "fliesen" : groupKey.slice(0, groupKey.indexOf(":"));
+        changedKeys[kind === "poster" ? POSTER_STORAGE_KEY : FLIESEN_STORAGE_KEY] = kind === "poster" ? dataPoster : dataFliesen;
+      });
     }
     noteDataChanged();
     Object.keys(changedKeys).forEach(function (key) { persistKey(key, JSON.stringify(changedKeys[key])); });
