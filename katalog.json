@@ -48613,6 +48613,497 @@
    ],
    "display": false,
    "marke": "engers"
+  },
+  {
+   "id": "p371_9521SP220410",
+   "seite": 371,
+   "serie": "SPA",
+   "material": "11x100cm",
+   "codes": [
+    "9521-SP22-04-10"
+   ],
+   "tafel_groesse": "101x43 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "SPA 2422",
+     "stueck": "3",
+     "farbe": "bordüre 3er-set blau-braun",
+     "groesse": "11x100 cm"
+    }
+   ],
+   "label": "Poster 9331-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (49795) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.1",
+    "Trägerplatte 9721-SOTF-G0-10 (MT 1-TLG. 1000 X 420 X 5 MM)",
+    "Tafel enthält Ambientebild/Foto",
+    "Bild-Zuordnung unsicher: Plan S.1 zeigt drei Tafeln „GT 43x101“ (SPA 2420/2421/2422), es gibt aber nur diesen einen Code. Hier ist die Bordüren-Tafel unten links abgebildet — bitte am Original-Plan prüfen."
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p372_9557SP220610",
+   "seite": 372,
+   "serie": "SPA",
+   "material": "33x100cm",
+   "codes": [
+    "9557-SP22-06-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 2420",
+     "stueck": "2",
+     "farbe": "usedopti glanzeffekt wei",
+     "groesse": "33x100 cm"
+    },
+    {
+     "artnr": "SPA 2422",
+     "stueck": "1",
+     "farbe": "bordüre 3er-set blau-braun",
+     "groesse": "11x100 cm"
+    }
+   ],
+   "label": "Poster 9331-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50392) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.2",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)",
+    "Tafel enthält Ambientebild/Foto",
+    "Achtung: Diese Größe ist auf dem Original-Plan nicht abgebildet — Bestückung laut Stückliste, Anordnung analog der übrigen Größen"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p372_9562SP220610",
+   "seite": 372,
+   "serie": "SPA",
+   "material": "33x100cm",
+   "codes": [
+    "9562-SP22-06-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 2420",
+     "stueck": "3",
+     "farbe": "usedopti glanzeffekt wei",
+     "groesse": "33x100 cm"
+    },
+    {
+     "artnr": "SPA 2422",
+     "stueck": "3",
+     "farbe": "bordüre 3er-set blau-braun",
+     "groesse": "11x100 cm"
+    }
+   ],
+   "label": "Poster 9331-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50502) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.2",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p372_9566SP220610",
+   "seite": 372,
+   "serie": "SPA",
+   "material": "33x100cm",
+   "codes": [
+    "9566-SP22-06-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 2420",
+     "stueck": "3",
+     "farbe": "usedopti glanzeffekt wei",
+     "groesse": "33x100 cm"
+    },
+    {
+     "artnr": "SPA 2422",
+     "stueck": "3",
+     "farbe": "bordüre 3er-set blau-braun",
+     "groesse": "11x100 cm"
+    }
+   ],
+   "label": "Poster 9331-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50638) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.2",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p372_9569SP220610",
+   "seite": 372,
+   "serie": "SPA",
+   "material": "33x100cm",
+   "codes": [
+    "9569-SP22-06-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 2420",
+     "stueck": "3",
+     "farbe": "usedopti glanzeffekt wei",
+     "groesse": "33x100 cm"
+    },
+    {
+     "artnr": "SPA 2422",
+     "stueck": "3",
+     "farbe": "bordüre 3er-set blau-braun",
+     "groesse": "11x100 cm"
+    }
+   ],
+   "label": "Poster 9331-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50903) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.2",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p373_9568SP220610",
+   "seite": 373,
+   "serie": "SPA",
+   "material": "33x100cm",
+   "codes": [
+    "9568-SP22-06-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 2420",
+     "stueck": "4",
+     "farbe": "usedopti glanzeffekt wei",
+     "groesse": "33x100 cm"
+    },
+    {
+     "artnr": "SPA 2422",
+     "stueck": "1",
+     "farbe": "bordüre 3er-set blau-braun",
+     "groesse": "11x100 cm"
+    }
+   ],
+   "label": "Poster 9331-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50771) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.3",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p373_9587SP220610",
+   "seite": 373,
+   "serie": "SPA",
+   "material": "33x100cm",
+   "codes": [
+    "9587-SP22-06-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 2420",
+     "stueck": "4",
+     "farbe": "usedopti glanzeffekt wei",
+     "groesse": "33x100 cm"
+    },
+    {
+     "artnr": "SPA 2422",
+     "stueck": "3",
+     "farbe": "bordüre 3er-set blau-braun",
+     "groesse": "11x100 cm"
+    }
+   ],
+   "label": "Poster 9331-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51113) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.3",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p374_9555SP220410",
+   "seite": 374,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9555-SP22-04-10"
+   ],
+   "tafel_groesse": "72x78 cm",
+   "gt": true,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "1",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "1",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50281) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.4",
+    "Trägerplatte 9755-SOTF-G0-10 (MT 1-TLG. 780 X 720 X 5 MM GT Engers)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p374_9585SP220410",
+   "seite": 374,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9585-SP22-04-10"
+   ],
+   "tafel_groesse": "65x130 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "2",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "1",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51006) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.4",
+    "Trägerplatte 9785-SOTF-G0-10 (MT 1-TLG.1300X650X5 MM, anthrazit, M.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p375_9557SP220410",
+   "seite": 375,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9557-SP22-04-10"
+   ],
+   "tafel_groesse": "94x134 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "3,5",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "2",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50391) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.5",
+    "Trägerplatte 9757-SOTF-G0-10 (MT 1-TLG.  940X1340X5 MM, anthrazitM.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p376_9562SP220410",
+   "seite": 376,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9562-SP22-04-10"
+   ],
+   "tafel_groesse": "104x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "5",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "3",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50501) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.6",
+    "Trägerplatte 9762-SOTF-G0-10 (MT 1-TLG. 1040X1840X10 MM, anthraz.M.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p376_9566SP220410",
+   "seite": 376,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9566-SP22-04-10"
+   ],
+   "tafel_groesse": "107x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "5",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "3",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50637) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.6",
+    "Trägerplatte 9766-SOTF-G0-10 (MT 1-TLG. 1070X1840X10 MM, anthrazit MLB)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p376_9568SP220410",
+   "seite": 376,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9568-SP22-04-10"
+   ],
+   "tafel_groesse": "100,5x192,5 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "6,5",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "3",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50770) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.6",
+    "Trägerplatte 9768-SOTF-G0-10 (MT 1-TLG. 1005X1924X13MM, anthraz. O.LB.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p376_9569SP220410",
+   "seite": 376,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9569-SP22-04-10"
+   ],
+   "tafel_groesse": "97x184 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "5",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "3",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (50902) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.6",
+    "Trägerplatte 9769-SOTF-G0-10 (MT 1-TLG.  970 X 1840 X 10 MM, M.B.)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
+  },
+  {
+   "id": "p376_9587SP220410",
+   "seite": 376,
+   "serie": "SPA",
+   "material": "30x60cm",
+   "codes": [
+    "9587-SP22-04-10"
+   ],
+   "tafel_groesse": "100x200 cm",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "SPA 1220",
+     "stueck": "6,5",
+     "farbe": "usedopti glanzeffekt weiß",
+     "groesse": "30x60 cm"
+    },
+    {
+     "artnr": "SPA 1222",
+     "stueck": "3",
+     "farbe": "brick-mosaik blau-braun",
+     "groesse": "30x60 cm"
+    }
+   ],
+   "label": "Poster 9336-SPA2-Y2-10",
+   "notizen": [
+    "aus ENGERS_SampleBoard-Stückliste (51112) + Original-Plan „Mustertafeln SPA gesamt.pdf“ S.6",
+    "Trägerplatte 9787-SOTF-G0-10 (MT 1-TLG. 2000X1000X13 MM, anthraz. O.LB)",
+    "Tafel enthält Ambientebild/Foto"
+   ],
+   "display": false,
+   "marke": "engers"
   }
  ],
  "probleme": [
