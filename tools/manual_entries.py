@@ -9,12 +9,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 def campus(page, codes, name_suffix, size, gt, arts_spec, farbe, ycode, board):
     arts = [{"artnr": a, "stueck": s, "farbe": farbe, "groesse": g} for a, s, g in arts_spec]
-    codes_all = list(codes) + ([ycode] if ycode else [])
+    # ycode (z. B. 9336-CAM4-Y0) ist die Poster-Artikelnummer auf dem Tafelfoto,
+    # KEIN Tafel-Code -> gehoert ins label, nicht in codes.
     return {
         "id": f"p{page:03d}_{codes[0].replace('-','')}",
         "seite": page, "serie": "CAMPUS", "material": "Steingut/Feinsteinzeug 30x60 cm",
-        "codes": codes_all, "tafel_groesse": size, "gt": gt, "artikel": arts,
-        "label": None, "notizen": ["Mustertafel CAM 30x60 cm WAND"],
+        "codes": list(codes), "tafel_groesse": size, "gt": gt, "artikel": arts,
+        "label": f"Poster {ycode}" if ycode else None,
+        "notizen": ["Mustertafel CAM 30x60 cm WAND"],
         "board_px200": board, "display": False, "manuell": True,
     }
 

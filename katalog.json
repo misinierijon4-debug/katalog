@@ -15039,8 +15039,7 @@
    "serie": "CAMPUS",
    "material": "Steingut/Feinsteinzeug 30x60 cm",
    "codes": [
-    "9585-CA41-04-10",
-    "9336-CAM4-Y0"
+    "9585-CA41-04-10"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
@@ -15058,7 +15057,7 @@
      "groesse": "30x60 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM4-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
@@ -15078,8 +15077,7 @@
    "serie": "CAMPUS",
    "material": "Steingut/Feinsteinzeug 30x60 cm",
    "codes": [
-    "9557-CA41-04-10",
-    "9336-CAM4-Y0"
+    "9557-CA41-04-10"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
@@ -15109,7 +15107,7 @@
      "groesse": "30x30 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM4-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
@@ -15131,8 +15129,7 @@
    "codes": [
     "9569-CA41-04-10",
     "9562-CA41-04-10",
-    "9566-CA41-04-10",
-    "9336-CAM4-Y0"
+    "9566-CA41-04-10"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
@@ -15162,7 +15159,7 @@
      "groesse": "30x30 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM4-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
@@ -15183,8 +15180,7 @@
    "material": "Steingut/Feinsteinzeug 30x60 cm",
    "codes": [
     "9568-CA41-04-10",
-    "9587-CA41-04-10",
-    "9336-CAM4-Y0"
+    "9587-CA41-04-10"
    ],
    "tafel_groesse": "100x200 / 100,5x192,5 cm",
    "gt": false,
@@ -15214,7 +15210,7 @@
      "groesse": "30x30 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM4-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
@@ -15272,8 +15268,7 @@
    "serie": "CAMPUS",
    "material": "Steingut/Feinsteinzeug 30x60 cm",
    "codes": [
-    "9585-CA81-04-10",
-    "9336-CAM8-Y0"
+    "9585-CA81-04-10"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
@@ -15291,7 +15286,7 @@
      "groesse": "30x60 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM8-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
@@ -15311,8 +15306,7 @@
    "serie": "CAMPUS",
    "material": "Steingut/Feinsteinzeug 30x60 cm",
    "codes": [
-    "9557-CA81-04-10",
-    "9336-CAM8-Y0"
+    "9557-CA81-04-10"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
@@ -15342,7 +15336,7 @@
      "groesse": "30x30 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM8-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
@@ -15364,8 +15358,7 @@
    "codes": [
     "9569-CA81-04-10",
     "9562-CA81-04-10",
-    "9566-CA81-04-10",
-    "9336-CAM8-Y0"
+    "9566-CA81-04-10"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
@@ -15395,7 +15388,7 @@
      "groesse": "30x30 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM8-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
@@ -15416,8 +15409,7 @@
    "material": "Steingut/Feinsteinzeug 30x60 cm",
    "codes": [
     "9568-CA81-04-10",
-    "9587-CA81-04-10",
-    "9336-CAM8-Y0"
+    "9587-CA81-04-10"
    ],
    "tafel_groesse": "100x200 / 100,5x192,5 cm",
    "gt": false,
@@ -15447,7 +15439,7 @@
      "groesse": "30x30 cm"
     }
    ],
-   "label": null,
+   "label": "Poster 9336-CAM8-Y0",
    "notizen": [
     "Mustertafel CAM 30x60 cm WAND"
    ],
