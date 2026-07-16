@@ -4835,7 +4835,7 @@
   // erscheinen nur einmal; unter jedem Code bleiben alle betroffenen Aufträge
   // und Positionen sichtbar.
   function ermittleWasFehltAlle(index) {
-    var katalogMap = {}, bausteineMap = {}, blankoMap = {}, posterMap = {};
+    var katalogMap = {}, bausteineMap = {}, posterMap = {};
 
     function codeKey(code) {
       return normalizeCode(code || "").replace(/[^A-Z0-9]/g, "");
@@ -4876,19 +4876,16 @@
         mergePositionen(katalogMap[key], [{ pos: item.pos, code: item.code }], a);
       });
       report.bausteine.forEach(function (item) { mergeGruppe(bausteineMap, codeKey(item.artnr), item, a); });
-      report.blanko.forEach(function (item) { mergeGruppe(blankoMap, codeKey(item.code), item, a); });
       (report.poster || []).forEach(function (item) { mergeGruppe(posterMap, codeKey(item.code), item, a); });
     });
 
     var katalogFehlt = Object.keys(katalogMap).map(function (key) { return katalogMap[key]; });
     var bausteine = Object.keys(bausteineMap).map(function (key) { return bausteineMap[key]; });
-    var blanko = Object.keys(blankoMap).map(function (key) { return blankoMap[key]; });
     var poster = Object.keys(posterMap).map(function (key) { return posterMap[key]; });
     katalogFehlt.sort(function (a, b) { return String(a.code).localeCompare(String(b.code), "de", { numeric: true }); });
     bausteine.sort(function (a, b) { return String(a.artnr).localeCompare(String(b.artnr), "de", { numeric: true }); });
-    blanko.sort(function (a, b) { return String(a.code).localeCompare(String(b.code), "de", { numeric: true }); });
     poster.sort(function (a, b) { return String(a.code).localeCompare(String(b.code), "de", { numeric: true }); });
-    return { katalogFehlt: katalogFehlt, bausteine: bausteine, blanko: blanko, poster: poster };
+    return { katalogFehlt: katalogFehlt, bausteine: bausteine, blanko: [], poster: poster };
   }
 
   // Baut die "Positionen"-Zeile für dedupliziert gefehlte Bausteine/Blanko
@@ -6163,10 +6160,14 @@
     wasFehltModalEl.style.display = "flex";
   }
 
-  function wasFehltSummary(report, prefix) {
-    return (prefix ? prefix + " · " : "") + report.katalogFehlt.length + " Pos. ohne Katalogeintrag · " +
-      report.bausteine.length + " fehlende Baustein(e) · " + report.blanko.length + " fehlende Blanko-Tafel(n) · " +
-      (report.poster || []).length + " fehlende(s) Poster/Etikett(en)";
+  function wasFehltSummary(report, prefix, ohneBlanko) {
+    var teile = [
+      report.katalogFehlt.length + " Pos. ohne Katalogeintrag",
+      report.bausteine.length + " fehlende Baustein(e)"
+    ];
+    if (!ohneBlanko) teile.push(report.blanko.length + " fehlende Blanko-Tafel(n)");
+    teile.push((report.poster || []).length + " fehlende(s) Poster/Etikett(en)");
+    return (prefix ? prefix + " · " : "") + teile.join(" · ");
   }
 
   function openWasFehltModal(auftragId) {
@@ -6179,7 +6180,7 @@
 
   function openWasFehltAlleModal() {
     var report = ermittleWasFehltAlle(buildLagerIndex());
-    showWasFehltReport(report, "Was fehlt? – alle Aufträge", wasFehltSummary(report, auftraege.length + " Auftrag/Aufträge geprüft"));
+    showWasFehltReport(report, "Was fehlt? – alle Aufträge", wasFehltSummary(report, auftraege.length + " Auftrag/Aufträge geprüft", true));
   }
 
   function closeWasFehltModal() {
