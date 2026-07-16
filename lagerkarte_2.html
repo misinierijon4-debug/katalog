@@ -363,6 +363,41 @@
     padding: 16px;
   }
 
+  /* Breite, nach Erfassungstag gruppierte Auftragsansicht. */
+  .auftrag-day-board { display: block; padding: 2px 2px 8px; }
+  .auftrag-day-column {
+    display: block; background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; margin-bottom: 10px;
+  }
+  .auftrag-day-column.is-today { border-color: var(--primary); }
+  .auftrag-day-head {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    cursor: pointer; list-style: none; user-select: none;
+  }
+  .auftrag-day-head::-webkit-details-marker { display: none; }
+  .auftrag-day-column:not([open]) .auftrag-day-head { border-bottom: none; }
+  .auftrag-day-chevron { color: var(--text-faint); transition: transform .15s ease; flex: none; }
+  .auftrag-day-column[open] .auftrag-day-chevron { transform: rotate(90deg); }
+  .auftrag-day-date { font-size: 13px; font-weight: 800; white-space: nowrap; }
+  .auftrag-day-date small { color: var(--primary-fg); font-size: 10px; margin-left: 5px; }
+  .auftrag-day-total {
+    min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px; background: var(--primary-bg); color: var(--primary-fg);
+    font-size: 10.5px; font-weight: 800;
+  }
+  .auftrag-day-statuses { margin-left: auto; display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+  .auftrag-day-stat { font-size: 9.5px; color: var(--text-muted); white-space: nowrap; }
+  .auftrag-day-stat strong { color: var(--text); }
+  .auftrag-day-cards { padding: 8px; }
+  .auftrag-day-cards .auftrag-card:last-child { margin-bottom: 0; }
+  .auftrag-day-cards .auftrag-body { overflow-x: auto; }
+  @media (max-width: 720px) {
+    .auftrag-day-board { padding-bottom: 0; }
+    .auftrag-day-column { margin-bottom: 12px; }
+  }
+
   /* ---------- Bestellungen / intelligenter Wareneingang ---------- */
   .bestellungen-section, .performance-section { margin-bottom: 12px; }
   .feature-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
@@ -1541,7 +1576,7 @@
   /* Ganze Positionszeile klickbar zum Picken; user-select aus, damit ein
      Doppelklick keinen Text markiert. */
   .auftrag-pos-table tr.pos-row { cursor: pointer; -webkit-user-select: none; user-select: none; }
-  .auftrag-pos-table .pos-picked { width: 116px; text-align: center; padding: 2px 4px; }
+  .auftrag-pos-table .pos-picked { width: 118px; text-align: center; padding: 2px 4px; }
   .position-state-controls {
     display: flex; align-items: center; justify-content: center; gap: 4px;
   }
@@ -1566,7 +1601,7 @@
   tr.pos-row.gepickt .pick-circle svg { transform: scale(1); }
   .work-toggle {
     display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-    height: 28px; padding: 0 8px; border: 1px solid var(--border-strong);
+    width: 28px; height: 28px; padding: 0; border: 1px solid var(--border-strong);
     border-radius: 999px; background: var(--surface); color: var(--text-muted);
     font: 700 10.5px/1 system-ui, sans-serif; cursor: pointer; white-space: nowrap;
     transition: background .15s ease, border-color .15s ease, color .15s ease;
@@ -1577,6 +1612,18 @@
   tr.pos-row.in-arbeit .work-toggle { background: var(--blue-bg); color: var(--blue-fg); border-color: var(--blue-border); }
   .auftrag-pos-table tr.pos-row.in-arbeit td { background: var(--blue-bg); }
   tr.pos-row.in-arbeit .pos-code { color: var(--blue-fg); }
+  .partial-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; padding: 0; border: 1px solid var(--border-strong);
+    border-radius: 999px; background: var(--surface); color: var(--text-muted);
+    cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .partial-toggle:hover,
+  tr.pos-row.teilweise .partial-toggle { background: var(--yellow-bg); color: var(--yellow-fg); border-color: var(--yellow-border); }
+  .partial-toggle:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+  .partial-toggle svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .auftrag-pos-table tr.pos-row.teilweise td { background: var(--yellow-bg); }
+  tr.pos-row.teilweise .pos-code { color: var(--yellow-fg); }
   /* Pop-Animation nur auf dem frisch abgehakten Toggle (Klasse setzt das JS
      nach dem Neu-Rendern), sonst würde jeder Render alle Haken animieren. */
   .pick-toggle.just-picked .pick-circle { animation: pickPop .18s ease; }
@@ -1697,9 +1744,11 @@
     /* Grüner Zustand liegt hier auf der Karte (tr), nicht auf den Zellen. */
     .auftrag-pos-table tr.pos-row:hover td,
     .auftrag-pos-table tr.pos-row.gepickt td,
-    .auftrag-pos-table tr.pos-row.in-arbeit td { background: none; }
+    .auftrag-pos-table tr.pos-row.in-arbeit td,
+    .auftrag-pos-table tr.pos-row.teilweise td { background: none; }
     .auftrag-pos-table tr.pos-row.gepickt { background: var(--green-bg); border-color: var(--green-fg); }
     .auftrag-pos-table tr.pos-row.in-arbeit { background: var(--blue-bg); border-color: var(--blue-fg); }
+    .auftrag-pos-table tr.pos-row.teilweise { background: var(--yellow-bg); border-color: var(--yellow-border); }
     .auftrag-pos-table td.pos-picked { grid-area: toggle; width: auto; text-align: center; }
     .auftrag-pos-table td.pos-nr { grid-area: nr; font-size: 11px; color: var(--text-muted); }
     .auftrag-pos-table td.pos-code { grid-area: code; font-size: 13.5px; }
@@ -1709,7 +1758,7 @@
     .pick-circle { width: 34px; height: 34px; }
     .pick-circle svg { width: 20px; height: 20px; }
     .position-state-controls { flex-direction: column; gap: 2px; }
-    .work-toggle { height: 24px; padding: 0 6px; font-size: 9.5px; }
+    .work-toggle, .partial-toggle { width: 28px; height: 28px; padding: 0; }
   }
 </style>
 </head>
@@ -1915,7 +1964,7 @@
       <div class="auftraege-header">
         <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg></span>
         <span class="auftraege-title">Kommissionierung</span>
-        <span class="auftraege-sub">Aufträge importieren, Verfügbarkeit prüfen, Pick-Fortschritt verfolgen.</span>
+        <span class="auftraege-sub">Nach Erfassungstag sortiert – neueste Tage oben, Tagesbereiche lassen sich auf- und zuklappen.</span>
       </div>
 
       <!-- Dropzone für PDF- und Foto-Import -->
@@ -2929,10 +2978,16 @@
           if (norm !== p.code) { p.code = norm; changed = true; }
           if (p.inArbeit === undefined) { p.inArbeit = false; changed = true; }
           if (p.inArbeitAm === undefined) { p.inArbeitAm = null; changed = true; }
-          if (p.gepickt && p.inArbeit) { p.inArbeit = false; p.inArbeitAm = null; changed = true; }
+          if (p.teilweise === undefined) { p.teilweise = false; changed = true; }
+          if (p.teilweiseAm === undefined) { p.teilweiseAm = null; changed = true; }
+          if (p.gepickt && (p.inArbeit || p.teilweise)) {
+            p.inArbeit = false; p.inArbeitAm = null; p.teilweise = false; p.teilweiseAm = null; changed = true;
+          } else if (p.teilweise && p.inArbeit) {
+            p.inArbeit = false; p.inArbeitAm = null; changed = true;
+          }
         });
         if (a.inArbeitAm === undefined) {
-          var startTimes = a.positionen.map(function (p) { return p.inArbeitAm || p.gepicktAm; }).filter(Boolean).sort();
+          var startTimes = a.positionen.map(function (p) { return p.inArbeitAm || p.teilweiseAm || p.gepicktAm; }).filter(Boolean).sort();
           a.inArbeitAm = startTimes[0] || null;
           changed = true;
         }
@@ -2958,6 +3013,8 @@
           gepicktAm: null,
           inArbeit: false,
           inArbeitAm: null,
+          teilweise: false,
+          teilweiseAm: null,
           verfuegbar: item.status === "ok" || item.status === "pending" ? true : (item.status ? false : null)
         };
       });
@@ -4293,14 +4350,18 @@
     var nowIso = new Date().toISOString();
     p.gepickt = !p.gepickt;
     p.gepicktAm = p.gepickt ? nowIso : null;
-    if (p.gepickt) { p.inArbeit = false; p.inArbeitAm = null; }
+    if (p.gepickt) {
+      p.inArbeit = false; p.inArbeitAm = null;
+      p.teilweise = false; p.teilweiseAm = null;
+    }
     var picked = a.positionen.filter(function (x) { return x.gepickt; }).length;
     var working = a.positionen.filter(function (x) { return x.inArbeit; }).length;
+    var partial = a.positionen.filter(function (x) { return x.teilweise; }).length;
     if (a.status === "offen" || a.status === "inArbeit" || !AUFTRAG_STATUS[a.status]) {
-      a.status = picked > 0 || working > 0 ? "inArbeit" : "offen";
+      a.status = picked > 0 || working > 0 || partial > 0 ? "inArbeit" : "offen";
     }
     if (!p.gepickt) a.erledigtAm = null;
-    if (picked === 0 && working === 0) a.inArbeitAm = null;
+    if (picked === 0 && working === 0 && partial === 0) a.inArbeitAm = null;
     var perfChanged = false;
     if (p.gepickt) {
       perfChanged = ensureAuftragStarted(a, nowIso, true) || perfChanged;
@@ -4325,14 +4386,38 @@
     var nowIso = new Date().toISOString();
     p.inArbeit = !p.inArbeit;
     p.inArbeitAm = p.inArbeit ? nowIso : null;
-    if (p.inArbeit) { p.gepickt = false; p.gepicktAm = null; }
+    if (p.inArbeit) {
+      p.gepickt = false; p.gepicktAm = null;
+      p.teilweise = false; p.teilweiseAm = null;
+    }
     if (p.inArbeit) a.erledigtAm = null;
-    var active = a.positionen.some(function (x) { return x.gepickt || x.inArbeit; });
+    var active = a.positionen.some(function (x) { return x.gepickt || x.inArbeit || x.teilweise; });
     if (a.status === "offen" || a.status === "inArbeit" || !AUFTRAG_STATUS[a.status]) {
       a.status = active ? "inArbeit" : "offen";
     }
     if (!active) a.inArbeitAm = null;
     if (p.inArbeit) ensureAuftragStarted(a, nowIso, false);
+    saveAuftraege();
+    applyTabChrome();
+    renderAuftraege();
+  }
+
+  function togglePositionTeilweise(auftragId, posIdx) {
+    var a = findAuftrag(auftragId);
+    if (!a || !a.positionen || !a.positionen[posIdx]) return;
+    var p = a.positionen[posIdx];
+    var nowIso = new Date().toISOString();
+    p.teilweise = !p.teilweise;
+    p.teilweiseAm = p.teilweise ? nowIso : null;
+    if (p.teilweise) {
+      p.gepickt = false; p.gepicktAm = null;
+      p.inArbeit = false; p.inArbeitAm = null;
+      a.erledigtAm = null;
+    }
+    var active = a.positionen.some(function (x) { return x.gepickt || x.inArbeit || x.teilweise; });
+    if (a.status === "offen" || a.status === "inArbeit" || !AUFTRAG_STATUS[a.status]) a.status = active ? "inArbeit" : "offen";
+    if (!active) a.inArbeitAm = null;
+    if (p.teilweise) ensureAuftragStarted(a, nowIso, false);
     saveAuftraege();
     applyTabChrome();
     renderAuftraege();
@@ -4815,6 +4900,7 @@
     var total = pos.length;
     var picked = pos.filter(function (p) { return p.gepickt; }).length;
     var working = pos.filter(function (p) { return p.inArbeit; }).length;
+    var partial = pos.filter(function (p) { return p.teilweise; }).length;
     // Nur echte Blocker zählen — durch Kleben machbare Positionen sind kein
     // Problem (Standard-Fall), also nicht als "blockiert" werten.
     var blocked = pos.filter(function (p) { return istBlockiert(p, lagerIndex); }).length;
@@ -4831,7 +4917,8 @@
       '<span class="auftrag-progress' + (allPicked ? " complete" : "") + '">' +
         '<span class="auftrag-progress-bar"><span class="auftrag-progress-fill" style="width:' + pct + '%;"></span></span>' +
         '<span class="auftrag-progress-text">' + picked + '/' + total + (allPicked ? ' – komplett gepickt ✓' : ' gepickt') +
-          (working ? ' · ' + working + ' in Arbeit' : '') + '</span>' +
+          (working ? ' · ' + working + ' in Arbeit' : '') +
+          (partial ? ' · ' + partial + ' teilweise abgeschlossen' : '') + '</span>' +
       '</span>';
 
     var statusBtns = Object.keys(AUFTRAG_STATUS).map(function (key) {
@@ -4879,7 +4966,7 @@
         : '';
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
-      return '<tr class="pos-row' + (p.gepickt ? " gepickt" : (p.inArbeit ? " in-arbeit" : "")) + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
+      return '<tr class="pos-row' + (p.gepickt ? " gepickt" : (p.teilweise ? " teilweise" : (p.inArbeit ? " in-arbeit" : ""))) + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
         '<td class="pos-picked">' +
           '<span class="position-state-controls">' +
             '<button type="button" class="pick-toggle" role="checkbox" aria-checked="' + (p.gepickt ? "true" : "false") + '" ' +
@@ -4887,8 +4974,11 @@
               'title="' + (p.gepickt ? "Pick zurücknehmen" : "Als gepickt markieren") + '">' +
               '<span class="pick-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>' +
             '</button>' +
-            '<button type="button" class="work-toggle" data-action="positionInArbeit" data-id="' + a.id + '" data-pos="' + i + '" aria-pressed="' + (p.inArbeit ? "true" : "false") + '" title="' + (p.inArbeit ? "In Arbeit zurücknehmen" : "Als In Arbeit markieren") + '">' +
-              '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> In Arbeit' +
+            '<button type="button" class="work-toggle" data-action="positionInArbeit" data-id="' + a.id + '" data-pos="' + i + '" aria-pressed="' + (p.inArbeit ? "true" : "false") + '" aria-label="In Arbeit" title="' + (p.inArbeit ? "In Arbeit zurücknehmen" : "Als In Arbeit markieren") + '">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' +
+            '</button>' +
+            '<button type="button" class="partial-toggle" data-action="positionTeilweise" data-id="' + a.id + '" data-pos="' + i + '" aria-pressed="' + (p.teilweise ? "true" : "false") + '" aria-label="Teilweise abgeschlossen" title="' + (p.teilweise ? "Teilweisen Abschluss zurücknehmen" : "Als teilweise abgeschlossen markieren") + '">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/><path d="M5 19h14"/></svg>' +
             '</button>' +
           '</span>' +
         '</td>' +
@@ -4959,6 +5049,46 @@
   // gerendert wird (der zweite Klick trifft ein frisches Element).
   var lastPickToggle = { key: "", t: 0 };
 
+  function auftragDayInfo(a) {
+    var raw = a.importiertAm || a.savedAt || "";
+    var d = raw ? new Date(raw) : null;
+    if (!d || isNaN(d.getTime())) return { key: "ohne-datum", time: 0, label: "Ohne Datum", today: false, relative: "" };
+    var key = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    var now = new Date();
+    var todayKey = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+    var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    var yesterdayKey = yesterday.getFullYear() + "-" + String(yesterday.getMonth() + 1).padStart(2, "0") + "-" + String(yesterday.getDate()).padStart(2, "0");
+    return {
+      key: key,
+      time: new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(),
+      label: d.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" }),
+      today: key === todayKey,
+      relative: key === todayKey ? "Heute" : (key === yesterdayKey ? "Gestern" : "")
+    };
+  }
+
+  function renderAuftragDayGroup(group, openIds, lagerIndex, dayOpenState, hadDayGroups) {
+    var counts = { offen: 0, inArbeit: 0, verpackt: 0, versendet: 0 };
+    group.items.forEach(function (a) {
+      var st = AUFTRAG_STATUS[a.status] ? a.status : "offen";
+      counts[st]++;
+    });
+    var stats = [
+      counts.offen ? '<span class="auftrag-day-stat"><strong>' + counts.offen + '</strong> offen</span>' : '',
+      counts.inArbeit ? '<span class="auftrag-day-stat"><strong>' + counts.inArbeit + '</strong> in Arbeit</span>' : '',
+      counts.verpackt ? '<span class="auftrag-day-stat"><strong>' + counts.verpackt + '</strong> verpackt</span>' : '',
+      counts.versendet ? '<span class="auftrag-day-stat"><strong>' + counts.versendet + '</strong> versendet</span>' : ''
+    ].filter(Boolean).join("");
+    var knownDay = Object.prototype.hasOwnProperty.call(dayOpenState, group.key);
+    var openAttr = (!hadDayGroups || !knownDay || dayOpenState[group.key]) ? ' open' : '';
+    return '<details class="auftrag-day-column auftrag-day-group' + (group.today ? ' is-today' : '') + '" data-day="' + group.key + '"' + openAttr + '>' +
+      '<summary class="auftrag-day-head"><span class="auftrag-day-chevron icon">' + ICONS.chevron + '</span>' +
+        '<span class="auftrag-day-date">' + escapeHtml(group.label) + (group.relative ? '<small>' + group.relative + '</small>' : '') + '</span>' +
+        '<span class="auftrag-day-total" title="Aufträge an diesem Tag">' + group.items.length + '</span>' +
+        '<span class="auftrag-day-statuses">' + stats + '</span></summary>' +
+      '<div class="auftrag-day-cards">' + group.items.map(function (a) { return renderAuftragCard(a, openIds, lagerIndex); }).join("") + '</div></details>';
+  }
+
   function renderAuftraege() {
     var listEl = document.getElementById("auftraegeList");
     var emptyEl = document.getElementById("auftraegeEmpty");
@@ -4971,8 +5101,14 @@
 
     // Aufgeklappte Karten über das Neu-Rendern hinweg offen halten.
     var openIds = {};
-    listEl.querySelectorAll("details[open]").forEach(function (d) {
+    listEl.querySelectorAll("details.auftrag-card[open]").forEach(function (d) {
       openIds[d.getAttribute("data-id")] = true;
+    });
+    var dayOpenState = {};
+    var hadDayGroups = false;
+    listEl.querySelectorAll("details.auftrag-day-group").forEach(function (d) {
+      hadDayGroups = true;
+      dayOpenState[d.getAttribute("data-day")] = d.open;
     });
 
     var term = auftragSearch.trim().toLowerCase();
@@ -5014,7 +5150,17 @@
     // Lager-Index einmal pro Render bauen (für die Klebe-Artikel-Prüfung).
     var lagerIndex = null;
     try { lagerIndex = buildLagerIndex(); } catch (e) {}
-    listEl.innerHTML = visible.map(function (a) { return renderAuftragCard(a, openIds, lagerIndex); }).join("");
+    var groupsByDay = {};
+    visible.forEach(function (a) {
+      var day = auftragDayInfo(a);
+      if (!groupsByDay[day.key]) groupsByDay[day.key] = { key: day.key, time: day.time, label: day.label, today: day.today, relative: day.relative, items: [] };
+      groupsByDay[day.key].items.push(a);
+    });
+    var groups = Object.keys(groupsByDay).map(function (key) { return groupsByDay[key]; });
+    groups.sort(function (x, y) { return y.time - x.time; });
+    listEl.innerHTML = '<div class="auftrag-day-board">' + groups.map(function (group) {
+      return renderAuftragDayGroup(group, openIds, lagerIndex, dayOpenState, hadDayGroups);
+    }).join("") + '</div>';
 
     // Handler (Buttons im summary → Aufklappen unterdrücken).
     listEl.querySelectorAll('[data-action="auftragStatus"]').forEach(function (el) {
@@ -5069,6 +5215,13 @@
         e.preventDefault();
         e.stopPropagation();
         togglePositionInArbeit(el.getAttribute("data-id"), parseInt(el.getAttribute("data-pos"), 10));
+      });
+    });
+    listEl.querySelectorAll('[data-action="positionTeilweise"]').forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        togglePositionTeilweise(el.getAttribute("data-id"), parseInt(el.getAttribute("data-pos"), 10));
       });
     });
     listEl.querySelectorAll('[data-action="jumpCode"]').forEach(function (el) {
@@ -5370,12 +5523,15 @@
       // Pick-/In-Arbeit-Zustand pro Code in die neuen Positionen übernehmen.
       var pickedByCode = {};
       var workingByCode = {};
+      var partialByCode = {};
       (existing.positionen || []).forEach(function (p) {
         if (p.gepickt) pickedByCode[p.code] = p.gepicktAm || new Date().toISOString();
+        else if (p.teilweise) partialByCode[p.code] = p.teilweiseAm || new Date().toISOString();
         else if (p.inArbeit) workingByCode[p.code] = p.inArbeitAm || new Date().toISOString();
       });
       neu.positionen.forEach(function (p) {
         if (pickedByCode[p.code]) { p.gepickt = true; p.gepicktAm = pickedByCode[p.code]; }
+        else if (partialByCode[p.code]) { p.teilweise = true; p.teilweiseAm = partialByCode[p.code]; }
         else if (workingByCode[p.code]) { p.inArbeit = true; p.inArbeitAm = workingByCode[p.code]; }
       });
       existing.positionen = neu.positionen;
@@ -5618,6 +5774,8 @@
         gepicktAm: null,
         inArbeit: false,
         inArbeitAm: null,
+        teilweise: false,
+        teilweiseAm: null,
         verfuegbar: null
       });
     }
