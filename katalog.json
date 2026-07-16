@@ -43794,7 +43794,8 @@
    "material": "Steingut 30x60cm",
    "codes": [
     "9785-NATU-06",
-    "9585-NATU-06"
+    "9585-NATU-06",
+    "9585-NAPO-06-10"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
@@ -44003,7 +44004,8 @@
    "material": "Steingut 30x60cm",
    "codes": [
     "9785-NATU-07",
-    "9585-NATU-07"
+    "9585-NATU-07",
+    "9585-NAPO-05-10"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
