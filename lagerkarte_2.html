@@ -2057,34 +2057,36 @@
   function openKatalog(code) {
     window.open(KATALOG_URL + "?code=" + encodeURIComponent(code), "_blank");
   }
-  // Mindest-Seitenabstände pro Tafel-Serie (erste 4 Ziffern des Codes),
-  // Reihenfolge [oben, unten, links, rechts]. "griff" = die Tafel bekommt
-  // einen Griff, keine Seitenabstände. Serien ohne Eintrag: Angabe entfällt
-  // auf dem Druckblatt. Quelle: handschriftliche Abstands-Liste (07/2026).
+  // Mindest-Seitenabstände pro Tafel-Serie. Maßgeblich sind nur die LETZTEN
+  // zwei Ziffern der 4-stelligen Serie — die ersten beiden sind die Marke
+  // (95xx/97xx), z. B. 9585 = 9785 = "85". Reihenfolge [oben, unten, links,
+  // rechts]. "griff" = die Tafel bekommt einen Griff, keine Seitenabstände.
+  // Serien ohne Eintrag: Angabe entfällt auf dem Druckblatt.
+  // Quelle: handschriftliche Abstands-Liste (07/2026).
   var MINDESTABSTAENDE = {
-    "9785": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
-    "9726": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
-    "9757": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
-    "9756": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
-    "9728": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
-    "9787": ["3 cm", "3 cm", "3 cm", "3 cm"],
-    "9768": ["3 cm", "3 cm", "3 cm", "3 cm"],
-    "9761": ["3 cm", "3 cm", "3 cm", "3 cm"],
-    "9762": ["3 cm", "3 cm", "3 cm", "3 cm"],
-    "9766": ["3 cm", "3 cm", "3 cm", "3 cm"],
-    "9769": ["3 cm", "3 cm", "3 cm", "3 cm"],
-    "9786": ["3 cm", "3 cm", "0 cm", "0 cm"],
-    "9789": ["3 cm", "3 cm", "1,5 cm", "1,5 cm"],
-    "9724": ["3 cm", "3 cm", "1,5 cm", "1,5 cm"],
-    "9716": ["0 cm", "0 cm", "0 cm", "0 cm"],
-    "9788": ["0 cm", "0 cm", "0 cm", "0 cm"],
-    "9752": ["0 cm", "0 cm", "0 cm", "0 cm"],
-    "9539": ["0 cm", "0 cm", "0 cm", "0 cm"],
-    "9599": ["0 cm", "0 cm", "1,5 cm", "1,5 cm"],
-    "9705": "griff"
+    "85": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
+    "26": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
+    "57": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
+    "56": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
+    "28": ["2,5 cm", "2,5 cm", "2,5 cm", "2,5 cm"],
+    "87": ["3 cm", "3 cm", "3 cm", "3 cm"],
+    "68": ["3 cm", "3 cm", "3 cm", "3 cm"],
+    "61": ["3 cm", "3 cm", "3 cm", "3 cm"],
+    "62": ["3 cm", "3 cm", "3 cm", "3 cm"],
+    "66": ["3 cm", "3 cm", "3 cm", "3 cm"],
+    "69": ["3 cm", "3 cm", "3 cm", "3 cm"],
+    "86": ["3 cm", "3 cm", "0 cm", "0 cm"],
+    "89": ["3 cm", "3 cm", "1,5 cm", "1,5 cm"],
+    "24": ["3 cm", "3 cm", "1,5 cm", "1,5 cm"],
+    "16": ["0 cm", "0 cm", "0 cm", "0 cm"],
+    "88": ["0 cm", "0 cm", "0 cm", "0 cm"],
+    "52": ["0 cm", "0 cm", "0 cm", "0 cm"],
+    "39": ["0 cm", "0 cm", "0 cm", "0 cm"],
+    "99": ["0 cm", "0 cm", "1,5 cm", "1,5 cm"],
+    "05": "griff"
   };
   function abstandFuerCode(code) {
-    var m = /^(\d{4})/.exec(normalizeCode(code));
+    var m = /^\d{2}(\d{2})/.exec(normalizeCode(code));
     return (m && MINDESTABSTAENDE[m[1]]) || null;
   }
   // Baut das Druckblatt für eine Auftragsposition: Auftragsnummer, Tafel-Bild
