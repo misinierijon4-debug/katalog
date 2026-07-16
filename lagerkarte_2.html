@@ -1988,6 +1988,7 @@
         <button type="button" class="auftrag-filter-chip active" data-auftrag-marke="alle">Alle</button>
         <button type="button" class="auftrag-filter-chip chip-marke-engers" data-auftrag-marke="engers">engers</button>
         <button type="button" class="auftrag-filter-chip chip-marke-vb" data-auftrag-marke="vb">V&amp;B</button>
+        <button type="button" class="btn btn-danger" id="btnWasFehltAlle">🧩 Alles Fehlende</button>
         <input type="text" id="auftragSearch" class="auftrag-search" placeholder="Auftragsnr. / Code suchen…" autocomplete="off">
       </div>
 
@@ -4830,11 +4831,72 @@
     return { katalogFehlt: katalogFehlt, bausteine: bausteine, blanko: blanko, poster: poster };
   }
 
+  // Fasst die Fehlteile ALLER gespeicherten Aufträge zusammen. Gleiche Codes
+  // erscheinen nur einmal; unter jedem Code bleiben alle betroffenen Aufträge
+  // und Positionen sichtbar.
+  function ermittleWasFehltAlle(index) {
+    var katalogMap = {}, bausteineMap = {}, blankoMap = {}, posterMap = {};
+
+    function codeKey(code) {
+      return normalizeCode(code || "").replace(/[^A-Z0-9]/g, "");
+    }
+
+    function positionMitAuftrag(p, a) {
+      return { pos: p.pos || "", code: p.code || "", auftrag: auftragDisplayName(a) };
+    }
+
+    function mergePositionen(target, source, a) {
+      var seen = {};
+      (target.positionen || []).forEach(function (p) {
+        seen[(p.auftrag || "") + "|" + (p.pos || "") + "|" + (p.code || "")] = true;
+      });
+      (source || []).forEach(function (p) {
+        var merged = positionMitAuftrag(p, a);
+        var key = merged.auftrag + "|" + merged.pos + "|" + merged.code;
+        if (!seen[key]) { seen[key] = true; target.positionen.push(merged); }
+      });
+    }
+
+    function mergeGruppe(map, key, item, a) {
+      if (!map[key]) {
+        map[key] = {};
+        Object.keys(item).forEach(function (prop) {
+          if (prop !== "positionen") map[key][prop] = item[prop];
+        });
+        map[key].positionen = [];
+      }
+      mergePositionen(map[key], item.positionen, a);
+    }
+
+    auftraege.forEach(function (a) {
+      var report = ermittleWasFehlt(a, index);
+      report.katalogFehlt.forEach(function (item) {
+        var key = codeKey(item.code);
+        if (!katalogMap[key]) katalogMap[key] = { code: item.code, positionen: [] };
+        mergePositionen(katalogMap[key], [{ pos: item.pos, code: item.code }], a);
+      });
+      report.bausteine.forEach(function (item) { mergeGruppe(bausteineMap, codeKey(item.artnr), item, a); });
+      report.blanko.forEach(function (item) { mergeGruppe(blankoMap, codeKey(item.code), item, a); });
+      (report.poster || []).forEach(function (item) { mergeGruppe(posterMap, codeKey(item.code), item, a); });
+    });
+
+    var katalogFehlt = Object.keys(katalogMap).map(function (key) { return katalogMap[key]; });
+    var bausteine = Object.keys(bausteineMap).map(function (key) { return bausteineMap[key]; });
+    var blanko = Object.keys(blankoMap).map(function (key) { return blankoMap[key]; });
+    var poster = Object.keys(posterMap).map(function (key) { return posterMap[key]; });
+    katalogFehlt.sort(function (a, b) { return String(a.code).localeCompare(String(b.code), "de", { numeric: true }); });
+    bausteine.sort(function (a, b) { return String(a.artnr).localeCompare(String(b.artnr), "de", { numeric: true }); });
+    blanko.sort(function (a, b) { return String(a.code).localeCompare(String(b.code), "de", { numeric: true }); });
+    poster.sort(function (a, b) { return String(a.code).localeCompare(String(b.code), "de", { numeric: true }); });
+    return { katalogFehlt: katalogFehlt, bausteine: bausteine, blanko: blanko, poster: poster };
+  }
+
   // Baut die "Positionen"-Zeile für dedupliziert gefehlte Bausteine/Blanko
   // ("benötigt für: 9524-BR10-UE (Pos. 0010), 9568-BR10-UE (Pos. 0020)").
   function wfUsedInHtml(positionen) {
     var text = positionen.map(function (p) {
-      return p.code + (p.pos ? " (Pos. " + p.pos + ")" : "");
+      var position = p.code + (p.pos ? " (Pos. " + p.pos + ")" : "");
+      return p.auftrag ? p.auftrag + ": " + position : position;
     }).join(", ");
     return '<div class="wf-used-in">benötigt für: ' + escapeHtml(text) + '</div>';
   }
@@ -4856,6 +4918,7 @@
             '<span class="wf-code" data-action="jumpCode" data-code="' + escapeHtml(k.code) + '">' + escapeHtml(k.code) + '</span>' +
           '</div>' +
           '<div class="wf-used-in">kein Katalogeintrag gefunden – Kleben nicht ermittelbar</div>' +
+          (k.positionen ? wfUsedInHtml(k.positionen) : "") +
         '</div>';
       }).join("");
     }
@@ -6082,16 +6145,10 @@
   var btnWasFehltCopyEl = document.getElementById("btnWasFehltCopy");
   var wasFehltCurrentReport = null;   // für den Kopieren-Button gemerkt
 
-  function openWasFehltModal(auftragId) {
-    var a = findAuftrag(auftragId);
-    if (!a) return;
-    var index = buildLagerIndex();
-    var report = ermittleWasFehlt(a, index);
+  function showWasFehltReport(report, title, sub) {
     wasFehltCurrentReport = report;
-    wasFehltTitleEl.textContent = "Was fehlt? – " + auftragDisplayName(a);
-    wasFehltSubEl.textContent = report.katalogFehlt.length + " Pos. ohne Katalogeintrag · " +
-      report.bausteine.length + " fehlende Baustein(e) · " + report.blanko.length + " fehlende Blanko-Tafel(n) · " +
-      (report.poster || []).length + " fehlende(s) Poster/Etikett(en)";
+    wasFehltTitleEl.textContent = title;
+    wasFehltSubEl.textContent = sub;
     wasFehltBodyEl.innerHTML = renderWasFehltBody(report);
     // Codes im Modal springen ins Lager (Modal schließt sich dabei).
     wasFehltBodyEl.querySelectorAll('[data-action="jumpCode"]').forEach(function (el) {
@@ -6106,6 +6163,25 @@
     wasFehltModalEl.style.display = "flex";
   }
 
+  function wasFehltSummary(report, prefix) {
+    return (prefix ? prefix + " · " : "") + report.katalogFehlt.length + " Pos. ohne Katalogeintrag · " +
+      report.bausteine.length + " fehlende Baustein(e) · " + report.blanko.length + " fehlende Blanko-Tafel(n) · " +
+      (report.poster || []).length + " fehlende(s) Poster/Etikett(en)";
+  }
+
+  function openWasFehltModal(auftragId) {
+    var a = findAuftrag(auftragId);
+    if (!a) return;
+    var index = buildLagerIndex();
+    var report = ermittleWasFehlt(a, index);
+    showWasFehltReport(report, "Was fehlt? – " + auftragDisplayName(a), wasFehltSummary(report, ""));
+  }
+
+  function openWasFehltAlleModal() {
+    var report = ermittleWasFehltAlle(buildLagerIndex());
+    showWasFehltReport(report, "Was fehlt? – alle Aufträge", wasFehltSummary(report, auftraege.length + " Auftrag/Aufträge geprüft"));
+  }
+
   function closeWasFehltModal() {
     wasFehltModalEl.style.display = "none";
     wasFehltBodyEl.innerHTML = "";
@@ -6113,6 +6189,7 @@
   }
 
   document.getElementById("btnWasFehltClose").addEventListener("click", closeWasFehltModal);
+  document.getElementById("btnWasFehltAlle").addEventListener("click", openWasFehltAlleModal);
 
   // Alle im Fenster gezeigten Codes (Katalog-fehlt + Bausteine + Blanko-
   // Tafeln), dedupliziert, komma-getrennt in die Zwischenablage kopieren —
@@ -6121,7 +6198,10 @@
     if (!wasFehltCurrentReport) return;
     var seen = {};
     var codes = [];
-    function pushCode(c) { if (c && !seen[c]) { seen[c] = true; codes.push(c); } }
+    function pushCode(c) {
+      var key = deliveryMatchKey(c);
+      if (c && key && !seen[key]) { seen[key] = true; codes.push(c); }
+    }
     wasFehltCurrentReport.katalogFehlt.forEach(function (k) { pushCode(k.code); });
     wasFehltCurrentReport.bausteine.forEach(function (b) { pushCode(b.artnr); });
     wasFehltCurrentReport.blanko.forEach(function (bl) { pushCode(bl.code); });
