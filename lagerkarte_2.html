@@ -4851,20 +4851,27 @@
 
   // Zieht den Poster-/Etikett-Code aus dem Katalogfeld "label". Labels sind
   // z.B. "Poster 91E0-IRO1-00-10" (Code) oder "Poster NATURAL 30x60 beige"
-  // (rein beschreibend, kein Code). Liefert den normalisierten Code oder null.
+  // (farbgenaue Beschreibung). Liefert den Lager-Schluessel oder null.
   function posterCodeAusLabel(label) {
     if (!label) return null;
-    var m = /([0-9A-Z]{3,4}-[0-9A-Z]{2,4}-[0-9A-Z]{2,4}(?:-\d{1,2})?)/i.exec(String(label));
-    return m ? normalizeCode(m[1]) : null;
+    var text = String(label).trim();
+    var m = /([0-9A-Z]{3,4}-[0-9A-Z]{2,4}-[0-9A-Z]{2,4}(?:-\d{1,2})?)/i.exec(text);
+    if (m) return normalizeCode(m[1]);
+
+    // Beschreibende Poster ohne Artikelnummer werden im Poster-Bestand unter
+    // genau dieser Bezeichnung (ohne das Wort "Poster") gefuehrt. Die Farbe
+    // bleibt Teil des Schluessels, damit beige und braun getrennt bleiben.
+    var beschreibung = /^\+?\s*Poster\s+(.+)$/i.exec(text);
+    return beschreibung ? beschreibung[1].replace(/\s+/g, " ").trim() : null;
   }
 
   // Poster-Verfügbarkeit für einen Katalogeintrag: Poster-Code aus "label"
-  // gegen den Poster-Bestand (Teil des Lager-Index) prüfen. null, wenn das
-  // label keinen Code enthält (rein beschreibend).
+  // gegen den Poster-Bestand (Teil des Lager-Index) prüfen. Auch beschreibende
+  // Poster werden farbgenau über ihren vollständigen Namen abgeglichen.
   function posterStatusFuer(eintrag, index) {
     var code = posterCodeAusLabel(eintrag.label);
     if (!code) return null;
-    var entry = index[code.replace(/-/g, "")];
+    var entry = index[normalizeCode(code).replace(/-/g, "")];
     // Der Poster-Bestand führt Codes gekürzt auf zwei Segmente ("91E0-IRO1");
     // Katalog-Labels nennen den vollen Code ("91E0-IRO1-00-10") — als
     // Fallback deshalb auch den Basis-Code (erste zwei Segmente) prüfen.
