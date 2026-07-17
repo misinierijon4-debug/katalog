@@ -1350,6 +1350,32 @@
     margin: -8px 0 16px;
   }
   .ocr-status { font-size: 11.5px; color: var(--text-muted); }
+  .check-dropzone {
+    flex: 1 1 320px;
+    min-width: 260px;
+    min-height: 42px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .check-dropzone:hover,
+  .check-dropzone.drag-over {
+    background: var(--primary-bg);
+    border-color: var(--primary);
+    color: var(--primary-fg);
+  }
+  .check-dropzone-icon { color: var(--primary); font-size: 18px; line-height: 1; }
+  .check-dropzone strong { color: var(--text); }
   .ocr-confirm {
     font-size: 12px;
     font-weight: 600;
@@ -1452,22 +1478,6 @@
   #btnFab .icon { width: 24px; height: 24px; }
 
   /* ---------- Kommissionier-System ---------- */
-  .auftrag-dropzone {
-    border: 2px dashed var(--border-strong);
-    border-radius: var(--radius);
-    padding: 24px;
-    text-align: center;
-    cursor: pointer;
-    transition: background .15s ease, border-color .15s ease;
-    background: var(--surface-2);
-    margin-bottom: 12px;
-  }
-  .auftrag-dropzone:hover { background: var(--surface-hover); border-color: var(--primary); }
-  .auftrag-dropzone.drag-over { background: var(--primary-bg); border-color: var(--primary); }
-  .auftrag-dropzone-icon { font-size: 28px; margin-bottom: 6px; }
-  .auftrag-dropzone-text { font-size: 13px; font-weight: 600; color: var(--text); }
-  .auftrag-dropzone-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-  .auftrag-dropzone-status { font-size: 11.5px; color: var(--text-muted); margin-top: 8px; }
 
   .auftrag-filter-bar {
     display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; align-items: center;
@@ -1576,7 +1586,7 @@
   /* Ganze Positionszeile klickbar zum Picken; user-select aus, damit ein
      Doppelklick keinen Text markiert. */
   .auftrag-pos-table tr.pos-row { cursor: pointer; -webkit-user-select: none; user-select: none; }
-  .auftrag-pos-table .pos-picked { width: 118px; text-align: center; padding: 2px 4px; }
+  .auftrag-pos-table .pos-picked { width: 150px; text-align: center; padding: 2px 4px; }
   .position-state-controls {
     display: flex; align-items: center; justify-content: center; gap: 4px;
   }
@@ -1624,6 +1634,20 @@
   .partial-toggle svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
   .auftrag-pos-table tr.pos-row.teilweise td { background: var(--yellow-bg); }
   tr.pos-row.teilweise .pos-code { color: var(--yellow-fg); }
+  .strike-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; padding: 0; border: 1px solid var(--border-strong);
+    border-radius: 999px; background: var(--surface); color: var(--text-muted);
+    cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .strike-toggle:hover,
+  tr.pos-row.gestrichen .strike-toggle { background: var(--red-bg); color: var(--red-fg); border-color: var(--red-fg); }
+  .strike-toggle:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+  .strike-toggle svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .auftrag-pos-table tr.pos-row.gestrichen td { background: var(--red-bg); color: var(--text-muted); }
+  tr.pos-row.gestrichen .pos-code { color: var(--red-fg); opacity: .8; }
+  tr.pos-row.gestrichen .pos-code-link { text-decoration-line: line-through; }
+  .auftrag-pos-badge.avail-strike { background: var(--red-bg); color: var(--red-fg); }
   /* Pop-Animation nur auf dem frisch abgehakten Toggle (Klasse setzt das JS
      nach dem Neu-Rendern), sonst würde jeder Render alle Haken animieren. */
   .pick-toggle.just-picked .pick-circle { animation: pickPop .18s ease; }
@@ -1856,6 +1880,9 @@
     }
     .auftrag-card.print-active .auftrag-pos-table tr.pos-row.teilweise .pos-picked::before {
       content: "[ ] TEILWEISE";
+    }
+    .auftrag-card.print-active .auftrag-pos-table tr.pos-row.gestrichen .pos-picked::before {
+      content: "[X] GESTRICHEN";
     }
     .auftrag-card.print-active .auftrag-pos-table tr.pos-row.blockiert .pos-picked::before {
       content: "[ ] BLOCKIERT";
@@ -2132,6 +2159,11 @@
             Foto hochladen
           </label>
           <input type="file" id="ocrFile" accept="image/*" style="display:none;">
+          <div id="checkDropzone" class="check-dropzone" role="button" tabindex="0" aria-label="PDF oder Bild hier ablegen">
+            <span class="check-dropzone-icon">&#x21e9;</span>
+            <span><strong>PDF oder Bild hierher ziehen</strong> oder klicken</span>
+          </div>
+          <input type="file" id="checkDropzoneFiles" accept=".pdf,application/pdf,image/*" multiple style="display:none;">
           <span id="ocrStatus" class="ocr-status"></span>
         </div>
         <div class="ocr-hint">PDF-Upload funktioniert nur mit einem echten Text-PDF (Drucken → "Als PDF speichern"), nicht mit eingescannten oder fotografierten Blättern — dafür bitte den Foto-Upload nutzen.</div>
@@ -2156,14 +2188,6 @@
         <span class="auftraege-sub">Nach Erfassungstag sortiert – neueste Tage oben, Tagesbereiche lassen sich auf- und zuklappen.</span>
       </div>
 
-      <!-- Dropzone für PDF- und Foto-Import -->
-      <div id="auftragDropzone" class="auftrag-dropzone">
-        <div class="auftrag-dropzone-icon">📄</div>
-        <div class="auftrag-dropzone-text">Auftrags-PDF oder Foto hierher ziehen oder klicken</div>
-        <div class="auftrag-dropzone-hint">Text-PDF oder Foto/Scan (per Texterkennung), mehrere Dateien gleichzeitig möglich</div>
-        <div id="auftragDropzoneStatus" class="auftrag-dropzone-status" style="display:none;"></div>
-      </div>
-      <input type="file" id="auftragPdfFiles" accept=".pdf,application/pdf,image/*" multiple style="display:none;">
 
       <!-- Statusfilter + Suche -->
       <div class="auftrag-filter-bar">
@@ -3171,7 +3195,14 @@
           if (p.inArbeitAm === undefined) { p.inArbeitAm = null; changed = true; }
           if (p.teilweise === undefined) { p.teilweise = false; changed = true; }
           if (p.teilweiseAm === undefined) { p.teilweiseAm = null; changed = true; }
-          if (p.gepickt && (p.inArbeit || p.teilweise)) {
+          if (p.gestrichen === undefined) { p.gestrichen = false; changed = true; }
+          if (p.gestrichenAm === undefined) { p.gestrichenAm = null; changed = true; }
+          if (p.gestrichen && (p.gepickt || p.inArbeit || p.teilweise)) {
+            p.gepickt = false; p.gepicktAm = null;
+            p.inArbeit = false; p.inArbeitAm = null;
+            p.teilweise = false; p.teilweiseAm = null;
+            changed = true;
+          } else if (p.gepickt && (p.inArbeit || p.teilweise)) {
             p.inArbeit = false; p.inArbeitAm = null; p.teilweise = false; p.teilweiseAm = null; changed = true;
           } else if (p.teilweise && p.inArbeit) {
             p.inArbeit = false; p.inArbeitAm = null; changed = true;
@@ -3183,7 +3214,7 @@
           changed = true;
         }
         if (a.erledigtAm === undefined) {
-          var allPicked = a.positionen.length > 0 && a.positionen.every(function (p) { return p.gepickt; });
+          var allPicked = a.positionen.length > 0 && a.positionen.every(function (p) { return p.gepickt || p.gestrichen; });
           var pickTimes = a.positionen.map(function (p) { return p.gepicktAm; }).filter(Boolean).sort();
           a.erledigtAm = allPicked && pickTimes.length ? pickTimes[pickTimes.length - 1] : (a.verpacktAm || a.versendetAm || null);
           changed = true;
@@ -3206,6 +3237,8 @@
           inArbeitAm: null,
           teilweise: false,
           teilweiseAm: null,
+          gestrichen: false,
+          gestrichenAm: null,
           verfuegbar: item.status === "ok" || item.status === "pending" ? true : (item.status ? false : null)
         };
       });
@@ -4635,6 +4668,7 @@
     if (!a || !a.positionen || !a.positionen[posIdx]) return;
     var p = a.positionen[posIdx];
     var nowIso = new Date().toISOString();
+    if (p.gestrichen) { p.gestrichen = false; p.gestrichenAm = null; }
     p.gepickt = !p.gepickt;
     p.gepicktAm = p.gepickt ? nowIso : null;
     if (p.gepickt) {
@@ -4653,7 +4687,7 @@
     if (p.gepickt) {
       perfChanged = ensureAuftragStarted(a, nowIso, true) || perfChanged;
       perfChanged = recordPickedPerformance(a, p, posIdx, nowIso, true) || perfChanged;
-      if (a.positionen.length > 0 && a.positionen.every(function (x) { return x.gepickt; })) {
+      if (a.positionen.length > 0 && a.positionen.every(function (x) { return x.gepickt || x.gestrichen; })) {
         perfChanged = ensureAuftragCompleted(a, nowIso, true) || perfChanged;
       }
     }
@@ -4676,6 +4710,7 @@
     if (p.inArbeit) {
       p.gepickt = false; p.gepicktAm = null;
       p.teilweise = false; p.teilweiseAm = null;
+      p.gestrichen = false; p.gestrichenAm = null;
     }
     if (p.inArbeit) a.erledigtAm = null;
     var active = a.positionen.some(function (x) { return x.gepickt || x.inArbeit || x.teilweise; });
@@ -4699,6 +4734,7 @@
     if (p.teilweise) {
       p.gepickt = false; p.gepicktAm = null;
       p.inArbeit = false; p.inArbeitAm = null;
+      p.gestrichen = false; p.gestrichenAm = null;
       a.erledigtAm = null;
     }
     var active = a.positionen.some(function (x) { return x.gepickt || x.inArbeit || x.teilweise; });
@@ -4710,11 +4746,42 @@
     renderAuftraege();
   }
 
+  // Eine Position bewusst aus dem Auftrag nehmen, ohne sie als versendet zu
+  // markieren. Sie bleibt sichtbar und nachvollziehbar, zählt aber weder als
+  // Pick- noch als Fehlposition.
+  function togglePositionGestrichen(auftragId, posIdx) {
+    var a = findAuftrag(auftragId);
+    if (!a || !a.positionen || !a.positionen[posIdx]) return;
+    var p = a.positionen[posIdx];
+    var nowIso = new Date().toISOString();
+    p.gestrichen = !p.gestrichen;
+    p.gestrichenAm = p.gestrichen ? nowIso : null;
+    if (p.gestrichen) {
+      p.gepickt = false; p.gepicktAm = null;
+      p.inArbeit = false; p.inArbeitAm = null;
+      p.teilweise = false; p.teilweiseAm = null;
+    }
+    var active = a.positionen.some(function (x) { return !x.gestrichen && (x.gepickt || x.inArbeit || x.teilweise); });
+    if (a.status === "offen" || a.status === "inArbeit" || !AUFTRAG_STATUS[a.status]) {
+      a.status = active ? "inArbeit" : "offen";
+    }
+    if (!active) a.inArbeitAm = null;
+    var allDone = a.positionen.length > 0 && a.positionen.every(function (x) { return x.gepickt || x.gestrichen; });
+    if (allDone) ensureAuftragCompleted(a, nowIso, false);
+    else a.erledigtAm = null;
+    saveAuftraege();
+    applyTabChrome();
+    renderAuftraege();
+  }
+
   // Gleicht Positionen gegen den aktuellen Lager-Index ab (gleiche Regel wie
   // der Auftragsprüfer: ok/pending = verfügbar, alles andere blockiert).
   function applyVerfuegbarkeit(positionen, index) {
     (positionen || []).forEach(function (p) {
       p.marke = markeFuerCode(p.code);
+      if (p.gestrichen) {
+        return;
+      }
       // engers-Tafeln werden immer frisch geklebt — der Tafel-Bestand (fertig
       // geklebte Tafeln) gilt nur für V&B. engers-Positionen deshalb gar nicht
       // erst gegen den Bestand prüfen: sie sind reine Klebe-Aufgaben.
@@ -4936,6 +5003,7 @@
   // Eine Position blockiert den Auftrag nur, wenn sie weder direkt verfügbar
   // noch durch Kleben machbar ist. (Kleben ist Standard, kein Blocker.)
   function istBlockiert(p, index) {
+    if (p.gestrichen) return false;
     if (p.marke === "engers") {
       // Kleben ist der einzige Weg: blockiert nur, wenn laut Katalog Material
       // fehlt. Ohne Katalog-Eintrag keine Aussage möglich → nicht blockieren.
@@ -4973,6 +5041,7 @@
     }
 
     (auftrag.positionen || []).forEach(function (p, i) {
+      if (p.gestrichen) return;
       if (p.lagerStatus === "missing" || p.lagerStatus === "broken") return;
 
       // Fehlende Poster/Etiketten: blockieren das Kleben nicht, fehlen aber
@@ -5254,24 +5323,31 @@
     var picked = pos.filter(function (p) { return p.gepickt; }).length;
     var working = pos.filter(function (p) { return p.inArbeit; }).length;
     var partial = pos.filter(function (p) { return p.teilweise; }).length;
+    var gestrichen = pos.filter(function (p) { return p.gestrichen; }).length;
+    var erledigt = picked + gestrichen;
+    var aktiv = total - gestrichen;
     // Nur echte Blocker zählen — durch Kleben machbare Positionen sind kein
     // Problem (Standard-Fall), also nicht als "blockiert" werten.
-    var blocked = pos.filter(function (p) { return istBlockiert(p, lagerIndex); }).length;
-    var pct = total > 0 ? Math.round(picked * 100 / total) : 0;
+    var blocked = pos.filter(function (p) { return !p.gestrichen && istBlockiert(p, lagerIndex); }).length;
+    var pct = total > 0 ? Math.round(erledigt * 100 / total) : 0;
 
-    var availBanner = blocked === 0
-      ? '<span class="auftrag-avail-banner auftrag-avail-ok">✓ ' + total + ' Pos. erfüllbar</span>'
+    var availBanner = aktiv === 0 && total > 0
+      ? '<span class="auftrag-avail-banner auftrag-avail-ok">✓ Alle Positionen gestrichen</span>'
+      : blocked === 0
+      ? '<span class="auftrag-avail-banner auftrag-avail-ok">✓ ' + aktiv + ' Pos. erfüllbar</span>'
       : '<span class="auftrag-avail-banner auftrag-avail-partial">⚠ ' + blocked + ' von ' + total + ' blockiert</span>';
 
     // Alle Positionen gepickt → kein Status-Wechsel mehr, aber Fortschritt
     // grün hervorheben und den "Verpackt"-Button nahelegen.
-    var allPicked = total > 0 && picked === total;
+    var allPicked = total > 0 && erledigt === total;
     var progress =
       '<span class="auftrag-progress' + (allPicked ? " complete" : "") + '">' +
         '<span class="auftrag-progress-bar"><span class="auftrag-progress-fill" style="width:' + pct + '%;"></span></span>' +
-        '<span class="auftrag-progress-text">' + picked + '/' + total + (allPicked ? ' – komplett gepickt ✓' : ' gepickt') +
+        '<span class="auftrag-progress-text">' + erledigt + '/' + total + (allPicked ? ' – komplett erledigt ✓' : ' erledigt') +
+          (picked ? ' · ' + picked + ' gepickt' : '') +
           (working ? ' · ' + working + ' in Arbeit' : '') +
-          (partial ? ' · ' + partial + ' teilweise abgeschlossen' : '') + '</span>' +
+          (partial ? ' · ' + partial + ' teilweise abgeschlossen' : '') +
+          (gestrichen ? ' · ' + gestrichen + ' gestrichen' : '') + '</span>' +
       '</span>';
 
     var statusBtns = Object.keys(AUFTRAG_STATUS).map(function (key) {
@@ -5288,7 +5364,9 @@
     var rows = pos.map(function (p, i) {
       var badge;
       var klebe = lagerIndex ? klebeInfoFuer(p, lagerIndex) : null;
-      if (p.marke === "engers") {
+      if (p.gestrichen) {
+        badge = '<span class="auftrag-pos-badge avail-strike">✕ gestrichen – nicht machen</span>';
+      } else if (p.marke === "engers") {
         // engers: kein Tafel-Bestand-Abgleich — immer Klebe-Aufgabe.
         badge = klebe
           ? '<span class="auftrag-pos-badge avail-klebe">🧩 ' +
@@ -5306,11 +5384,11 @@
         badge = '<span class="auftrag-pos-badge avail-unk">– noch nicht geprüft</span>';
       }
       var extra = "";
-      if (p.lagerNote) extra += ' <span style="opacity:0.7;">– ' + escapeHtml(p.lagerNote) + '</span>';
-      if (p.lagerLabel) extra += ' <span style="opacity:0.55;">(' + escapeHtml(p.lagerLabel) + ')</span>';
+      if (!p.gestrichen && p.lagerNote) extra += ' <span style="opacity:0.7;">– ' + escapeHtml(p.lagerNote) + '</span>';
+      if (!p.gestrichen && p.lagerLabel) extra += ' <span style="opacity:0.55;">(' + escapeHtml(p.lagerLabel) + ')</span>';
       // Klebe-Position: benötigte Blanko-Tafel, Fliesen-Bausteine und Poster
       // aus dem Katalog anzeigen, jeweils mit Bestandsstatus + Gesamturteil.
-      if (klebe) {
+      if (klebe && !p.gestrichen) {
         extra += klebeDetailHtml(klebe, true);
       }
       var katalogEintrag = katalogEintragFuer(p.code);
@@ -5319,8 +5397,8 @@
         : '';
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
-      return '<tr class="pos-row' + (p.gepickt ? " gepickt" : (p.teilweise ? " teilweise" : (p.inArbeit ? " in-arbeit" : ""))) +
-        (istBlockiert(p, lagerIndex) ? " blockiert" : "") + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
+      return '<tr class="pos-row' + (p.gestrichen ? " gestrichen" : (p.gepickt ? " gepickt" : (p.teilweise ? " teilweise" : (p.inArbeit ? " in-arbeit" : "")))) +
+        (!p.gestrichen && istBlockiert(p, lagerIndex) ? " blockiert" : "") + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
         '<td class="pos-picked">' +
           '<span class="position-state-controls">' +
             '<button type="button" class="pick-toggle" role="checkbox" aria-checked="' + (p.gepickt ? "true" : "false") + '" ' +
@@ -5333,6 +5411,9 @@
             '</button>' +
             '<button type="button" class="partial-toggle" data-action="positionTeilweise" data-id="' + a.id + '" data-pos="' + i + '" aria-pressed="' + (p.teilweise ? "true" : "false") + '" aria-label="Teilweise abgeschlossen" title="' + (p.teilweise ? "Teilweisen Abschluss zurücknehmen" : "Als teilweise abgeschlossen markieren") + '">' +
               '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6"/><path d="M5 19h14"/></svg>' +
+            '</button>' +
+            '<button type="button" class="strike-toggle" data-action="positionGestrichen" data-id="' + a.id + '" data-pos="' + i + '" aria-pressed="' + (p.gestrichen ? "true" : "false") + '" aria-label="Nicht machen" title="' + (p.gestrichen ? "Ausstreichen zurücknehmen" : "Position aus Auftrag streichen – nicht machen") + '">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14"/><path d="M19 5L5 19"/></svg>' +
             '</button>' +
           '</span>' +
         '</td>' +
@@ -5625,6 +5706,13 @@
         e.preventDefault();
         e.stopPropagation();
         togglePositionTeilweise(el.getAttribute("data-id"), parseInt(el.getAttribute("data-pos"), 10));
+      });
+    });
+    listEl.querySelectorAll('[data-action="positionGestrichen"]').forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        togglePositionGestrichen(el.getAttribute("data-id"), parseInt(el.getAttribute("data-pos"), 10));
       });
     });
     listEl.querySelectorAll('[data-action="jumpCode"]').forEach(function (el) {
@@ -5932,13 +6020,16 @@
       var pickedByCode = {};
       var workingByCode = {};
       var partialByCode = {};
+      var gestrichenByCode = {};
       (existing.positionen || []).forEach(function (p) {
-        if (p.gepickt) pickedByCode[p.code] = p.gepicktAm || new Date().toISOString();
+        if (p.gestrichen) gestrichenByCode[p.code] = p.gestrichenAm || new Date().toISOString();
+        else if (p.gepickt) pickedByCode[p.code] = p.gepicktAm || new Date().toISOString();
         else if (p.teilweise) partialByCode[p.code] = p.teilweiseAm || new Date().toISOString();
         else if (p.inArbeit) workingByCode[p.code] = p.inArbeitAm || new Date().toISOString();
       });
       neu.positionen.forEach(function (p) {
-        if (pickedByCode[p.code]) { p.gepickt = true; p.gepicktAm = pickedByCode[p.code]; }
+        if (gestrichenByCode[p.code]) { p.gestrichen = true; p.gestrichenAm = gestrichenByCode[p.code]; }
+        else if (pickedByCode[p.code]) { p.gepickt = true; p.gepicktAm = pickedByCode[p.code]; }
         else if (partialByCode[p.code]) { p.teilweise = true; p.teilweiseAm = partialByCode[p.code]; }
         else if (workingByCode[p.code]) { p.inArbeit = true; p.inArbeitAm = workingByCode[p.code]; }
       });
@@ -6123,7 +6214,7 @@
     document.getElementById("checkResult").innerHTML = "";
     ocrStatusEl.textContent = "PDF wird gelesen…";
 
-    pdfExtractText(file).then(function (fullText) {
+    return pdfExtractText(file).then(function (fullText) {
       var trimmed = fullText.trim();
       if (!trimmed) {
         ocrStatusEl.textContent =
@@ -6184,6 +6275,8 @@
         inArbeitAm: null,
         teilweise: false,
         teilweiseAm: null,
+        gestrichen: false,
+        gestrichenAm: null,
         verfuegbar: null
       });
     }
@@ -6476,6 +6569,7 @@
     setTimeout(function () { btn.textContent = "📋 Codes kopieren"; }, 1200);
   });
 
+  if (auftragDropzoneEl) {
   auftragDropzoneEl.addEventListener("click", function () { auftragPdfFilesEl.click(); });
 
   auftragPdfFilesEl.addEventListener("change", function (e) {
@@ -6509,6 +6603,7 @@
     }
     auftragImportFiles(files);
   });
+  }
 
   // ---- Foto-OCR ----
   var ocrFileEl = document.getElementById("ocrFile");
@@ -6527,6 +6622,77 @@
   // Wartet, bis Tesseract vom CDN geladen ist (max. ~15 Sek.), und erkennt
   // dann den Text im Bild. onProgress bekommt 0–100 während der Erkennung.
   // Wird vom Foto-Upload im Prüfen-Tab UND vom Dropzone-Bildimport genutzt.
+  // Gemeinsame Dropzone fÃ¼r den PrÃ¼fbereich. PDFs und Bilder laufen Ã¼ber
+  // exakt dieselben Handler wie die beiden Upload-SchaltflÃ¤chen oben.
+  var checkDropzoneEl = document.getElementById("checkDropzone");
+  var checkDropzoneFilesEl = document.getElementById("checkDropzoneFiles");
+  var checkImportQueue = [];
+  var checkImportBusy = false;
+
+  function processNextCheckImport() {
+    if (checkImportBusy || !checkImportQueue.length) return;
+    var file = checkImportQueue.shift();
+    checkImportBusy = true;
+    var task;
+    try {
+      task = isImportImage(file) ? handleOcrFile(file) : handlePdfFile(file);
+    } catch (err) {
+      task = Promise.reject(err);
+    }
+    Promise.resolve(task).then(function () {
+      checkImportBusy = false;
+      if (checkImportQueue.length) processNextCheckImport();
+    }, function () {
+      checkImportBusy = false;
+      if (checkImportQueue.length) processNextCheckImport();
+    });
+  }
+
+  function addCheckImportFiles(fileList) {
+    var files = [];
+    var heic = false;
+    for (var i = 0; i < fileList.length; i++) {
+      var file = fileList[i];
+      if (/\\.pdf$/i.test(file.name || "") || file.type === "application/pdf" || isImportImage(file)) {
+        files.push(file);
+      } else if (isHeicImage(file)) {
+        heic = true;
+      }
+    }
+    if (!files.length) {
+      ocrStatusEl.textContent = heic
+        ? "HEIC-Fotos (iPhone-Format) werden nicht unterstÃ¼tzt â€” bitte als JPEG teilen/exportieren."
+        : "Bitte PDF- oder Bilddateien ablegen.";
+      return;
+    }
+    for (var j = 0; j < files.length; j++) checkImportQueue.push(files[j]);
+    processNextCheckImport();
+  }
+
+  checkDropzoneEl.addEventListener("click", function () { checkDropzoneFilesEl.click(); });
+  checkDropzoneEl.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      checkDropzoneFilesEl.click();
+    }
+  });
+  checkDropzoneFilesEl.addEventListener("change", function (e) {
+    if (e.target.files && e.target.files.length) addCheckImportFiles(e.target.files);
+    checkDropzoneFilesEl.value = "";
+  });
+  checkDropzoneEl.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    checkDropzoneEl.classList.add("drag-over");
+  });
+  checkDropzoneEl.addEventListener("dragleave", function () {
+    checkDropzoneEl.classList.remove("drag-over");
+  });
+  checkDropzoneEl.addEventListener("drop", function (e) {
+    e.preventDefault();
+    checkDropzoneEl.classList.remove("drag-over");
+    addCheckImportFiles(e.dataTransfer && e.dataTransfer.files ? e.dataTransfer.files : []);
+  });
+
   function ocrRecognize(file, onProgress) {
     return new Promise(function (resolve, reject) {
       function start() {
@@ -6566,7 +6732,7 @@
     document.getElementById("checkResult").innerHTML = "";
     ocrStatusEl.textContent = "Foto wird gelesen… (kann 10–30 Sek. dauern)";
 
-    ocrRecognize(file, function (pct) {
+    return ocrRecognize(file, function (pct) {
       ocrStatusEl.textContent = "Foto wird gelesen… " + pct + "%";
     })
       .then(function (raw) {
