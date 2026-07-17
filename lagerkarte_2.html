@@ -1712,7 +1712,7 @@
 
   /* ---------- Laufzettel fuer einen einzelnen Auftrag ---------- */
   @media print {
-    @page { size: A4 portrait; margin: 12mm; }
+    @page { size: A4 portrait; margin: 5mm; }
 
     html, body, #app, .auftrag-card.print-active, .auftrag-card.print-active * {
       -webkit-print-color-adjust: exact !important;
@@ -1774,29 +1774,48 @@
     }
     .auftrag-card.print-active {
       margin: 0 !important;
+      width: var(--print-width, 108.696%) !important;
       border: 1px solid #555 !important;
-      border-left-width: 4px !important;
+      border-left-width: 3px !important;
       border-radius: 0 !important;
       box-shadow: none !important;
       overflow: visible !important;
       opacity: 1 !important;
       color: #111 !important;
       background: #fff !important;
+      font-size: 7.5pt !important;
+      zoom: var(--print-scale, .92);
     }
     .auftrag-card.print-active > .auftrag-summary {
-      padding: 4mm !important;
+      gap: 1.5mm !important;
+      min-height: 0 !important;
+      padding: 1.7mm 2mm !important;
       cursor: default !important;
       border-bottom: 1px solid #777 !important;
       background: #f1f3f5 !important;
     }
+    .auftrag-card.print-active .auftrag-name { font-size: 9pt !important; }
+    .auftrag-card.print-active .auftrag-date,
+    .auftrag-card.print-active .auftraege-sub { font-size: 6.8pt !important; }
+    .auftrag-card.print-active .auftrag-marke-badge,
+    .auftrag-card.print-active .auftrag-avail-banner {
+      font-size: 6.8pt !important;
+      padding: .3mm 1.3mm !important;
+    }
+    .auftrag-card.print-active .auftrag-progress-bar {
+      width: 20mm !important;
+      height: 1.3mm !important;
+      margin-bottom: .3mm !important;
+    }
+    .auftrag-card.print-active .auftrag-progress-text { font-size: 6.5pt !important; }
     .auftrag-card.print-active .auftrag-body {
-      padding: 3mm 4mm 4mm !important;
+      padding: 1.2mm 2mm 2mm !important;
       border-top: 0 !important;
       overflow: visible !important;
     }
     .auftrag-card.print-active .auftrag-pos-table {
       table-layout: auto !important;
-      margin: 2mm 0 3mm !important;
+      margin: 1mm 0 1.5mm !important;
     }
     .auftrag-card.print-active .auftrag-pos-table thead {
       display: table-header-group !important;
@@ -1807,16 +1826,19 @@
     }
     .auftrag-card.print-active .auftrag-pos-table th,
     .auftrag-card.print-active .auftrag-pos-table td {
-      padding: 2.2mm 1.8mm !important;
+      padding: .7mm 1mm !important;
       border-color: #999 !important;
       color: #111 !important;
+      line-height: 1.12 !important;
     }
+    .auftrag-card.print-active .auftrag-pos-table th { font-size: 6.2pt !important; }
+    .auftrag-card.print-active .auftrag-pos-table td { font-size: 7.2pt !important; }
     .auftrag-card.print-active .auftrag-pos-table .pos-picked {
-      width: 31mm !important;
-      min-width: 31mm !important;
+      width: 25mm !important;
+      min-width: 25mm !important;
       text-align: left !important;
       white-space: nowrap !important;
-      font: 800 10pt/1.2 'SFMono-Regular', Consolas, 'Courier New', monospace !important;
+      font: 800 6.6pt/1.1 'SFMono-Regular', Consolas, 'Courier New', monospace !important;
     }
     .auftrag-card.print-active .auftrag-pos-table .pos-picked::before {
       content: "[ ] OFFEN";
@@ -1834,15 +1856,31 @@
       content: "[OK]";
     }
     .auftrag-card.print-active .auftrag-pos-table tr.pos-row.blockiert td {
-      border-top: 2px solid #b42318 !important;
-      border-bottom: 2px solid #b42318 !important;
+      border-top: 1px solid #b42318 !important;
+      border-bottom: 1px solid #b42318 !important;
     }
+    .auftrag-card.print-active .auftrag-pos-badge,
+    .auftrag-card.print-active .pos-klebe,
+    .auftrag-card.print-active .klebe-art,
+    .auftrag-card.print-active .klebe-verdict {
+      font-size: 6.4pt !important;
+      line-height: 1.08 !important;
+    }
+    .auftrag-card.print-active .auftrag-pos-badge,
+    .auftrag-card.print-active .klebe-art { padding: .15mm .8mm !important; }
+    .auftrag-card.print-active .pos-klebe,
+    .auftrag-card.print-active .klebe-verdict { margin-top: .35mm !important; }
+    .auftrag-card.print-active .auftrag-actions-row { margin-top: 1mm !important; }
+    .auftrag-card.print-active .auftrag-avail-detail { font-size: 6.5pt !important; margin-top: 0 !important; }
     .auftrag-card.print-active .print-only { display: inline !important; }
     .auftrag-card.print-active .auftrag-notiz {
-      min-height: 18mm !important;
+      min-height: 8mm !important;
+      margin-top: 1mm !important;
+      padding: 1mm 1.5mm !important;
       border: 1px solid #888 !important;
       background: #fff !important;
       color: #111 !important;
+      font-size: 7pt !important;
       resize: none !important;
     }
   }
@@ -5353,7 +5391,11 @@
   var activePrintAuftrag = null;
   var activePrintDay = null;
   function clearAuftragPrintState() {
-    if (activePrintAuftrag) activePrintAuftrag.classList.remove("print-active");
+    if (activePrintAuftrag) {
+      activePrintAuftrag.classList.remove("print-active");
+      activePrintAuftrag.style.removeProperty("--print-scale");
+      activePrintAuftrag.style.removeProperty("--print-width");
+    }
     if (activePrintDay) activePrintDay.classList.remove("print-parent-active");
     activePrintAuftrag = null;
     activePrintDay = null;
@@ -5368,6 +5410,20 @@
     activePrintDay = card.closest("details.auftrag-day-column");
     card.classList.add("print-active");
     if (activePrintDay) activePrintDay.classList.add("print-parent-active");
+
+    // Grosse Auftraege automatisch weiter verkleinern. Neben der Anzahl der
+    // Positionen zaehlen auch mehrzeilige Klebe-Details mit, da diese im
+    // Ausdruck zusaetzliche Hoehe benoetigen.
+    var positionsCount = card.querySelectorAll("tr.pos-row").length;
+    var detailCount = card.querySelectorAll(".pos-klebe, .klebe-verdict").length;
+    var printUnits = positionsCount + detailCount * 0.8;
+    var printScale = printUnits <= 18 ? 0.92
+      : printUnits <= 30 ? 0.82
+      : printUnits <= 44 ? 0.70
+      : printUnits <= 60 ? 0.58
+      : 0.48;
+    card.style.setProperty("--print-scale", String(printScale));
+    card.style.setProperty("--print-width", (100 / printScale).toFixed(3) + "%");
 
     // Zwei Frames geben dem Browser Zeit, die Druckklasse sicher anzuwenden,
     // bevor er die Druckvorschau aufbaut.
