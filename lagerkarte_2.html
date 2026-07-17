@@ -1664,6 +1664,14 @@
   .auftrag-pos-badge.avail-no { background: var(--red-bg); color: var(--red-fg); }
   .auftrag-pos-badge.avail-unk { background: var(--surface-2); color: var(--text-muted); }
   .auftrag-pos-badge.avail-klebe { background: var(--yellow-bg); color: var(--yellow-fg); }
+  /* Sonderklebung (-SOKL-): machbar (grün), aber Handarbeit nötig. */
+  .auftrag-pos-badge.avail-sonder { background: var(--green-bg); color: var(--green-fg); }
+  /* Zuschnittmaß einer Sonderklebung: GANZ GROSS und fett, damit es am
+     Klebeplatz sofort ins Auge springt. */
+  .pos-sondermass { display: inline-block; margin-top: 5px; padding: 5px 12px;
+    font-size: 17px; font-weight: 900; letter-spacing: 0.3px;
+    color: var(--yellow-fg); background: var(--yellow-bg);
+    border: 2px solid var(--yellow-fg); border-radius: 8px; }
   /* Klebe-Positionen: benötigte Fliesen-Artikel aus dem Katalog. */
   .pos-klebe { font-size: 11px; margin-top: 3px; color: var(--text-muted); }
   .klebe-art { display: inline-block; padding: 1px 6px; border-radius: 999px; cursor: pointer;
@@ -1909,6 +1917,17 @@
       margin: 0 1.2mm 0 0 !important;
     }
     .auftrag-card.print-active .pos-klebe:not(.klebe-verdict)::after { content: " · "; }
+    /* Sonderklebungs-Maß bleibt auch auf dem gedruckten Auftragszettel GROSS. */
+    .auftrag-card.print-active .pos-sondermass {
+      display: inline-block !important;
+      font-size: 14pt !important;
+      font-weight: 900 !important;
+      padding: 1mm 3mm !important;
+      margin: 1mm 0 !important;
+      color: #111 !important;
+      background: #fff !important;
+      border: 2px solid #111 !important;
+    }
     .auftrag-card.print-active .auftrag-actions-row { margin-top: 1mm !important; }
     .auftrag-card.print-active .auftrag-avail-detail { font-size: 8.5pt !important; margin-top: 0 !important; }
     .auftrag-card.print-active .print-only { display: inline !important; }
@@ -2355,7 +2374,7 @@
   }
   // Baut das Druckblatt für eine Auftragsposition: Auftragsnummer, Tafel-Bild
   // aus dem Katalog und die Mindest-Seitenabstände rund um das Bild.
-  function druckblattHtml(code, eintrag, auftragNr) {
+  function druckblattHtml(code, eintrag, auftragNr, sonderMass) {
     var abst = abstandFuerCode(code);
     var markeTxt = eintrag.marke === "vb" ? "Villeroy & Boch" : "engers";
     var subBits = [];
@@ -2379,6 +2398,17 @@
     }
     var imgHtml = imgUrl
       ? '<img src="' + escapeHtml(imgUrl) + '" alt="Tafel ' + escapeHtml(code) + '" onerror="this.parentNode.style.display=\'none\'">'
+      : "";
+    // Sonderklebung ohne Katalog-Bild: das Zuschnittmaß in den Rahmen setzen,
+    // damit die Abstands-Kästchen nicht um ein leeres Feld stehen.
+    if (!imgHtml && sonderMass) {
+      imgHtml = '<div class="zuschnitt-mass">' + escapeHtml(formatSonderMass(sonderMass)) + '</div>';
+    }
+    // GANZ GROSSER Hinweis auf das individuelle Zuschnittmaß — der Kollege am
+    // Klebeplatz sieht sofort, worauf die Platte gekappt werden muss.
+    var sonderHtml = sonderMass
+      ? '<div class="sondermass">&#10024; SONDERKLEBUNG &ndash; Ma&szlig;: ' +
+        escapeHtml(formatSonderMass(sonderMass)) + ' zuschneiden!</div>'
       : "";
     var mitte;
     if (abst === "griff") {
@@ -2437,6 +2467,8 @@
       '.bild img{display:block;max-width:118mm;max-height:145mm}' +
       '.bild-solo{display:inline-block;margin:3mm 0 7mm}' +
       '.griff{font-size:16pt;font-weight:700;border:2px solid #111;border-radius:3mm;background:#f2f2f2;padding:4mm 6mm;margin:3mm 0 5mm;display:inline-block}' +
+      '.sondermass{font-size:24pt;font-weight:900;text-align:center;border:4px solid #111;border-radius:3mm;background:#fff3cd;padding:5mm 6mm;margin:0 0 6mm;letter-spacing:.5px}' +
+      '.zuschnitt-mass{font-size:34pt;font-weight:900;text-align:center;padding:22mm 10mm;white-space:nowrap}' +
       '.etikett{font-size:12pt;border:1.5px solid #111;padding:3mm 5mm;display:inline-block;margin-bottom:4mm}' +
       '.notiz{font-size:11pt;color:#333;margin-bottom:4mm}' +
       '.pickliste{margin-top:4mm;border-top:2px solid #111;padding-top:3mm}' +
@@ -2457,6 +2489,7 @@
       '</div>' +
       '<div class="code-zeile"><div class="code">' + escapeHtml(code) + '</div>' +
       (detailBits.length ? '<div class="details">' + escapeHtml(detailBits.join("  ·  ")) + '</div>' : "") + '</div>' +
+      sonderHtml +
       mitte +
       extraBits.join("") +
       picklisteHtml +
@@ -2468,11 +2501,17 @@
       'if(img&&!img.complete){img.addEventListener("load",go);img.addEventListener("error",go);setTimeout(go,4000);}else{window.addEventListener("load",go);setTimeout(go,1500);}})();<\/script>' +
       '</body></html>';
   }
-  function printKatalogSeite(code, auftragNr) {
+  function printKatalogSeite(code, auftragNr, sonderMass) {
     var eintrag = katalogEintragFuer(code);
     if (!eintrag) {
-      showBackupMsg("Für " + code + " wurde kein Katalog-Eintrag gefunden.");
-      return;
+      // Sonderklebungen stehen nicht im Katalog — reduziertes Druckblatt
+      // (Marke aus dem Code-Präfix, kein Bild, dafür das Zuschnittmaß groß).
+      if (istSonderklebung(code)) {
+        eintrag = { marke: markeFuerCode(code), artikel: [] };
+      } else {
+        showBackupMsg("Für " + code + " wurde kein Katalog-Eintrag gefunden.");
+        return;
+      }
     }
     var w = window.open("", "_blank");
     if (!w) {
@@ -2480,7 +2519,7 @@
       return;
     }
     w.document.open();
-    w.document.write(druckblattHtml(code, eintrag, auftragNr));
+    w.document.write(druckblattHtml(code, eintrag, auftragNr, sonderMass || ""));
     w.document.close();
   }
   // Ein delegierter Handler für alle Katalog-Buttons (Bestand + Aufträge),
@@ -2490,7 +2529,7 @@
     if (!btn) return;
     e.preventDefault();
     e.stopPropagation();
-    if (btn.getAttribute("data-action") === "printKatalog") printKatalogSeite(btn.getAttribute("data-code"), btn.getAttribute("data-auftrag") || "");
+    if (btn.getAttribute("data-action") === "printKatalog") printKatalogSeite(btn.getAttribute("data-code"), btn.getAttribute("data-auftrag") || "", btn.getAttribute("data-mass") || "");
     else openKatalog(btn.getAttribute("data-code"));
   });
 
@@ -4806,6 +4845,30 @@
       if (p.gestrichen) {
         return;
       }
+      // Sonderklebung (-SOKL-): individueller Zuschnitt, es gibt bewusst
+      // keinen exakten Lager-Treffer. Nie blockieren — exakter Treffer im
+      // Bestand zählt normal, sonst Status "sondermass" (= machbar, aber
+      // Handarbeit: Tafel auf Wunschmaß kappen).
+      if (istSonderklebung(p.code)) {
+        var sEntry = index[normalizeCode(p.code).replace(/-/g, "")];
+        if (sEntry && (sEntry.status === "ok" || sEntry.status === "pending")) {
+          p.lagerStatus = sEntry.status;
+          p.lagerNote = sEntry.note || "";
+          p.lagerLabel = sEntry.label || "";
+          p.verfuegbar = true;
+          return;
+        }
+        var traeger = blankoTafelStatus(p.code, index);
+        p.lagerStatus = "sondermass";
+        p.lagerNote = traeger
+          ? (klebenNutzbar(traeger.lagerStatus)
+              ? "Träger " + traeger.code + " im Bestand"
+              : "Träger " + traeger.code + " nicht im Bestand – Tafel individuell zuschneiden")
+          : "";
+        p.lagerLabel = "";
+        p.verfuegbar = true;
+        return;
+      }
       // engers-Tafeln werden immer frisch geklebt — der Tafel-Bestand (fertig
       // geklebte Tafeln) gilt nur für V&B. engers-Positionen deshalb gar nicht
       // erst gegen den Bestand prüfen: sie sind reine Klebe-Aufgaben.
@@ -4975,6 +5038,56 @@
 
   function klebenNutzbar(st) { return st === "ok" || st === "pending"; }
 
+  // --- Sonderklebungen (-SOKL-) ---
+  // Sonderklebung = Tafel wird individuell auf ein Wunschmaß zugeschnitten.
+  // Erkennungsmerkmal ist das Segment "SOKL" im Code (z.B. "9562-SOKL-00").
+  function istSonderklebung(code) {
+    return /SOKL/i.test(String(code || ""));
+  }
+
+  // Maßangabe "104x184" (auch "104 x 184", "×", Dezimalmaße) aus einer Zeile.
+  function massAusZeile(line) {
+    var m = /(\d{2,3}(?:[.,]\d+)?)\s*[x×]\s*(\d{2,3}(?:[.,]\d+)?)/i.exec(line || "");
+    return m ? (m[1] + "x" + m[2]) : null;
+  }
+
+  // Wunschmaß einer Sonderklebung aus dem Auftragstext: die Zeile mit dem
+  // SOKL-Code suchen und das Maß aus der direkt darunter liegenden Zeile
+  // ziehen (Leerzeilen werden übersprungen); Fallback: die Code-Zeile selbst.
+  function sonderMassFuerCode(text, norm) {
+    if (!istSonderklebung(norm)) return "";
+    var key = String(norm).replace(/-/g, "");
+    var lines = String(text || "").split(/\r?\n/);
+    for (var i = 0; i < lines.length; i++) {
+      var hit = extractCodes(lines[i]).some(function (c) {
+        return c.norm.replace(/-/g, "") === key;
+      });
+      if (!hit) continue;
+      for (var j = i + 1; j < lines.length; j++) {
+        if (!lines[j].trim()) continue;          // Leerzeilen überspringen
+        var mass = massAusZeile(lines[j]);
+        if (mass) return mass;
+        break;                                    // nur die erste Folgezeile zählt
+      }
+      var eigene = massAusZeile(lines[i]);
+      if (eigene) return eigene;
+    }
+    return "";
+  }
+
+  // "104x184" → "104 x 184 cm" für die Anzeige.
+  function formatSonderMass(mass) {
+    return String(mass).replace(/\s*[x×]\s*/i, " x ") + " cm";
+  }
+
+  // Großer Hinweis-Banner für Prüfer & Auftragsliste, damit der Kollege am
+  // Klebeplatz das Zuschnittmaß sofort sieht.
+  function sonderMassHinweisHtml(mass, cssClass) {
+    if (!mass) return "";
+    return '<div class="' + cssClass + '">✨ SONDERKLEBUNG – Maß: ' +
+      escapeHtml(formatSonderMass(mass)) + ' zuschneiden!</div>';
+  }
+
   // Klebe-Info für eine Auftragsposition: Tafel ist nicht im Lager, aber im
   // Katalog → keine Pick-Aufgabe, sondern kleben. Liefert die benötigte
   // Blanko-Tafel, die Fliesen-Bausteine (z.B. "PHO 1250") und den Poster —
@@ -5017,6 +5130,8 @@
   // nicht (mehr) im Lager stehen ("unknown") oder als leer markiert sind
   // ("empty" → neu bekleben). Bestellte/defekte Codes betrifft es nicht.
   function klebeInfoFuer(p, index) {
+    // Sonderklebung: individueller Zuschnitt, kein Katalog-Klebe-Abgleich.
+    if (istSonderklebung(p.code)) return null;
     // engers: Tafel-Bestand ist irrelevant, jede Position ist eine Klebe-Aufgabe.
     if (p.marke === "engers") return klebeInfoForCode(p.code, index);
     if (p.verfuegbar === true) return null;
@@ -5028,6 +5143,8 @@
   // noch durch Kleben machbar ist. (Kleben ist Standard, kein Blocker.)
   function istBlockiert(p, index) {
     if (p.gestrichen) return false;
+    // Sonderklebung ist immer machbar (Zuschnitt = Handarbeit, kein Blocker).
+    if (istSonderklebung(p.code)) return false;
     if (p.marke === "engers") {
       // Kleben ist der einzige Weg: blockiert nur, wenn laut Katalog Material
       // fehlt. Ohne Katalog-Eintrag keine Aussage möglich → nicht blockieren.
@@ -5390,6 +5507,9 @@
       var klebe = lagerIndex ? klebeInfoFuer(p, lagerIndex) : null;
       if (p.gestrichen) {
         badge = '<span class="auftrag-pos-badge avail-strike">✕ gestrichen – nicht machen</span>';
+      } else if (p.lagerStatus === "sondermass") {
+        // Sonderklebung ohne exakten Lager-Treffer: machbar, aber Handarbeit.
+        badge = '<span class="auftrag-pos-badge avail-sonder">⚡ Sondermaß / Zuschnitt erforderlich</span>';
       } else if (p.marke === "engers") {
         // engers: kein Tafel-Bestand-Abgleich — immer Klebe-Aufgabe.
         badge = klebe
@@ -5415,9 +5535,15 @@
       if (klebe && !p.gestrichen) {
         extra += klebeDetailHtml(klebe, true);
       }
+      // Sonderklebungs-Wunschmaß GANZ GROSS unter der Position anzeigen.
+      if (!p.gestrichen && p.sonderMass) {
+        extra += sonderMassHinweisHtml(p.sonderMass, "pos-sondermass");
+      }
       var katalogEintrag = katalogEintragFuer(p.code);
-      var printButton = katalogEintrag
-        ? '<button type="button" class="icon-btn katalog-btn pos-print-btn" data-action="printKatalog" data-code="' + escapeHtml(p.code || "") + '" data-auftrag="' + escapeHtml(performanceOrderLabel(a)) + '" title="Druckblatt mit Auftragsnummer und Seitenabständen drucken"><span class="icon">' + ICONS.print + '</span></button>'
+      // Sonderklebungen bekommen auch ohne Katalog-Eintrag ein Druckblatt
+      // (reduzierter Laufzettel mit dem Zuschnittmaß).
+      var printButton = (katalogEintrag || istSonderklebung(p.code))
+        ? '<button type="button" class="icon-btn katalog-btn pos-print-btn" data-action="printKatalog" data-code="' + escapeHtml(p.code || "") + '" data-auftrag="' + escapeHtml(performanceOrderLabel(a)) + '" data-mass="' + escapeHtml(p.sonderMass || "") + '" title="Druckblatt mit Auftragsnummer und Seitenabständen drucken"><span class="icon">' + ICONS.print + '</span></button>'
         : '';
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
@@ -5894,7 +6020,7 @@
   function extractCodes(text) {
     var codes = [];
     var seen = {};
-    var re = /\b((?:ART\.?\s*)?\d{4}\s*-\s*[A-Z0-9]{2,4}\s*-\s*[A-Z0-9]{2,3}(?:\s*-\s*\d{2}){0,2}|\d{4}\s*-\s*[A-Z]{2}\d{2}(?:\s*-\s*\d{2}){0,2}|\d?\s?[A-Z]{2,4}\s*-\s*\d{3,4}(?:\s*-\s*[A-Z0-9]{2,3}){0,2}|\d[A-Z]{2,4}\d{4}|\d{4}[A-Z]{2}\d{2}(?:[A-Z0-9]{2})?)/gi;
+    var re = /\b(\d{4}\s*-\s*SOKL(?:\s*-\s*[A-Z0-9]{1,4})*|(?:ART\.?\s*)?\d{4}\s*-\s*[A-Z0-9]{2,4}\s*-\s*[A-Z0-9]{2,3}(?:\s*-\s*\d{2}){0,2}|\d{4}\s*-\s*[A-Z]{2}\d{2}(?:\s*-\s*\d{2}){0,2}|\d?\s?[A-Z]{2,4}\s*-\s*\d{3,4}(?:\s*-\s*[A-Z0-9]{2,3}){0,2}|\d[A-Z]{2,4}\d{4}|\d{4}[A-Z]{2}\d{2}(?:[A-Z0-9]{2})?)/gi;
     var m;
     while ((m = re.exec(text)) !== null) {
       var norm = normalizeCode(m[1]);
@@ -5924,7 +6050,8 @@
     missing: { cls: "cl-missing", icon: "●", text: "fehlt – Nachbestellung" },
     broken:  { cls: "cl-broken",  icon: "⚠", text: "nicht verwendbar" },
     empty:   { cls: "cl-empty",   icon: "▲", text: "Tafel leer – neu kleben" },
-    unknown: { cls: "cl-unknown", icon: "?", text: "nicht im Lager erfasst" }
+    unknown: { cls: "cl-unknown", icon: "?", text: "nicht im Lager erfasst" },
+    sondermass: { cls: "cl-ok",   icon: "⚡", text: "Sondermaß / Zuschnitt erforderlich" }
   };
 
   function runCheck() {
@@ -5947,14 +6074,28 @@
       var entry = index[c.norm.replace(/-/g, "")];
       var status = entry ? entry.status : "unknown";
       var direkt = status === "ok" || status === "pending";
+      var sonder = istSonderklebung(c.norm);
+      var sonderMass = sonder ? sonderMassFuerCode(text, c.norm) : "";
       // Nicht direkt im Lager? → Katalog prüfen: dann ist es ein Kleben-Fall
       // (Standard, kein Problem), sofern das Material vorhanden ist.
-      var klebe = direkt ? null : klebeInfoForCode(c.norm, index);
+      var klebe = (direkt || sonder) ? null : klebeInfoForCode(c.norm, index);
 
       var meta, isBlocker, klebeHtml = "";
       if (direkt) {
         meta = STATUS_LABEL[status];
         isBlocker = false;
+      } else if (sonder) {
+        // Sonderklebung: individueller Zuschnitt — zählt als machbar, kein
+        // Blocker. Der Träger-Status ist reine Zusatzinfo.
+        meta = STATUS_LABEL.sondermass;
+        isBlocker = false;
+        var sTraeger = blankoTafelStatus(c.norm, index);
+        if (sTraeger) {
+          klebeHtml = '<div class="check-klebe"><div class="pos-klebe">' +
+            '<span class="klebe-label">Träger:</span> ' +
+            klebeChipHtml(sTraeger.code, sTraeger.lagerStatus, "Träger " + sTraeger.code) +
+            '</div></div>';
+        }
       } else if (klebe) {
         klebenCount++;
         isBlocker = !klebe.moeglich;
@@ -5988,7 +6129,11 @@
           '<span>' + meta.icon + '</span>' +
           '<span class="cl-code">' + escapeHtml(c.norm) + '</span>' +
           '<span class="cl-status">' + meta.text + noteHtml + '</span>' +
-        '</div>' + klebeHtml
+        '</div>' +
+        // Wunschmaß der Sonderklebung GROSS anzeigen — der Kollege am
+        // Klebeplatz sieht sofort, worauf die Platte gekappt werden muss.
+        (sonderMass ? '<div class="check-klebe">' + sonderMassHinweisHtml(sonderMass, "pos-sondermass") + '</div>' : "") +
+        klebeHtml
       );
     });
 
@@ -6290,6 +6435,9 @@
       positionen.push({
         pos: posNr || ("000" + ((positionen.length + 1) * 10)).slice(-4),
         code: norm,
+        // Sonderklebung: Wunschmaß aus der Zeile unter dem SOKL-Code
+        // (z.B. "104x184") — leer bei normalen Positionen.
+        sonderMass: sonderMassFuerCode(text, norm),
         termin: "",
         menge: menge || "",
         einheit: einheit || "ST",
