@@ -49197,6 +49197,128 @@
    ],
    "display": true,
    "marke": "engers"
+  },
+  {
+   "id": "p377_9570GR060010",
+   "seite": 377,
+   "serie": "MIX & CREATE",
+   "material": "Display",
+   "codes": [
+    "9570-GR06-00-10"
+   ],
+   "tafel_groesse": "65x100 cm / Rückwand 200x100 cm",
+   "gt": false,
+   "artikel": [
+
+   ],
+   "label": "",
+   "notizen": [
+    "Display MIX & CREATE, Teil 1 (Fliesenmix)",
+    "Display 65x100 cm (6 Einschübe), anthrazit",
+    "Rückwand 200x100 cm (magnetisch), weiß",
+    "Quelle: Engers-Blatt „Display MIX & CREATE Teil 1“ (Foto 07/2026) — Code taucht in keiner Stückliste-Datei auf"
+   ],
+   "display": true,
+   "marke": "engers"
+  },
+  {
+   "id": "p377_9571MIX10010",
+   "seite": 377,
+   "serie": "MIX & CREATE",
+   "material": "Poster",
+   "codes": [
+    "9571-MIX1-00-10"
+   ],
+   "tafel_groesse": "140x100 cm",
+   "gt": false,
+   "artikel": [
+
+   ],
+   "label": "",
+   "notizen": [
+    "Poster 140x100 cm, Teil 1, farbmix",
+    "Wird an der magnetischen Rückwand angebracht!",
+    "Gehört zum Display MIX & CREATE (9570-GR06-00-10, gleiche Seite)",
+    "Quelle: Engers-Blatt „Display MIX & CREATE Teil 1“ (Foto 07/2026)"
+   ],
+   "display": true,
+   "marke": "engers"
+  },
+  {
+   "id": "p377_9569MIX10010",
+   "seite": 377,
+   "serie": "MIX & CREATE",
+   "material": "Fliesenmix",
+   "codes": [
+    "9569-MIX1-00-10"
+   ],
+   "tafel_groesse": "Bestückung, Teil 1",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "TER 1490",
+     "stueck": "1",
+     "farbe": "lava (lose)",
+     "groesse": "60x60 cm"
+    },
+    {
+     "artnr": "TER 1460",
+     "stueck": "1",
+     "farbe": "terracotta (lose)",
+     "groesse": "60x60 cm"
+    },
+    {
+     "artnr": "MIW 2920",
+     "stueck": "1",
+     "farbe": "kalkweiß (lose)",
+     "groesse": "40x120 cm"
+    },
+    {
+     "artnr": "GAR 2921",
+     "stueck": "1",
+     "farbe": "farbmix (lose)",
+     "groesse": "40x120 cm"
+    },
+    {
+     "artnr": "WOO 2040",
+     "stueck": "1",
+     "farbe": "eiche (lose)",
+     "groesse": "20x120 cm"
+    },
+    {
+     "artnr": "ARI 0635",
+     "stueck": "1",
+     "farbe": "farbmix natur (auf Trägerplatte)",
+     "groesse": "30x30 cm"
+    },
+    {
+     "artnr": "BRI 3120",
+     "stueck": "4",
+     "farbe": "edelweiß (auf Trägerplatte)",
+     "groesse": "5x25 cm"
+    },
+    {
+     "artnr": "BRI 3130",
+     "stueck": "4",
+     "farbe": "moosgrün (auf Trägerplatte)",
+     "groesse": "5x25 cm"
+    },
+    {
+     "artnr": "BRI 3160",
+     "stueck": "4",
+     "farbe": "ziegelrot (auf Trägerplatte)",
+     "groesse": "5x25 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "Bestückung Fliesenmix lose, Teil 1 — für Display MIX & CREATE (9570-GR06-00-10, gleiche Seite)",
+    "TER/MIW/GAR/WOO-Fliesen lose in die 6 Einschübe; ARI-Mosaik + BRI-Sticks aufgeklebt auf Trägerplatten",
+    "Etikett jeweils vorderseitig oben bzw. unten rechts",
+    "Quelle: Engers-Blatt „Display MIX & CREATE Teil 1“ (Foto 07/2026) — Code taucht in keiner Stückliste-Datei auf (auf Lieferschein auch als „MAGNET RW MIX&CREATE“ bezeichnet)"
+   ],
+   "display": true,
+   "marke": "engers"
   }
  ],
  "probleme": [
