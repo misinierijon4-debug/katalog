@@ -1659,6 +1659,7 @@
   .auftrag-avail-detail { font-size: 11.5px; margin-top: 8px; }
   .auftrag-avail-detail.avail-ok { color: var(--green-fg); font-weight: 700; }
   .auftrag-avail-detail.avail-partial { color: var(--yellow-fg); font-weight: 600; }
+  .print-only { display: none; }
 
   .auftrag-ocr-modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;
@@ -1708,6 +1709,143 @@
   }
   .was-fehlt-item .wf-used-in { font-size: 11px; color: var(--text-muted); }
   .was-fehlt-modal-actions { display: flex; gap: 8px; margin-top: 12px; justify-content: flex-end; }
+
+  /* ---------- Laufzettel fuer einen einzelnen Auftrag ---------- */
+  @media print {
+    @page { size: A4 portrait; margin: 12mm; }
+
+    html, body, #app, .auftrag-card.print-active, .auftrag-card.print-active * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    html, body {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #fff !important;
+    }
+    #loadingMsg,
+    #topbar,
+    .tabs,
+    .search-wrap,
+    .dashboard,
+    .page > :not(#auftraegeSection),
+    #auftraegeSection > :not(#auftraegeList),
+    .auftrag-day-column,
+    .auftrag-card:not(.print-active) {
+      display: none !important;
+    }
+
+    #app,
+    .page,
+    #auftraegeSection,
+    #auftraegeList,
+    .auftrag-day-board,
+    .auftrag-day-column.print-parent-active,
+    .auftrag-day-cards,
+    .auftrag-card.print-active,
+    .auftrag-card.print-active .auftrag-body {
+      display: block !important;
+      width: 100% !important;
+      max-width: none !important;
+      box-sizing: border-box !important;
+    }
+    .page,
+    .auftrag-day-board,
+    .auftrag-day-cards {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .auftrag-day-column.print-parent-active {
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      overflow: visible !important;
+    }
+    .auftrag-day-column.print-parent-active > .auftrag-day-head,
+    .auftrag-card.print-active .chevron,
+    .auftrag-card.print-active .auftrag-status-btns,
+    .auftrag-card.print-active .auftrag-del,
+    .auftrag-card.print-active .pos-code-actions,
+    .auftrag-card.print-active .auftrag-actions-row .btn,
+    .auftrag-card.print-active .position-state-controls {
+      display: none !important;
+    }
+    .auftrag-card.print-active {
+      margin: 0 !important;
+      border: 1px solid #555 !important;
+      border-left-width: 4px !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+      opacity: 1 !important;
+      color: #111 !important;
+      background: #fff !important;
+    }
+    .auftrag-card.print-active > .auftrag-summary {
+      padding: 4mm !important;
+      cursor: default !important;
+      border-bottom: 1px solid #777 !important;
+      background: #f1f3f5 !important;
+    }
+    .auftrag-card.print-active .auftrag-body {
+      padding: 3mm 4mm 4mm !important;
+      border-top: 0 !important;
+      overflow: visible !important;
+    }
+    .auftrag-card.print-active .auftrag-pos-table {
+      table-layout: auto !important;
+      margin: 2mm 0 3mm !important;
+    }
+    .auftrag-card.print-active .auftrag-pos-table thead {
+      display: table-header-group !important;
+    }
+    .auftrag-card.print-active .auftrag-pos-table tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .auftrag-card.print-active .auftrag-pos-table th,
+    .auftrag-card.print-active .auftrag-pos-table td {
+      padding: 2.2mm 1.8mm !important;
+      border-color: #999 !important;
+      color: #111 !important;
+    }
+    .auftrag-card.print-active .auftrag-pos-table .pos-picked {
+      width: 31mm !important;
+      min-width: 31mm !important;
+      text-align: left !important;
+      white-space: nowrap !important;
+      font: 800 10pt/1.2 'SFMono-Regular', Consolas, 'Courier New', monospace !important;
+    }
+    .auftrag-card.print-active .auftrag-pos-table .pos-picked::before {
+      content: "[ ] OFFEN";
+    }
+    .auftrag-card.print-active .auftrag-pos-table tr.pos-row.in-arbeit .pos-picked::before {
+      content: "[ ] IN ARBEIT";
+    }
+    .auftrag-card.print-active .auftrag-pos-table tr.pos-row.teilweise .pos-picked::before {
+      content: "[ ] TEILWEISE";
+    }
+    .auftrag-card.print-active .auftrag-pos-table tr.pos-row.blockiert .pos-picked::before {
+      content: "[ ] BLOCKIERT";
+    }
+    .auftrag-card.print-active .auftrag-pos-table tr.pos-row.gepickt .pos-picked::before {
+      content: "[OK]";
+    }
+    .auftrag-card.print-active .auftrag-pos-table tr.pos-row.blockiert td {
+      border-top: 2px solid #b42318 !important;
+      border-bottom: 2px solid #b42318 !important;
+    }
+    .auftrag-card.print-active .print-only { display: inline !important; }
+    .auftrag-card.print-active .auftrag-notiz {
+      min-height: 18mm !important;
+      border: 1px solid #888 !important;
+      background: #fff !important;
+      color: #111 !important;
+      resize: none !important;
+    }
+  }
 
   /* ---------- Responsive ---------- */
   @media (max-width: 640px) {
@@ -5123,7 +5261,8 @@
         : '';
       // Die ganze Zeile togglet "gepickt"; interaktive Kind-Elemente werden
       // im Klick-Handler ausgenommen.
-      return '<tr class="pos-row' + (p.gepickt ? " gepickt" : (p.teilweise ? " teilweise" : (p.inArbeit ? " in-arbeit" : ""))) + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
+      return '<tr class="pos-row' + (p.gepickt ? " gepickt" : (p.teilweise ? " teilweise" : (p.inArbeit ? " in-arbeit" : ""))) +
+        (istBlockiert(p, lagerIndex) ? " blockiert" : "") + '" data-action="togglePick" data-id="' + a.id + '" data-pos="' + i + '">' +
         '<td class="pos-picked">' +
           '<span class="position-state-controls">' +
             '<button type="button" class="pick-toggle" role="checkbox" aria-checked="' + (p.gepickt ? "true" : "false") + '" ' +
@@ -5185,11 +5324,12 @@
         '<div class="auftrag-body">' +
           metaLine +
           '<table class="auftrag-pos-table">' +
-            '<thead><tr><th></th><th>Pos.</th><th>Artikel</th><th>Menge</th><th>Verfügbarkeit</th></tr></thead>' +
+            '<thead><tr><th class="pos-state-head"><span class="print-only">Status</span></th><th>Pos.</th><th>Artikel</th><th>Menge</th><th>Verfügbarkeit</th></tr></thead>' +
             '<tbody>' + rows + '</tbody>' +
           '</table>' +
           '<div class="auftrag-actions-row">' +
             '<button type="button" class="btn" data-action="recheck" data-id="' + a.id + '">🔄 Verfügbarkeit neu prüfen</button>' +
+            '<button type="button" class="btn" data-action="printAuftrag" data-id="' + a.id + '">&#x1F5A8;&#xFE0F; Laufzettel drucken</button>' +
             // Immer anzeigen (nicht nur bei Blockern): auch fehlende Poster/
             // Etiketten sollen auffindbar sein — die blockieren nicht.
             '<button type="button" class="btn' + (blocked > 0 ? " btn-danger" : "") + '" data-action="showMissing" data-id="' + a.id + '">🧩 Was fehlt?</button>' +
@@ -5205,6 +5345,39 @@
   // von renderAuftraege leben, weil die Liste nach jedem Toggle neu
   // gerendert wird (der zweite Klick trifft ein frisches Element).
   var lastPickToggle = { key: "", t: 0 };
+
+  // Druckt genau die Karte, deren Laufzettel-Button angeklickt wurde. Die
+  // Elternklasse sorgt dafuer, dass auch bei Tagesgruppen nur dieser Auftrag
+  // im Druck-Layout verbleibt. "afterprint" wird auch beim Abbrechen des
+  // Druckdialogs ausgeloest und raeumt beide Klassen wieder auf.
+  var activePrintAuftrag = null;
+  var activePrintDay = null;
+  function clearAuftragPrintState() {
+    if (activePrintAuftrag) activePrintAuftrag.classList.remove("print-active");
+    if (activePrintDay) activePrintDay.classList.remove("print-parent-active");
+    activePrintAuftrag = null;
+    activePrintDay = null;
+  }
+  window.addEventListener("afterprint", clearAuftragPrintState);
+
+  function printAuftrag(button) {
+    var card = button && button.closest ? button.closest("details.auftrag-card") : null;
+    if (!card) return;
+    clearAuftragPrintState();
+    activePrintAuftrag = card;
+    activePrintDay = card.closest("details.auftrag-day-column");
+    card.classList.add("print-active");
+    if (activePrintDay) activePrintDay.classList.add("print-parent-active");
+
+    // Zwei Frames geben dem Browser Zeit, die Druckklasse sicher anzuwenden,
+    // bevor er die Druckvorschau aufbaut.
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () {
+        try { window.print(); }
+        catch (err) { clearAuftragPrintState(); }
+      });
+    });
+  }
 
   function auftragDayInfo(a) {
     var raw = a.importiertAm || a.savedAt || "";
@@ -5389,6 +5562,11 @@
     listEl.querySelectorAll('[data-action="recheck"]').forEach(function (el) {
       el.addEventListener("click", function () {
         recheckAuftrag(el.getAttribute("data-id"));
+      });
+    });
+    listEl.querySelectorAll('[data-action="printAuftrag"]').forEach(function (el) {
+      el.addEventListener("click", function () {
+        printAuftrag(el);
       });
     });
     listEl.querySelectorAll('[data-action="showMissing"]').forEach(function (el) {
