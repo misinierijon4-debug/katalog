@@ -49104,6 +49104,99 @@
    ],
    "display": false,
    "marke": "engers"
+  },
+  {
+   "id": "p259_9569WOBS0010",
+   "seite": 259,
+   "serie": "WOOD",
+   "material": "Feinsteinzeug 20x120 / 30x120 cm",
+   "codes": [
+    "9569-WOBS-00-10"
+   ],
+   "tafel_groesse": "12 lose Fliesen (6x 20x120, 6x 30x120)",
+   "gt": false,
+   "artikel": [
+    {
+     "artnr": "WOO 2030",
+     "stueck": "1",
+     "farbe": "ahorn",
+     "groesse": "20x120 cm"
+    },
+    {
+     "artnr": "WOO 2040",
+     "stueck": "1",
+     "farbe": "eiche",
+     "groesse": "20x120 cm"
+    },
+    {
+     "artnr": "WOO 2050",
+     "stueck": "1",
+     "farbe": "kirsche",
+     "groesse": "20x120 cm"
+    },
+    {
+     "artnr": "WOO 2060",
+     "stueck": "1",
+     "farbe": "walnuss",
+     "groesse": "20x120 cm"
+    },
+    {
+     "artnr": "WOO 2080",
+     "stueck": "1",
+     "farbe": "grau",
+     "groesse": "20x120 cm"
+    },
+    {
+     "artnr": "WOO 2090",
+     "stueck": "1",
+     "farbe": "anthrazit",
+     "groesse": "20x120 cm"
+    },
+    {
+     "artnr": "WOO 2130",
+     "stueck": "1",
+     "farbe": "ahorn",
+     "groesse": "30x120 cm"
+    },
+    {
+     "artnr": "WOO 2140",
+     "stueck": "1",
+     "farbe": "eiche",
+     "groesse": "30x120 cm"
+    },
+    {
+     "artnr": "WOO 2150",
+     "stueck": "1",
+     "farbe": "kirsche",
+     "groesse": "30x120 cm"
+    },
+    {
+     "artnr": "WOO 2160",
+     "stueck": "1",
+     "farbe": "walnuss",
+     "groesse": "30x120 cm"
+    },
+    {
+     "artnr": "WOO 2180",
+     "stueck": "1",
+     "farbe": "grau",
+     "groesse": "30x120 cm"
+    },
+    {
+     "artnr": "WOO 2190",
+     "stueck": "1",
+     "farbe": "anthrazit",
+     "groesse": "30x120 cm"
+    }
+   ],
+   "label": "",
+   "notizen": [
+    "Bestückungssatz für das Display WOOD (9570-WOSF-09-10, gleiche Seite)",
+    "aus ENGERS_SampleBoard-Stückliste (50937) — lose Fliesen, keine Verklebung",
+    "Kein eigener Plan/kein eigenes Foto vorhanden — Bild zeigt das zugehörige Display WOOD"
+   ],
+   "display": true,
+   "marke": "engers"
   }
  ],
  "probleme": [
