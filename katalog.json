@@ -21182,7 +21182,7 @@
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
     "+ Ambientebild auf Rückseite",
-    "Weitere Größen als Anordnungsplan: siehe 9562-NATU-08 u. a. (Katalogseite 308)"
+    "Weitere Größen als Anordnungsplan: siehe 9562-NATU-02-10 u. a. (Katalogseite 308)"
    ],
    "display": false,
    "board_px200": [
@@ -21220,7 +21220,7 @@
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
     "+ Ambientebild auf Rückseite",
-    "Weitere Größen als Anordnungsplan: siehe 9562-NATU-06 u. a. (Katalogseite 307)"
+    "Weitere Größen als Anordnungsplan: siehe 9562-NATU-04-10 u. a. (Katalogseite 307)"
    ],
    "display": false,
    "board_px200": [
@@ -42998,48 +42998,13 @@
    "pdf_pfad": "pages/vb/urban/seite-281.pdf"
   },
   {
-   "id": "p309_9555NAT01",
-   "seite": 309,
-   "serie": "NATURAL",
-   "name": null,
-   "material": "Steingut 30x60cm",
-   "codes": [
-    "9555-NATU-01"
-   ],
-   "tafel_groesse": "GT 72x78 cm",
-   "gt": true,
-   "artikel": [
-    {
-     "artnr": "NATU 1220",
-     "groesse": "30x60 cm"
-    },
-    {
-     "artnr": "NATU 1222"
-    }
-   ],
-   "label": null,
-   "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
-   ],
-   "marke": "engers",
-   "display": false,
-   "board_px200": [
-    110,
-    685,
-    644,
-    1219
-   ]
-  },
-  {
    "id": "p309_9740NAT01",
    "seite": 309,
    "serie": "NATURAL",
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NATU-01",
-    "9540-NATU-01"
+    "9540-NATU-01-10"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
@@ -43054,8 +43019,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43073,8 +43038,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NATU-01",
-    "9539-NATU-01"
+    "9539-NATU-01-10"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
@@ -43089,8 +43053,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43108,7 +43072,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NATU-01"
+    "9552-NATU-01-10"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
@@ -43123,8 +43087,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43136,48 +43100,13 @@
    ]
   },
   {
-   "id": "p309_9555NAT02",
-   "seite": 309,
-   "serie": "NATURAL",
-   "name": null,
-   "material": "Steingut 30x60cm",
-   "codes": [
-    "9555-NATU-02"
-   ],
-   "tafel_groesse": "GT 72x78 cm",
-   "gt": true,
-   "artikel": [
-    {
-     "artnr": "NATU 1270",
-     "groesse": "30x60 cm"
-    },
-    {
-     "artnr": "NATU 1272"
-    }
-   ],
-   "label": null,
-   "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
-   ],
-   "marke": "engers",
-   "display": false,
-   "board_px200": [
-    824,
-    684,
-    1359,
-    1218
-   ]
-  },
-  {
    "id": "p309_9740NAT02",
    "seite": 309,
    "serie": "NATURAL",
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NATU-02",
-    "9540-NATU-02"
+    "9540-NATU-04-10"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
@@ -43192,8 +43121,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43211,8 +43140,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NATU-02",
-    "9539-NATU-02"
+    "9539-NATU-04-10"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
@@ -43227,8 +43155,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43246,7 +43174,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NATU-02"
+    "9552-NATU-04-10"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
@@ -43261,8 +43189,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43274,48 +43202,13 @@
    ]
   },
   {
-   "id": "p309_9555NAT03",
-   "seite": 309,
-   "serie": "NATURAL",
-   "name": null,
-   "material": "Steingut 30x60cm",
-   "codes": [
-    "9555-NATU-03"
-   ],
-   "tafel_groesse": "GT 72x78 cm",
-   "gt": true,
-   "artikel": [
-    {
-     "artnr": "NATU 1250",
-     "groesse": "30x60 cm"
-    },
-    {
-     "artnr": "NATU 1252"
-    }
-   ],
-   "label": null,
-   "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
-   ],
-   "marke": "engers",
-   "display": false,
-   "board_px200": [
-    252,
-    1481,
-    786,
-    2015
-   ]
-  },
-  {
    "id": "p309_9740NAT03",
    "seite": 309,
    "serie": "NATURAL",
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NATU-03",
-    "9540-NATU-03"
+    "9540-NATU-02-10"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
@@ -43330,8 +43223,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43349,8 +43242,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NATU-03",
-    "9539-NATU-03"
+    "9539-NATU-02-10"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
@@ -43365,8 +43257,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43384,7 +43276,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NATU-03"
+    "9552-NATU-02-10"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
@@ -43399,8 +43291,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43412,48 +43304,13 @@
    ]
   },
   {
-   "id": "p309_9555NAT04",
-   "seite": 309,
-   "serie": "NATURAL",
-   "name": null,
-   "material": "Steingut 30x60cm",
-   "codes": [
-    "9555-NATU-04"
-   ],
-   "tafel_groesse": "GT 72x78 cm",
-   "gt": true,
-   "artikel": [
-    {
-     "artnr": "NATU 1260",
-     "groesse": "30x60 cm"
-    },
-    {
-     "artnr": "NATU 1262"
-    }
-   ],
-   "label": null,
-   "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
-   ],
-   "marke": "engers",
-   "display": false,
-   "board_px200": [
-    1007,
-    1484,
-    1541,
-    2018
-   ]
-  },
-  {
    "id": "p309_9740NAT04",
    "seite": 309,
    "serie": "NATURAL",
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9740-NATU-04",
-    "9540-NATU-04"
+    "9540-NATU-03-10"
    ],
    "tafel_groesse": "65x65 cm",
    "gt": false,
@@ -43468,8 +43325,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43487,8 +43344,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9739-NATU-04",
-    "9539-NATU-04"
+    "9539-NATU-03-10"
    ],
    "tafel_groesse": "92x92 cm",
    "gt": false,
@@ -43503,8 +43359,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43522,7 +43378,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9552-NATU-04"
+    "9552-NATU-03-10"
    ],
    "tafel_groesse": "125x92 cm",
    "gt": false,
@@ -43537,8 +43393,8 @@
    ],
    "label": null,
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x65 / 92x92 / 125x92 cm"
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Eindeutig belegte Größen: 65x65 / 92x92 / 125x92 cm; der im Plan zusätzlich genannte 72x78-Code gehört laut Stückliste zu einem anderen Motiv"
    ],
    "marke": "engers",
    "display": false,
@@ -43556,7 +43412,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NATU-05"
+    "9555-NATU-03-10"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
@@ -43581,8 +43437,8 @@
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43601,8 +43457,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9785-NATU-05",
-    "9585-NATU-05"
+    "9585-NATU-03-10"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
@@ -43627,8 +43482,8 @@
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43647,7 +43502,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NATU-05"
+    "9557-NATU-03-10"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
@@ -43672,8 +43527,8 @@
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43692,9 +43547,9 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NATU-05",
-    "9566-NATU-05",
-    "9569-NATU-05"
+    "9562-NATU-03-10",
+    "9566-NATU-03-10",
+    "9569-NATU-03-10"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
@@ -43719,8 +43574,8 @@
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43739,10 +43594,10 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NATU-05",
-    "9587-NATU-05"
+    "9568-NATU-03-10",
+    "9587-NATU-03-10"
    ],
-   "tafel_groesse": "100,5x192,5 cm",
+   "tafel_groesse": "100,5x192,5 / 100x200 cm",
    "gt": false,
    "artikel": [
     {
@@ -43765,8 +43620,8 @@
    ],
    "label": "Poster NATURAL 30x60 grau",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43785,6 +43640,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
+    "9585-NATU-04-10",
     "9585-NAPO-06-10"
    ],
    "tafel_groesse": "65x130 cm",
@@ -43805,8 +43661,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — vorher intern als 9785-NATU-06/9585-NATU-06 geführt (künstlich vergeben)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43825,7 +43681,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NATU-06"
+    "9557-NATU-04-10"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
@@ -43845,8 +43701,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — vorher intern als 9785-NATU-06/9585-NATU-06 geführt (künstlich vergeben)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43865,9 +43721,9 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NATU-06",
-    "9566-NATU-06",
-    "9569-NATU-06"
+    "9562-NATU-04-10",
+    "9566-NATU-04-10",
+    "9569-NATU-04-10"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
@@ -43887,8 +43743,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43907,10 +43763,10 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NATU-06",
-    "9587-NATU-06"
+    "9568-NATU-04-10",
+    "9587-NATU-04-10"
    ],
-   "tafel_groesse": "100,5x192,5 cm",
+   "tafel_groesse": "100,5x192,5 / 100x200 cm",
    "gt": false,
    "artikel": [
     {
@@ -43928,8 +43784,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43948,7 +43804,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9555-NATU-07"
+    "9555-NATU-01-10"
    ],
    "tafel_groesse": "GT 72x78 cm",
    "gt": true,
@@ -43973,8 +43829,8 @@
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -43993,6 +43849,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
+    "9585-NATU-01-10",
     "9585-NAPO-05-10"
    ],
    "tafel_groesse": "65x130 cm",
@@ -44018,8 +43875,8 @@
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — vorher intern als 9785-NATU-07/9585-NATU-07 geführt (künstlich vergeben)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -44038,7 +43895,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NATU-01"
+    "9557-NATU-01-10"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
@@ -44063,8 +43920,8 @@
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — vorher intern als 9785-NATU-07/9585-NATU-07 geführt (künstlich vergeben)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -44083,9 +43940,9 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NATU-07",
-    "9566-NATU-07",
-    "9569-NATU-07"
+    "9562-NATU-01-10",
+    "9566-NATU-01-10",
+    "9569-NATU-01-10"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
@@ -44110,8 +43967,8 @@
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -44130,10 +43987,10 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NATU-07",
-    "9587-NATU-07"
+    "9568-NATU-01-10",
+    "9587-NATU-01-10"
    ],
-   "tafel_groesse": "100,5x192,5 cm",
+   "tafel_groesse": "100,5x192,5 / 100x200 cm",
    "gt": false,
    "artikel": [
     {
@@ -44156,8 +44013,8 @@
    ],
    "label": "Poster NATURAL 30x60 braun",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -44176,8 +44033,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9785-NATU-08",
-    "9585-NATU-08"
+    "9585-NATU-02-10"
    ],
    "tafel_groesse": "65x130 cm",
    "gt": false,
@@ -44200,8 +44056,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -44220,7 +44076,7 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9557-NATU-03"
+    "9557-NATU-02-10"
    ],
    "tafel_groesse": "94x134 cm",
    "gt": false,
@@ -44243,8 +44099,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -44263,9 +44119,9 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9562-NATU-08",
-    "9566-NATU-08",
-    "9569-NATU-08"
+    "9562-NATU-02-10",
+    "9566-NATU-02-10",
+    "9569-NATU-02-10"
    ],
    "tafel_groesse": "97x184 / 104x184 / 107x184 cm",
    "gt": false,
@@ -44288,8 +44144,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -44308,10 +44164,10 @@
    "name": null,
    "material": "Steingut 30x60cm",
    "codes": [
-    "9568-NATU-08",
-    "9587-NATU-08"
+    "9568-NATU-02-10",
+    "9587-NATU-02-10"
    ],
-   "tafel_groesse": "100,5x192,5 cm",
+   "tafel_groesse": "100,5x192,5 / 100x200 cm",
    "gt": false,
    "artikel": [
     {
@@ -44332,8 +44188,8 @@
    ],
    "label": "Poster NATURAL 30x60 beige",
    "notizen": [
-    "Anordnungsplan ohne eigenen Tafelcode — Code künstlich vergeben (NATU-01…08)",
-    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 cm",
+    "Echter Tafelcode aus ENGERS_SampleBoard-Stückliste (07/2026) — dem Anordnungsplan anhand der Artikelkombination zugeordnet",
+    "Größen laut Plan: 72x78 / 65x130 / 94x134 / 97x184 / 104x184 / 107x184 / 100,5x192,5 / 100x200 cm",
     "Sonderanfertigung möglich"
    ],
    "marke": "engers",
@@ -49208,9 +49064,7 @@
    ],
    "tafel_groesse": "65x100 cm / Rückwand 200x100 cm",
    "gt": false,
-   "artikel": [
-
-   ],
+   "artikel": [],
    "label": "",
    "notizen": [
     "Display MIX & CREATE, Teil 1 (Fliesenmix)",
@@ -49231,9 +49085,7 @@
    ],
    "tafel_groesse": "140x100 cm",
    "gt": false,
-   "artikel": [
-
-   ],
+   "artikel": [],
    "label": "",
    "notizen": [
     "Poster 140x100 cm, Teil 1, farbmix",
