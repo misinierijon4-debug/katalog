@@ -2400,6 +2400,21 @@
     var extraBits = [];
     if (eintrag.label) extraBits.push('<div class="etikett">&#127991; ' + escapeHtml(eintrag.label) + '</div>');
     if (eintrag.notizen) extraBits.push('<div class="notiz">' + escapeHtml(eintrag.notizen) + '</div>');
+    var plZeilen = (eintrag.artikel || []).filter(function (a) { return a.artnr && String(a.artnr).trim(); }).map(function (a) {
+      return '<tr><td class="pl-check"><span class="pl-box"></span></td>' +
+        '<td class="pl-stueck">' + escapeHtml(a.stueck ? a.stueck + " St." : "") + '</td>' +
+        '<td class="pl-artnr">Art. ' + escapeHtml(a.artnr) + '</td>' +
+        '<td>' + escapeHtml(a.farbe || "") + '</td>' +
+        '<td>' + escapeHtml(a.groesse || "") + '</td></tr>';
+    });
+    if (eintrag.label) {
+      plZeilen.push('<tr><td class="pl-check"><span class="pl-box"></span></td>' +
+        '<td class="pl-stueck">1 St.</td>' +
+        '<td class="pl-artnr" colspan="3">' + escapeHtml(eintrag.label) + '</td></tr>');
+    }
+    var picklisteHtml = plZeilen.length
+      ? '<div class="pickliste"><div class="pl-titel">Pickliste</div><table>' + plZeilen.join("") + '</table></div>'
+      : "";
     return '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">' +
       '<title>Auftrag ' + escapeHtml(auftragNr || "") + ' – ' + escapeHtml(code) + '</title>' +
       '<style>' +
@@ -2424,6 +2439,14 @@
       '.griff{font-size:16pt;font-weight:700;border:2px solid #111;border-radius:3mm;background:#f2f2f2;padding:4mm 6mm;margin:3mm 0 5mm;display:inline-block}' +
       '.etikett{font-size:12pt;border:1.5px solid #111;padding:3mm 5mm;display:inline-block;margin-bottom:4mm}' +
       '.notiz{font-size:11pt;color:#333;margin-bottom:4mm}' +
+      '.pickliste{margin-top:4mm;border-top:2px solid #111;padding-top:3mm}' +
+      '.pickliste .pl-titel{font-size:9pt;text-transform:uppercase;letter-spacing:1px;color:#555;margin-bottom:2mm}' +
+      '.pickliste table{border-collapse:collapse;width:100%;font-size:11pt}' +
+      '.pickliste td{padding:1.6mm 3mm 1.6mm 0;border-bottom:1px solid #ddd;vertical-align:middle}' +
+      '.pickliste .pl-check{width:8mm}' +
+      '.pickliste .pl-stueck{width:18mm;font-weight:700;white-space:nowrap}' +
+      '.pickliste .pl-artnr{font-weight:700;white-space:nowrap}' +
+      '.pl-box{display:inline-block;width:4.5mm;height:4.5mm;border:1.5px solid #111;border-radius:1mm}' +
       '.fuss{font-size:9pt;color:#777;border-top:1px solid #ccc;padding-top:3mm;margin-top:4mm}' +
       '@media print{@page{size:A4 portrait;margin:0}body{padding:10mm 14mm}}' +
       '</style></head><body>' +
@@ -2436,6 +2459,7 @@
       (detailBits.length ? '<div class="details">' + escapeHtml(detailBits.join("  ·  ")) + '</div>' : "") + '</div>' +
       mitte +
       extraBits.join("") +
+      picklisteHtml +
       '<div class="fuss">Lagerkarte · gedruckt am ' + escapeHtml(new Date().toLocaleDateString("de-DE")) + '</div>' +
       // Drucken erst, wenn das Tafel-Bild geladen ist (sonst fehlt es im
       // Ausdruck); Fallback-Timer, falls das Bild hängt oder fehlt.
