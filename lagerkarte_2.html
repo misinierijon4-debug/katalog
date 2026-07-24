@@ -429,6 +429,26 @@
   .lieferung-heilung { color:var(--green-fg); font-size:10.5px; font-weight:700; }
   .lieferung-unmatched { margin-top:8px; padding:8px 10px; border-radius:var(--radius-sm); background:var(--yellow-bg); color:var(--yellow-fg); font-size:11px; }
 
+  /* ---------- Lieferungs-Archiv ---------- */
+  .lieferung-archiv { margin-top:24px; }
+  .archiv-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-sm); margin-bottom:8px; box-shadow:var(--shadow-sm);
+    overflow:hidden;
+  }
+  .archiv-summary {
+    display:flex; align-items:center; gap:8px; padding:9px 12px;
+    cursor:pointer; list-style:none; user-select:none; flex-wrap:wrap;
+  }
+  .archiv-summary::-webkit-details-marker { display:none; }
+  .archiv-chevron { color:var(--text-faint); transition:transform .15s ease; flex:none; }
+  .archiv-card[open] .archiv-chevron { transform:rotate(90deg); }
+  .archiv-datum { font-size:12.5px; font-weight:800; white-space:nowrap; }
+  .archiv-delete { margin-left:auto; }
+  .archiv-delete:hover { background:var(--danger-bg); color:var(--danger-fg); }
+  .archiv-body { padding:2px 12px 12px; border-top:1px solid var(--border); }
+  .archiv-table-wrap { overflow-x:auto; }
+
   /* ---------- Performance ---------- */
   .performance-head-actions { margin-left:auto; }
   .performance-dashboard { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-bottom:14px; }
@@ -2273,6 +2293,15 @@
         <span class="lieferung-hint">Der Bestand wird erst mit „Wareneingang speichern“ verändert.</span>
       </div>
       <div id="lieferungPreview" class="lieferung-preview"></div>
+
+      <div class="lieferung-archiv">
+        <div class="feature-head">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
+          <span class="feature-title">Archiv</span>
+          <span class="feature-sub" id="lieferungArchivSub">Gespeicherte Wareneingänge erscheinen hier automatisch.</span>
+        </div>
+        <div id="lieferungArchivList"></div>
+      </div>
     </section>
 
     <section id="performanceSection" class="performance-section" style="display:none;" aria-label="Performance">
@@ -3166,11 +3195,13 @@
   var ACTIVE_TAB_KEY = "lager-active-tab";
   var AUFTRAEGE_STORAGE_KEY = "lager-auftraege-history";
   var PERFORMANCE_STORAGE_KEY = "lager-performance-history";
+  var LIEFERUNGEN_STORAGE_KEY = "lager-lieferungen-archiv";
 
   var dataTafeln = null;
   var dataFliesen = null;
   var dataPoster = null;
   var auftraege = [];                 // Auftrags-Historie (neuester zuerst)
+  var lieferungsArchiv = [];          // Archiv gespeicherter Wareneingänge (neueste zuerst)
   var performanceHistory = { version: 1, resetAt: null, events: [] };
   var bestellungPreview = null;       // flüchtige Wareneingangs-Vorschau
   var lastCheck = null;               // Ergebnis der letzten Prüfung (für "Speichern")
@@ -3247,6 +3278,13 @@
       var rawP = localStorage.getItem(PERFORMANCE_STORAGE_KEY);
       performanceHistory = migratePerformanceHistory(rawP ? JSON.parse(rawP) : null);
     } catch (e) { performanceHistory = migratePerformanceHistory(null); }
+    try {
+      var rawL = localStorage.getItem(LIEFERUNGEN_STORAGE_KEY);
+      if (rawL) {
+        var parsedL = JSON.parse(rawL);
+        if (Array.isArray(parsedL)) lieferungsArchiv = parsedL;
+      }
+    } catch (e) { lieferungsArchiv = []; }
     bootstrapPerformanceFromOrders();
     try {
       var savedTab = localStorage.getItem(ACTIVE_TAB_KEY);
@@ -3802,6 +3840,7 @@
     var lagerIndex = buildLagerIndex();
     auftraege.forEach(function (a) { applyVerfuegbarkeit(a.positionen, lagerIndex); });
     if (auftraege.length) saveAuftraege();
+    archiveDelivery(bestellungPreview);
     var count = bestellungPreview.entries.length + bestellungPreview.unknown.length;
     bestellungPreview = null;
     document.getElementById("lieferungInput").value = "";
@@ -3817,6 +3856,94 @@
     document.getElementById("lieferungPreview").innerHTML = "";
     document.getElementById("btnLieferungSave").style.display = "none";
   }
+
+  /* ---------- Lieferungs-Archiv ----------
+     Jeder gespeicherte Wareneingang wird als eigener Archiv-Eintrag
+     festgehalten: wann, welche Artikel, Menge, Bestand vorher/nachher und
+     wohin eingelagert wurde. Das Archiv wird wie die anderen Bestände
+     persistiert, gesynct und im Backup mitgesichert. */
+  function saveLieferungsArchiv() {
+    persistKey(LIEFERUNGEN_STORAGE_KEY, JSON.stringify(lieferungsArchiv));
+  }
+
+  function archiveDelivery(preview) {
+    var eintrag = {
+      id: "l" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      gespeichertAm: new Date().toISOString(),
+      positionen: preview.entries.map(function (e) {
+        return {
+          code: e.code, menge: e.incoming,
+          vorher: e.before, nachher: e.before + e.incoming,
+          ziel: deliveryRoute(e.target),
+          transport: e.transport || "", heilung: e.healing || "", neu: false
+        };
+      }).concat(preview.unknown.map(function (e) {
+        return {
+          code: e.code, menge: e.incoming, vorher: null, nachher: null,
+          ziel: (e.kind === "poster" ? "Poster/Etiketten" : "Fliesen") + " → Neue Lieferung" +
+            (e.transport ? " " + e.transport : "") + " (noch ohne Stellplatz)",
+          transport: e.transport || "", heilung: "", neu: true
+        };
+      })),
+      ungeklaert: preview.unmatched.slice()
+    };
+    lieferungsArchiv.unshift(eintrag);
+    saveLieferungsArchiv();
+    renderLieferungsArchiv();
+  }
+
+  function renderLieferungsArchiv() {
+    var list = document.getElementById("lieferungArchivList");
+    var sub = document.getElementById("lieferungArchivSub");
+    if (!list) return;
+    if (!lieferungsArchiv.length) {
+      if (sub) sub.textContent = "Gespeicherte Wareneingänge erscheinen hier automatisch.";
+      list.innerHTML = '<div class="auftraege-empty">Noch keine Lieferungen archiviert. Sobald ein Wareneingang gespeichert wird, landet er hier.</div>';
+      return;
+    }
+    if (sub) sub.textContent = lieferungsArchiv.length + " Lieferung" + (lieferungsArchiv.length === 1 ? "" : "en") + " — neueste zuerst.";
+    list.innerHTML = lieferungsArchiv.map(function (l, idx) {
+      var stueck = (l.positionen || []).reduce(function (sum, p) { return sum + (Number(p.menge) || 0); }, 0);
+      var neue = (l.positionen || []).filter(function (p) { return p.neu; }).length;
+      var rows = (l.positionen || []).map(function (p) {
+        return '<tr><td class="lieferung-code">' + escapeHtml(p.code || "") + '</td>' +
+          '<td>+' + formatDeliveryNumber(p.menge) + '</td>' +
+          '<td>' + (p.vorher == null ? "neu" : formatDeliveryNumber(p.vorher) + " → <strong>" + formatDeliveryNumber(p.nachher) + "</strong>") + '</td>' +
+          '<td><span class="lieferung-route">' + escapeHtml(p.ziel || "") + '</span>' +
+            (p.heilung ? '<div class="lieferung-heilung">✓ ' + escapeHtml(p.heilung) + '</div>' : '') + '</td></tr>';
+      }).join("");
+      return '<details class="archiv-card"' + (idx === 0 ? " open" : "") + '>' +
+        '<summary class="archiv-summary">' +
+          '<span class="icon archiv-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>' +
+          '<span class="archiv-datum">' + escapeHtml(formatDateTime(l.gespeichertAm)) + '</span>' +
+          '<span class="lieferung-chip ok">' + (l.positionen || []).length + ' Artikel</span>' +
+          '<span class="lieferung-chip">' + formatDeliveryNumber(stueck) + ' Stück</span>' +
+          (neue ? '<span class="lieferung-chip warn">' + neue + ' ohne Stellplatz</span>' : '') +
+          ((l.ungeklaert || []).length ? '<span class="lieferung-chip warn">' + l.ungeklaert.length + ' ungeklärt</span>' : '') +
+          '<button type="button" class="icon-btn archiv-delete" data-archiv-id="' + l.id + '" title="Lieferung aus dem Archiv löschen">' +
+            '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>' +
+          '</button>' +
+        '</summary>' +
+        '<div class="archiv-body">' +
+          '<div class="archiv-table-wrap"><table class="lieferung-table"><thead><tr><th>Artikel</th><th>Eingang</th><th>Bestand</th><th>Eingelagert</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+          ((l.ungeklaert || []).length ? '<div class="lieferung-unmatched"><strong>Nicht erkannt:</strong><br>' + l.ungeklaert.map(escapeHtml).join("<br>") + '</div>' : '') +
+        '</div>' +
+      '</details>';
+    }).join("");
+  }
+
+  document.getElementById("lieferungArchivList").addEventListener("click", function (ev) {
+    var btn = ev.target.closest ? ev.target.closest(".archiv-delete") : null;
+    if (!btn) return;
+    ev.preventDefault();
+    var id = btn.getAttribute("data-archiv-id");
+    var eintrag = lieferungsArchiv.filter(function (l) { return l.id === id; })[0];
+    if (!eintrag) return;
+    if (!confirm("Diese archivierte Lieferung vom " + formatDateTime(eintrag.gespeichertAm) + " löschen? Der Bestand bleibt unverändert.")) return;
+    lieferungsArchiv = lieferungsArchiv.filter(function (l) { return l.id !== id; });
+    saveLieferungsArchiv();
+    renderLieferungsArchiv();
+  });
 
   document.getElementById("btnLieferungPreview").addEventListener("click", previewDelivery);
   document.getElementById("btnLieferungSave").addEventListener("click", saveDelivery);
@@ -6991,7 +7118,7 @@
   var lastSnapshotTs = 0;
   var dirtySinceSnapshot = false;    // gab es Änderungen seit dem letzten Snapshot?
 
-  var DATA_KEYS = [STORAGE_KEY, FLIESEN_STORAGE_KEY, POSTER_STORAGE_KEY, AUFTRAEGE_STORAGE_KEY, PERFORMANCE_STORAGE_KEY];
+  var DATA_KEYS = [STORAGE_KEY, FLIESEN_STORAGE_KEY, POSTER_STORAGE_KEY, AUFTRAEGE_STORAGE_KEY, PERFORMANCE_STORAGE_KEY, LIEFERUNGEN_STORAGE_KEY];
   var MIRROR_KEYS = DATA_KEYS.concat([ACTIVE_TAB_KEY, THEME_KEY, LAST_EXPORT_KEY, FIRST_SEEN_KEY]);
 
   function idbOpen() {
@@ -7061,16 +7188,18 @@
   }
 
   function buildExportPayload() {
-    // Version 5 sichert alle Bestände, Aufträge und die Performance-Historie.
+    // Version 6 sichert alle Bestände, Aufträge, Performance-Historie und
+    // das Lieferungs-Archiv.
     return {
-      version: 5,
+      version: 6,
       exportedAt: new Date().toISOString(),
       activeTab: activeTab,
       tafeln: dataTafeln,
       fliesen: dataFliesen,
       poster: dataPoster,
       auftraege: auftraege,
-      performance: performanceHistory
+      performance: performanceHistory,
+      lieferungen: lieferungsArchiv
     };
   }
 
@@ -7154,6 +7283,12 @@
       persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
       if (activeTab === "performance") renderPerformance();
       loadedParts.push("Performance");
+    }
+    if (Array.isArray(parsed.lieferungen)) {
+      lieferungsArchiv = parsed.lieferungen;
+      persistKey(LIEFERUNGEN_STORAGE_KEY, JSON.stringify(lieferungsArchiv));
+      renderLieferungsArchiv();
+      loadedParts.push("Lieferungs-Archiv");
     }
     if (loadedParts.length) {
       data = datasetFor(activeTab);
@@ -7317,6 +7452,7 @@
     persistKey(POSTER_STORAGE_KEY, JSON.stringify(dataPoster));
     persistKey(AUFTRAEGE_STORAGE_KEY, JSON.stringify(auftraege));
     persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
+    persistKey(LIEFERUNGEN_STORAGE_KEY, JSON.stringify(lieferungsArchiv));
     if (dirtySinceSnapshot) takeSnapshot(true);
   }
   document.addEventListener("visibilitychange", function () {
@@ -7516,7 +7652,7 @@
   var SYNC_META_KEY = "lager-sync-meta";     // { tafeln:{ts,dirty}, ... } in localStorage
   var SYNC_DEVICE_KEY = "lager-device-id";   // zufällige Geräte-ID (einmal pro Browser)
   var SYNC_PUSH_DELAY = 2000;                // lokale Änderungen gebündelt pushen
-  var SYNC_REMOTE_KEYS = ["tafeln", "fliesen", "poster", "auftraege", "performance"];
+  var SYNC_REMOTE_KEYS = ["tafeln", "fliesen", "poster", "auftraege", "performance", "lieferungen"];
 
   // Zuordnung localStorage-Key -> Zeilen-Key in der Supabase-Tabelle.
   var SYNC_KEY_MAP = {};
@@ -7525,6 +7661,7 @@
   SYNC_KEY_MAP[POSTER_STORAGE_KEY] = "poster";
   SYNC_KEY_MAP[AUFTRAEGE_STORAGE_KEY] = "auftraege";
   SYNC_KEY_MAP[PERFORMANCE_STORAGE_KEY] = "performance";
+  SYNC_KEY_MAP[LIEFERUNGEN_STORAGE_KEY] = "lieferungen";
 
   var syncClient = null;          // Supabase-Client oder null (Sync aus)
   var syncDeviceId = null;
@@ -7593,6 +7730,7 @@
     if (remoteKey === "poster") return dataPoster ? JSON.stringify(dataPoster) : null;
     if (remoteKey === "auftraege") return JSON.stringify(auftraege || []);
     if (remoteKey === "performance") return JSON.stringify(performanceHistory || { version: 1, events: [] });
+    if (remoteKey === "lieferungen") return JSON.stringify(lieferungsArchiv || []);
     return null;
   }
 
@@ -7690,6 +7828,10 @@
         performanceHistory = migratePerformanceHistory(remoteData);
         persistKey(PERFORMANCE_STORAGE_KEY, JSON.stringify(performanceHistory));
         if (activeTab === "performance") renderPerformance();
+      } else if (remoteKey === "lieferungen" && Array.isArray(remoteData)) {
+        lieferungsArchiv = remoteData;
+        persistKey(LIEFERUNGEN_STORAGE_KEY, JSON.stringify(lieferungsArchiv));
+        renderLieferungsArchiv();
       } else {
         return; // unbekannter Key oder unerwartetes Format → ignorieren
       }
@@ -7810,6 +7952,7 @@
     applyTabChrome();
     renderAuftraege();
     renderPerformance();
+    renderLieferungsArchiv();
     render();
     updateBackupReminder();
     initSync();
