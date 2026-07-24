@@ -1,5 +1,5 @@
 {
- "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281) | Seiten 62+100 ersetzt durch Einzelblatt-PDFs 9555-9585-9557-MW21/-EJ26 (Textlayer, 07/2026) | Mustertafeln ENIGMA 2019.pdf + Mustertafeln LINEAR.pdf (Seiten 282-305) | Mustertafeln NATURAL.pdf (Seite 306) | V&B Gesamt-PDF (641 Seiten) | Mustertafeln NATURAL.pdf Anordnungspläne (Seiten 307-309) | TREASURE B.pdf S.4 als Seite 310 (TR18-Poster) + Alt-Codes PH…-08/9560-GA21 aus Stücklisten (07/2026) | Seite 311: Serie CEMENTO 9557-CE46/-CE87 aus ENGERS_SampleBoard-Stückliste (BOM 57691/57692), kein Original-Plan – eigene Klebevorlage (07/2026)",
+ "quelle": "Mustertafeln engers.pdf (261 Seiten) + Mustertafeln Urban Pulse Neuheiten 2026.pdf (Seiten 262-281) | Seiten 62+100 ersetzt durch Einzelblatt-PDFs 9555-9585-9557-MW21/-EJ26 (Textlayer, 07/2026) | Mustertafeln ENIGMA 2019.pdf + Mustertafeln LINEAR.pdf (Seiten 282-305) | Mustertafeln NATURAL.pdf (Seite 306) | V&B Gesamt-PDF (641 Seiten) | Mustertafeln NATURAL.pdf Anordnungspläne (Seiten 307-309) | TREASURE B.pdf S.4 als Seite 310 (TR18-Poster) + Alt-Codes PH…-08/9560-GA21 aus Stücklisten (07/2026) | Seite 311: Serie CEMENTO 9557-CE46/-CE87 aus ENGERS_SampleBoard-Stückliste (BOM 57691/57692), kein Original-Plan – eigene Klebevorlage (07/2026) | Alt-Codes TERRA TE60/TE90-0A + KAVALA KV70/80/90-0C aus ENGERS_SampleBoard-Stückliste (07/2026)",
  "einträge": [
   {
    "id": "p002_9555IR210410",
@@ -3924,7 +3924,8 @@
    "serie": "TERRA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9552-TE60-0C-10"
+    "9552-TE60-0C-10",
+    "9552-TE60-0A-10"
    ],
    "tafel_groesse": "92x125 cm",
    "gt": false,
@@ -3937,7 +3938,9 @@
     }
    ],
    "label": "Etikett unten rechts 91E4-TER1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9552-TE60-0A-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     122,
     482,
@@ -4011,7 +4014,8 @@
    "serie": "TERRA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9552-TE90-0C-10"
+    "9552-TE90-0C-10",
+    "9552-TE90-0A-10"
    ],
    "tafel_groesse": "92x125 cm",
    "gt": false,
@@ -4024,7 +4028,9 @@
     }
    ],
    "label": "Etikett unten rechts 91E4-TER1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9552-TE90-0A-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     122,
     482,
@@ -8083,7 +8089,8 @@
    "serie": "KAVALA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9588-KV70-0A-10"
+    "9588-KV70-0A-10",
+    "9588-KV70-0C-10"
    ],
    "tafel_groesse": "120x120 cm",
    "gt": false,
@@ -8096,7 +8103,9 @@
     }
    ],
    "label": "Etikett unten rechts 91E4-KAV1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9588-KV70-0C-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     891,
     319,
@@ -8112,7 +8121,8 @@
    "serie": "KAVALA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9592-KV70-0A-10"
+    "9592-KV70-0A-10",
+    "9592-KV70-0C-10"
    ],
    "tafel_groesse": "120x182 cm",
    "gt": false,
@@ -8125,7 +8135,9 @@
     }
    ],
    "label": "Poster unten rechts 91E8-KAV1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9592-KV70-0C-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     122,
     1352,
@@ -8170,7 +8182,8 @@
    "serie": "KAVALA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9588-KV80-0A-10"
+    "9588-KV80-0A-10",
+    "9588-KV80-0C-10"
    ],
    "tafel_groesse": "120x120 cm",
    "gt": false,
@@ -8183,7 +8196,9 @@
     }
    ],
    "label": "Etikett unten rechts 91E4-KAV1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9588-KV80-0C-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     891,
     319,
@@ -8199,7 +8214,8 @@
    "serie": "KAVALA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9592-KV80-0A-10"
+    "9592-KV80-0A-10",
+    "9592-KV80-0C-10"
    ],
    "tafel_groesse": "120x182 cm",
    "gt": false,
@@ -8212,7 +8228,9 @@
     }
    ],
    "label": "Poster unten rechts 91E8-KAV1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9592-KV80-0C-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     122,
     1352,
@@ -8257,7 +8275,8 @@
    "serie": "KAVALA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9588-KV90-0A-10"
+    "9588-KV90-0A-10",
+    "9588-KV90-0C-10"
    ],
    "tafel_groesse": "120x120 cm",
    "gt": false,
@@ -8270,7 +8289,9 @@
     }
    ],
    "label": "Etikett unten rechts 91E4-KAV1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9588-KV90-0C-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     891,
     319,
@@ -8286,7 +8307,8 @@
    "serie": "KAVALA",
    "material": "Feinsteinzeug 60x60cm",
    "codes": [
-    "9592-KV90-0A-10"
+    "9592-KV90-0A-10",
+    "9592-KV90-0C-10"
    ],
    "tafel_groesse": "120x182 cm",
    "gt": false,
@@ -8299,7 +8321,9 @@
     }
    ],
    "label": "Poster unten rechts 91E8-KAV1-00-10",
-   "notizen": [],
+   "notizen": [
+    "Alt-Code 9592-KV90-0C-10 aus ENGERS_SampleBoard-Stückliste (07/2026), gleiche Tafel"
+   ],
    "board_px200": [
     122,
     1352,

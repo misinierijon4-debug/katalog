@@ -79,12 +79,17 @@ Wie bei CEMENTO Seite 311, aber skriptgesteuert:
 7. **Validieren** (beide Dateien parsen, Anzahl vergleichen), **committen & pushen** —
    ein Commit pro Serie, damit es reviewbar bleibt.
 
-## Die 10 Varianten
+## Die 10 Varianten — ERLEDIGT (07/2026)
 
 `9552-TE60/TE90-0A`, `9555-NATU-01/03`, `9588-KV70/80/90-0C`, `9592-KV70/80/90-0C`:
-Basis-Tafel existiert schon im Katalog mit anderem Suffix. Einzeln prüfen, ob es
-dieselbe Tafel ist (dann nur Alt-Code beim vorhandenen Eintrag ergänzen, wie 07/2026
-bei PH…-08 gemacht) oder eine andere Bestückung (dann als neue Tafel behandeln).
+Basis-Tafel existiert schon im Katalog mit anderem Suffix. Abgleich-Ergebnis:
+
+- `9555-NATU-01/03-10`: bereits eigene Einträge (Seiten 307/308 aus den
+  NATURAL-Anordnungsplänen) — nichts zu tun.
+- Die übrigen 8 (`9552-TE60/TE90-0A`, `9588-KV70/80/90-0C`, `9592-KV70/80/90-0C`):
+  Stücklisten-Beschreibung (Größe + Artikel) stimmt mit dem jeweils vorhandenen
+  Eintrag überein → Alt-Code beim vorhandenen Eintrag ergänzt (wie 07/2026 bei
+  PH…-08 gemacht), mit Notiz-Vermerk in `katalog.json`/`katalog.js`.
 
 ## Offene Punkte / Entscheidungen
 
