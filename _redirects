@@ -6,14 +6,19 @@
 # wird von tools/build.py aus index_template.html erzeugt und dabei jedes Mal
 # neu geschrieben.
 #
-# 200 = Netlify liefert die Zieldatei direkt unter dieser Adresse aus; die
-# Adresse im Browser bleibt stehen (keine sichtbare Weiterleitung).
+# 200  = Netlify liefert die Zieldatei unter dieser Adresse aus; die Adresse
+#        im Browser bleibt stehen (keine sichtbare Weiterleitung).
+# 200! = dasselbe, aber ERZWUNGEN. Das Ausrufezeichen ist hier zwingend:
+#        Netlify gibt einer tatsaechlich vorhandenen Datei sonst den Vorrang
+#        vor der Regel. Unter "/" liegt die index.html, also wuerde ohne "!"
+#        weiterhin der Katalog erscheinen. Bitte nicht entfernen.
 
-# Startseite: Lagerkarte
-/                /lagerkarte_2.html   200
+# Startseite: Lagerkarte (erzwungen, siehe oben)
+/                /lagerkarte_2.html   200!
 
 # Der Katalog braucht eine eigene Adresse: Netlify leitet /index.html von sich
 # aus auf "/" um, und "/" ist jetzt die Lagerkarte — ohne diese Zeilen waere
-# der Katalog nicht mehr aufrufbar.
+# der Katalog nicht mehr aufrufbar. Hier existiert keine Datei unter dem Pfad,
+# deshalb genuegt das einfache 200.
 /katalog         /index.html          200
 /katalog/        /index.html          200
