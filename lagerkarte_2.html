@@ -7831,22 +7831,41 @@
   // Offene + heute erledigte Einträge vom Server laden und mit dem lokalen
   // Stand zusammenführen. Lokale _pending-Einträge gewinnen (werden danach
   // nachgeschoben); alles andere übernimmt den Server-Stand.
+  //
+  // BEWUSST zwei einfache Abfragen statt einer kombinierten Oder-Abfrage:
+  // "erledigt = false" und "erledigt_am >= heute" sind Standard-Filter, die
+  // sich nicht an der Schreibweise eines eingesetzten Zeitstempels stoßen
+  // können. Bitte nicht zu einem .or(...) zusammenfassen — die eine
+  // gesparte Anfrage ist das Risiko nicht wert.
   function bedarfPull() {
     if (!syncClient) return;
-    syncClient.from(BEDARF_TABLE)
-      .select("*")
-      .or("erledigt.eq.false,erledigt_am.gte." + bedarfHeuteStartIso())
-      .then(function (res) {
-        if (res.error) { syncHandleNetError(res.error); return; }
-        var lokalPending = bedarfListe.filter(function (e) { return e._pending; });
-        var pendingIds = {};
-        lokalPending.forEach(function (e) { pendingIds[e.id] = true; });
-        bedarfListe = (res.data || []).filter(function (r) { return !pendingIds[r.id]; }).concat(lokalPending);
-        bedarfSaveCache();
-        renderBedarf();
-        applyTabChrome();
-        bedarfPushPending();
-      }, syncHandleNetError);
+    var offeneQuery = syncClient.from(BEDARF_TABLE).select("*").eq("erledigt", false);
+    var erledigtQuery = syncClient.from(BEDARF_TABLE).select("*").gte("erledigt_am", bedarfHeuteStartIso());
+    Promise.all([offeneQuery, erledigtQuery]).then(function (res) {
+      // Fehler in einer der beiden Antworten: lokalen Stand unangetastet
+      // lassen, die App läuft mit dem Cache weiter.
+      var fehler = (res[0] && res[0].error) || (res[1] && res[1].error);
+      if (fehler) { syncHandleNetError(fehler); return; }
+
+      // Beide Ergebnisse über die id zusammenführen (Überschneidung sollte
+      // es nicht geben, kostet aber nichts).
+      var serverRows = [];
+      var gesehen = {};
+      [res[0].data || [], res[1].data || []].forEach(function (rows) {
+        rows.forEach(function (r) {
+          if (r && r.id && !gesehen[r.id]) { gesehen[r.id] = true; serverRows.push(r); }
+        });
+      });
+
+      var lokalPending = bedarfListe.filter(function (e) { return e._pending; });
+      var pendingIds = {};
+      lokalPending.forEach(function (e) { pendingIds[e.id] = true; });
+      bedarfListe = serverRows.filter(function (r) { return !pendingIds[r.id]; }).concat(lokalPending);
+      bedarfSaveCache();
+      renderBedarf();
+      applyTabChrome();
+      bedarfPushPending();
+    }, syncHandleNetError);
   }
 
   // Eigener Realtime-Kanal für die Bedarf-Tabelle: Änderungen anderer
