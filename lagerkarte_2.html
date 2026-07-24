@@ -338,12 +338,59 @@
   #app[data-view="performance"] #newCatRow,
   #app[data-view="performance"] .map-scroll,
   #app[data-view="performance"] .extra-section,
-  #app[data-view="performance"] #btnFab { display: none !important; }
+  #app[data-view="performance"] #btnFab,
+  #app[data-view="bedarf"] .subtext,
+  #app[data-view="bedarf"] .dashboard,
+  #app[data-view="bedarf"] .banner:not(#bannerBackup),
+  #app[data-view="bedarf"] #newCatRow,
+  #app[data-view="bedarf"] .map-scroll,
+  #app[data-view="bedarf"] .extra-section,
+  #app[data-view="bedarf"] #btnFab { display: none !important; }
 
   /* Der Prüf-Bereich ("Auftrag prüfen") lebt jetzt im Auftrags-Tab,
      oberhalb der Auftragsliste — kein eigener Tab mehr. */
   #checkSection { display: none; }
   #app[data-view="auftraege"] #checkSection { display: block; }
+
+  /* ---------- Bedarf-Tab (Teams-Meldeliste) ----------
+     Sammelt automatisch, was per Teams gemeldet werden muss:
+     Lieferschein anfordern (Auftrag verpackt) und Nachbestellungen
+     (festgestellte Fehlmengen). Große Tap-Targets fürs Handy. */
+  .bedarf-section { margin-bottom: 8px; }
+  .bedarf-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    border: 1px solid var(--border); background: var(--surface);
+    border-left: 4px solid var(--border-strong);
+    border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
+    padding: 10px 12px; margin-bottom: 8px;
+  }
+  .bedarf-row.bedarf-typ-lieferschein { border-left-color: var(--yellow-fg); }
+  .bedarf-row.bedarf-typ-nachbestellung { border-left-color: var(--red-fg); }
+  .bedarf-badge {
+    font-size: 11px; font-weight: 700; padding: 3px 8px;
+    border-radius: 999px; white-space: nowrap;
+  }
+  .bedarf-badge.bb-lieferschein { background: var(--yellow-bg); color: var(--yellow-fg); }
+  .bedarf-badge.bb-nachbestellung { background: var(--red-bg); color: var(--red-fg); }
+  .bedarf-main { flex: 1; min-width: 160px; }
+  .bedarf-was { font-size: 13px; font-weight: 700; }
+  .bedarf-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .bedarf-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  /* Mindestens 44px hoch — wird am Handy im Lager mit Handschuhen bedient. */
+  .bedarf-actions .btn { min-height: 44px; }
+  /* Heute erledigte Einträge: ausgegraut, aber sichtbar (verhindert
+     Doppel-Meldungen); keine Aktions-Buttons mehr. */
+  .bedarf-row.bedarf-done { opacity: 0.6; background: var(--surface-2); }
+  .bedarf-row.bedarf-done .bedarf-was { font-weight: 600; text-decoration: line-through; }
+  .bedarf-empty {
+    font-size: 12px; color: var(--green-fg); font-weight: 600;
+    padding: 12px; background: var(--green-bg); border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+  }
+  .bedarf-group-title { font-size: 12.5px; font-weight: 700; margin: 14px 0 6px; }
+  .bedarf-group-title:first-child { margin-top: 0; }
+  /* "→ Bedarf"-Button im "Was fehlt?"-Modal */
+  .wf-bedarf-btn { margin-left: auto; }
 
   /* ---------- Auftrags-Datenbank ---------- */
   .auftraege-section { margin-bottom: 8px; }
@@ -2116,6 +2163,11 @@
           <span><span class="tab-label-full">Auftrags-Verwaltung</span><span class="tab-label-short">Aufträge</span></span>
           <span class="tab-count" id="tabAuftraegeCount" style="display:none;">0</span>
         </button>
+        <button type="button" class="tab" id="tabBedarf" role="tab" data-tab="bedarf" aria-selected="false">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <span>Bedarf</span>
+          <span class="tab-count" id="tabBedarfCount" style="display:none;">0</span>
+        </button>
         <button type="button" class="tab" id="tabBestellungen" role="tab" data-tab="bestellungen" aria-selected="false">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2 12h10l2-8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M12 5v6"/><path d="m9 8 3 3 3-3"/></svg></span>
           <span>Bestellungen</span>
@@ -2317,6 +2369,18 @@
         <div class="performance-card"><span id="perfAvgTime" class="performance-value">–</span><span class="performance-label">Ø Bearbeitungszeit pro Auftrag</span></div>
       </div>
       <div id="performanceTimeline" class="performance-timeline"></div>
+    </section>
+
+    <section id="bedarfSection" class="bedarf-section" style="display:none;" aria-label="Bedarf">
+      <div class="feature-head">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+        <span class="feature-title">Bedarf</span>
+        <span class="feature-sub">Sammelt automatisch, was per Teams gemeldet werden muss: Lieferscheine (Auftrag verpackt) und Nachbestellungen (Fehlmengen). Die Liste wird zwischen allen Geräten geteilt.</span>
+      </div>
+      <div class="bedarf-group-title" id="bedarfOffenTitle">Offen</div>
+      <div id="bedarfList"></div>
+      <div class="bedarf-group-title" id="bedarfDoneTitle" style="display:none;">Heute erledigt</div>
+      <div id="bedarfDoneList"></div>
     </section>
 
     <!-- OCR-Korrektur-Modal (initial versteckt) -->
@@ -4035,6 +4099,12 @@
         var next = !it[field];
         it[field] = next;
         if (next && !it.note) it.note = defaultNote;
+        // Bedarf-Tab: "Fehlend" setzen = Nachbestellung melden; das
+        // Zurücknehmen des Flags entfernt die noch offene Meldung wieder.
+        if (field === "missing") {
+          if (next) bedarfAddNachbestellung(it.code, parseInt(it.qty, 10) || 1);
+          else bedarfRemoveNachbestellung(it.code);
+        }
         break;
       }
     }
@@ -4762,15 +4832,21 @@
     auftraegeSection.style.display = activeTab === "auftraege" ? "block" : "none";
     document.getElementById("bestellungenSection").style.display = activeTab === "bestellungen" ? "block" : "none";
     document.getElementById("performanceSection").style.display = activeTab === "performance" ? "block" : "none";
+    document.getElementById("bedarfSection").style.display = activeTab === "bedarf" ? "block" : "none";
     var countEl = document.getElementById("tabAuftraegeCount");
     // Badge zählt alles, was noch nicht versendet ist (auch "verpackt").
     var nichtVersendet = auftraege.filter(function (a) { return a.status !== "versendet"; }).length;
     countEl.textContent = nichtVersendet;
     countEl.style.display = nichtVersendet > 0 ? "" : "none";
+    // Bedarf-Badge zählt die offenen (noch nicht erledigten) Meldungen.
+    var bedarfCountEl = document.getElementById("tabBedarfCount");
+    var bedarfOffen = bedarfOffene().length;
+    bedarfCountEl.textContent = bedarfOffen;
+    bedarfCountEl.style.display = bedarfOffen > 0 ? "" : "none";
   }
 
   function switchTab(tab) {
-    if (["tafeln", "fliesen", "poster", "auftraege", "bestellungen", "performance"].indexOf(tab) === -1) return;
+    if (["tafeln", "fliesen", "poster", "auftraege", "bestellungen", "performance", "bedarf"].indexOf(tab) === -1) return;
     activeTab = tab;
     data = datasetFor(tab);
     persistKey(ACTIVE_TAB_KEY, tab);
@@ -4783,6 +4859,7 @@
     applyTabChrome();
     if (tab === "auftraege") renderAuftraege();
     if (tab === "performance") renderPerformance();
+    if (tab === "bedarf") renderBedarf();
     render();
   }
 
@@ -4866,6 +4943,11 @@
     if (oldStatus === "offen" && status !== "offen") perfChanged = ensureAuftragStarted(a, nowIso, true) || perfChanged;
     if (status === "verpackt" || status === "versendet") perfChanged = ensureAuftragCompleted(a, nowIso, true) || perfChanged;
     if (perfChanged) savePerformance();
+    // Bedarf-Tab: "Verpackt" heißt, ein Lieferschein muss angefordert werden.
+    // Rückwärts-Korrektur (verpackt → offen/inArbeit) nimmt die noch offene
+    // Meldung wieder zurück, damit niemand umsonst anfordert.
+    if (status === "verpackt" && oldStatus !== "verpackt") bedarfAddLieferschein(a);
+    if (oldStatus === "verpackt" && (status === "offen" || status === "inArbeit")) bedarfRemoveLieferschein(a);
     saveAuftraege();
     applyTabChrome();
     renderAuftraege();
@@ -5469,6 +5551,13 @@
 
     var html = "";
 
+    // Button, um ein Fehlteil direkt als Nachbestellung in den Bedarf-Tab
+    // zu übernehmen (Duplikate fängt bedarfAddNachbestellung ab).
+    function wfBedarfBtnHtml(code, menge) {
+      return '<button type="button" class="btn wf-bedarf-btn" data-action="wfBedarf" ' +
+        'data-code="' + escapeHtml(code) + '" data-menge="' + (menge || 1) + '">→ Bedarf</button>';
+    }
+
     if (report.katalogFehlt.length) {
       html += '<div class="was-fehlt-group-title">📕 Katalog fehlt (' + report.katalogFehlt.length + ')</div>';
       html += report.katalogFehlt.map(function (k) {
@@ -5476,6 +5565,7 @@
           '<div class="wf-head">' +
             (k.pos ? '<span>Pos. ' + escapeHtml(k.pos) + '</span>' : "") +
             '<span class="wf-code" data-action="jumpCode" data-code="' + escapeHtml(k.code) + '">' + escapeHtml(k.code) + '</span>' +
+            wfBedarfBtnHtml(k.code, k.positionen ? k.positionen.length : 1) +
           '</div>' +
           '<div class="wf-used-in">kein Katalogeintrag gefunden – Kleben nicht ermittelbar</div>' +
           (k.positionen ? wfUsedInHtml(k.positionen) : "") +
@@ -5492,6 +5582,7 @@
             '<span class="wf-code" data-action="jumpCode" data-code="' + escapeHtml(b.artnr) + '">' + escapeHtml(b.artnr) + '</span>' +
             (b.farbe ? '<span>' + escapeHtml(b.farbe) + '</span>' : "") +
             '<span class="klebe-art klebe-miss">' + meta.icon + ' ' + escapeHtml(meta.text) + '</span>' +
+            wfBedarfBtnHtml(b.artnr, (parseInt(b.stueck, 10) || 1) * (b.positionen.length || 1)) +
           '</div>' +
           wfUsedInHtml(b.positionen) +
         '</div>';
@@ -5506,6 +5597,7 @@
           '<div class="wf-head">' +
             '<span class="wf-code" data-action="jumpCode" data-code="' + escapeHtml(bl.code) + '">' + escapeHtml(bl.code) + '</span>' +
             '<span class="klebe-art klebe-miss">' + meta.icon + ' ' + escapeHtml(meta.text) + '</span>' +
+            wfBedarfBtnHtml(bl.code, bl.positionen.length || 1) +
           '</div>' +
           wfUsedInHtml(bl.positionen) +
         '</div>';
@@ -5522,6 +5614,7 @@
           '<div class="wf-head">' +
             '<span class="wf-code" data-action="jumpCode" data-code="' + escapeHtml(po.code) + '">' + escapeHtml(po.code) + '</span>' +
             '<span class="klebe-art klebe-miss">' + meta.icon + ' ' + escapeHtml(meta.text) + '</span>' +
+            wfBedarfBtnHtml(po.code, po.positionen.length || 1) +
           '</div>' +
           wfUsedInHtml(po.positionen) +
         '</div>';
@@ -6226,6 +6319,18 @@
     var klebenCount = 0;
     var checkedItems = [];
 
+    // Für den Bedarf-Tab: Mengen je Code aus den Auftragszeilen ziehen
+    // (gleiche Regel wie parseAuftragPositionen), Kandidaten sammeln.
+    var bedarfKandidaten = [];
+    var mengeByKey = {};
+    text.split(/\r?\n/).forEach(function (line) {
+      var mengeM = /\b(\d+(?:[.,]\d+)?)\s*(ST|STK|M2|QM|PAK)\b/i.exec(line);
+      if (!mengeM) return;
+      extractCodes(line).forEach(function (c) {
+        mengeByKey[c.norm.replace(/-/g, "")] = Math.round(parseFloat(mengeM[1].replace(",", "."))) || 1;
+      });
+    });
+
     codes.forEach(function (c) {
       var entry = index[c.norm.replace(/-/g, "")];
       var status = entry ? entry.status : "unknown";
@@ -6255,6 +6360,8 @@
       } else if (klebe) {
         klebenCount++;
         isBlocker = !klebe.moeglich;
+        // Bedarf-Tab: fehlendes Klebe-Material als Nachbestellung vormerken.
+        if (isBlocker) bedarfKandidaten.push(c.norm);
         meta = klebe.moeglich
           ? { cls: "cl-ok",     icon: "🧩", text: "kleben – Material vorhanden" }
           : { cls: "cl-broken", icon: "🧩", text: "kleben – Material fehlt" };
@@ -6269,6 +6376,9 @@
         // im Katalog → echter Blocker.
         meta = STATUS_LABEL[status] || STATUS_LABEL.unknown;
         isBlocker = true;
+        // Bedarf-Tab: nur "nicht erfasst & nicht im Katalog" vormerken —
+        // missing/broken meldet bereits das "Fehlend"-Flag im Bestand.
+        if (status !== "missing" && status !== "broken") bedarfKandidaten.push(c.norm);
       }
 
       if (isBlocker) blockers.push({ code: c.norm, text: meta.text });
@@ -6291,6 +6401,12 @@
         (sonderMass ? '<div class="check-klebe">' + sonderMassHinweisHtml(sonderMass, "pos-sondermass") + '</div>' : "") +
         klebeHtml
       );
+    });
+
+    // Gesammelte Bedarf-Kandidaten melden; der Duplikat-Check in
+    // bedarfAddNachbestellung verhindert Rauschen bei wiederholtem Prüfen.
+    bedarfKandidaten.forEach(function (code) {
+      bedarfAddNachbestellung(code, mengeByKey[code.replace(/-/g, "")] || 1);
     });
 
     var fulfillable = blockers.length === 0;
@@ -6826,6 +6942,17 @@
         var code = el.getAttribute("data-code");
         closeWasFehltModal();
         jumpToLagerCode(code);
+      });
+    });
+    // "→ Bedarf": Fehlteil als Nachbestellung in den Bedarf-Tab übernehmen.
+    wasFehltBodyEl.querySelectorAll('[data-action="wfBedarf"]').forEach(function (el) {
+      el.addEventListener("click", function () {
+        var neu = bedarfAddNachbestellung(
+          el.getAttribute("data-code"),
+          parseInt(el.getAttribute("data-menge"), 10) || 1
+        );
+        el.textContent = neu ? "✓ übernommen" : "schon offen";
+        el.disabled = true;
       });
     });
     var hatCodes = report.katalogFehlt.length + report.bausteine.length + report.blanko.length + (report.poster || []).length > 0;
@@ -7587,6 +7714,369 @@
   });
 
   // ================================================================
+  // Bedarf-Tab: geteilte Teams-Meldeliste (Supabase-Tabelle "bedarf")
+  // ================================================================
+  //
+  // Einträge entstehen automatisch:
+  //  - typ='lieferschein'   → Auftrag wechselt auf "Verpackt" (setAuftragStatus)
+  //  - typ='nachbestellung' → "Fehlend"-Flag im Bestand (toggleFlag),
+  //                           "Material fehlt"-Blocker beim Prüfen (runCheck)
+  //                           oder Button im "Was fehlt?"-Modal.
+  //
+  // Anders als die Bestände (lager_state, ein Blob pro Bereich) ist "bedarf"
+  // eine eigene Tabelle mit einer Zeile pro Meldung — so können mehrere
+  // Geräte gleichzeitig eintragen und abhaken, ohne sich zu überschreiben.
+  // Ohne Supabase (nicht erreichbar/nicht geladen) läuft die Liste rein
+  // lokal weiter; noch nicht geteilte Änderungen (_pending) werden beim
+  // nächsten Kontakt nachgeschoben.
+
+  var BEDARF_TABLE = "bedarf";
+  var BEDARF_CACHE_KEY = "lagerkarte-bedarf-cache";  // lokaler Spiegel der Liste
+  var BEDARF_NAME_KEY = "lagerkarte-bedarf-name";    // "Wer hat's erledigt?" (einmal pro Gerät)
+
+  // Einträge (offene + heute erledigte); Feldnamen wie in der Tabelle.
+  // Zusätzlich lokal: _pending = "upsert"|"delete" für noch nicht geteilte
+  // Änderungen (Offline-Fallback).
+  var bedarfListe = [];
+  var bedarfSubscribedOnce = false;
+
+  function bedarfLoadCache() {
+    try {
+      var raw = localStorage.getItem(BEDARF_CACHE_KEY);
+      if (raw) bedarfListe = JSON.parse(raw) || [];
+    } catch (e) { bedarfListe = []; }
+    if (!Array.isArray(bedarfListe)) bedarfListe = [];
+  }
+
+  function bedarfSaveCache() {
+    // Bewusst NICHT in SYNC_KEY_MAP — die Liste läuft über die eigene
+    // Tabelle, nicht über den Blob-Sync.
+    persistKey(BEDARF_CACHE_KEY, JSON.stringify(bedarfListe));
+  }
+
+  // UUID für neue Einträge — clientseitig erzeugt, damit ein Eintrag auch
+  // offline entstehen und später unter derselben id geteilt werden kann.
+  function bedarfUuid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0;
+      return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  function bedarfCodeKey(code) {
+    return normalizeCode(code || "").replace(/[-\s]/g, "");
+  }
+
+  function bedarfHeuteStartIso() {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d.toISOString();
+  }
+
+  // Offene Einträge, neueste zuerst.
+  function bedarfOffene() {
+    return bedarfListe
+      .filter(function (e) { return !e.erledigt && e._pending !== "delete"; })
+      .sort(function (a, b) { return String(b.erstellt_am || "").localeCompare(String(a.erstellt_am || "")); });
+  }
+
+  // Heute erledigte Einträge, neueste zuerst. Ältere Erledigte fallen beim
+  // nächsten Pull aus der Liste — gelöscht wird serverseitig nichts.
+  function bedarfHeuteErledigte() {
+    var heute = bedarfHeuteStartIso();
+    return bedarfListe
+      .filter(function (e) { return e.erledigt && e._pending !== "delete" && String(e.erledigt_am || "") >= heute; })
+      .sort(function (a, b) { return String(b.erledigt_am || "").localeCompare(String(a.erledigt_am || "")); });
+  }
+
+  // ---- Remote-Operationen (best effort, App läuft bei Fehlern lokal weiter) ----
+
+  // Reine Tabellen-Spalten für den Upsert (ohne lokale _pending-Marker).
+  function bedarfRowFuer(e) {
+    return {
+      id: e.id, typ: e.typ, auftrag: e.auftrag || null, kunde: e.kunde || null,
+      code: e.code || null, menge: e.menge || null, erledigt: !!e.erledigt,
+      erledigt_von: e.erledigt_von || null, erstellt_am: e.erstellt_am,
+      erledigt_am: e.erledigt_am || null
+    };
+  }
+
+  function bedarfPushEintrag(e) {
+    if (!syncClient) return;
+    if (e._pending === "delete") {
+      syncClient.from(BEDARF_TABLE).delete().eq("id", e.id).then(function (res) {
+        if (res.error) { syncHandleNetError(res.error); return; }
+        bedarfListe = bedarfListe.filter(function (x) { return x.id !== e.id; });
+        bedarfSaveCache();
+      }, syncHandleNetError);
+      return;
+    }
+    syncClient.from(BEDARF_TABLE).upsert(bedarfRowFuer(e), { onConflict: "id" }).then(function (res) {
+      if (res.error) { syncHandleNetError(res.error); return; }
+      delete e._pending;
+      bedarfSaveCache();
+      renderBedarf();
+    }, syncHandleNetError);
+  }
+
+  // Alle noch nicht geteilten Änderungen nachschieben (nach Reconnect).
+  function bedarfPushPending() {
+    if (!syncClient) return;
+    bedarfListe.slice().forEach(function (e) {
+      if (e._pending) bedarfPushEintrag(e);
+    });
+  }
+
+  // Offene + heute erledigte Einträge vom Server laden und mit dem lokalen
+  // Stand zusammenführen. Lokale _pending-Einträge gewinnen (werden danach
+  // nachgeschoben); alles andere übernimmt den Server-Stand.
+  function bedarfPull() {
+    if (!syncClient) return;
+    syncClient.from(BEDARF_TABLE)
+      .select("*")
+      .or("erledigt.eq.false,erledigt_am.gte." + bedarfHeuteStartIso())
+      .then(function (res) {
+        if (res.error) { syncHandleNetError(res.error); return; }
+        var lokalPending = bedarfListe.filter(function (e) { return e._pending; });
+        var pendingIds = {};
+        lokalPending.forEach(function (e) { pendingIds[e.id] = true; });
+        bedarfListe = (res.data || []).filter(function (r) { return !pendingIds[r.id]; }).concat(lokalPending);
+        bedarfSaveCache();
+        renderBedarf();
+        applyTabChrome();
+        bedarfPushPending();
+      }, syncHandleNetError);
+  }
+
+  // Eigener Realtime-Kanal für die Bedarf-Tabelle: Änderungen anderer
+  // Geräte erscheinen sofort, ohne Neuladen.
+  function bedarfSubscribe() {
+    if (!syncClient) return;
+    syncClient.channel("lagerkarte-bedarf")
+      .on("postgres_changes", { event: "*", schema: "public", table: BEDARF_TABLE }, function (payload) {
+        var row = payload && payload.new && payload.new.id ? payload.new : null;
+        if (payload && payload.eventType === "DELETE") {
+          var oldId = payload.old && payload.old.id;
+          if (oldId) bedarfListe = bedarfListe.filter(function (x) { return x.id !== oldId; });
+        } else if (row) {
+          var vorhanden = bedarfListe.filter(function (x) { return x.id === row.id; })[0];
+          // Lokale, noch nicht geteilte Änderung nicht überschreiben.
+          if (vorhanden && vorhanden._pending) return;
+          if (vorhanden) bedarfListe[bedarfListe.indexOf(vorhanden)] = row;
+          else bedarfListe.push(row);
+        } else {
+          return;
+        }
+        bedarfSaveCache();
+        renderBedarf();
+        applyTabChrome();
+      })
+      .subscribe(function (status) {
+        // Nach einem Wiederverbinden evtl. verpasste Änderungen nachladen.
+        if (status === "SUBSCRIBED") {
+          if (bedarfSubscribedOnce) bedarfPull();
+          else bedarfSubscribedOnce = true;
+        }
+      });
+  }
+
+  // ---- Einträge anlegen / entfernen / erledigen ----
+
+  function bedarfInsert(eintrag) {
+    eintrag.id = bedarfUuid();
+    eintrag.erstellt_am = new Date().toISOString();
+    eintrag.erledigt = false;
+    eintrag._pending = "upsert";
+    bedarfListe.push(eintrag);
+    bedarfSaveCache();
+    renderBedarf();
+    applyTabChrome();
+    bedarfPushEintrag(eintrag);
+  }
+
+  // Lieferschein anfordern, wenn ein Auftrag auf "Verpackt" geht.
+  // Duplikat-Schutz: pro Auftragsnummer (bzw. Kunde, falls Nummer fehlt)
+  // höchstens ein offener Eintrag.
+  function bedarfAddLieferschein(a) {
+    var nummer = a.auftragsnummer || "";
+    var kunde = a.kunde || a.title || "";
+    // Kein echter Kundenname? (Der Prüf-Workflow setzt kunde = "Auftrag <nr>",
+    // wenn keiner bekannt ist.) → leer lassen statt doppelt anzeigen.
+    if (nummer && kunde === "Auftrag " + nummer) kunde = "";
+    var offen = bedarfOffene().some(function (e) {
+      if (e.typ !== "lieferschein") return false;
+      return nummer ? e.auftrag === nummer : (e.kunde || "") === kunde;
+    });
+    if (offen) return false;
+    var anzahl = (a.positionen || []).filter(function (p) { return !p.gestrichen; }).length;
+    bedarfInsert({ typ: "lieferschein", auftrag: nummer, kunde: kunde, code: "", menge: anzahl });
+    return true;
+  }
+
+  // Offenen Lieferschein-Eintrag entfernen (Auftrag von "Verpackt" zurückgesetzt).
+  function bedarfRemoveLieferschein(a) {
+    var nummer = a.auftragsnummer || "";
+    var kunde = a.kunde || a.title || "";
+    bedarfOffene().forEach(function (e) {
+      if (e.typ !== "lieferschein") return;
+      var passt = nummer ? e.auftrag === nummer : (e.kunde || "") === kunde;
+      if (passt) bedarfDelete(e);
+    });
+  }
+
+  // Nachbestellung melden. Duplikat-Schutz: pro (normalisiertem) Code
+  // höchstens ein offener Eintrag. Rückgabe: true = neu angelegt.
+  function bedarfAddNachbestellung(code, menge) {
+    var key = bedarfCodeKey(code);
+    if (!key) return false;
+    var offen = bedarfOffene().some(function (e) {
+      return e.typ === "nachbestellung" && bedarfCodeKey(e.code) === key;
+    });
+    if (offen) return false;
+    bedarfInsert({ typ: "nachbestellung", auftrag: "", kunde: "", code: normalizeCode(code), menge: menge || 1 });
+    return true;
+  }
+
+  // Offene Nachbestellung zum Code entfernen ("Fehlend"-Flag zurückgenommen).
+  function bedarfRemoveNachbestellung(code) {
+    var key = bedarfCodeKey(code);
+    if (!key) return;
+    bedarfOffene().forEach(function (e) {
+      if (e.typ === "nachbestellung" && bedarfCodeKey(e.code) === key) bedarfDelete(e);
+    });
+  }
+
+  function bedarfDelete(e) {
+    if (e._pending === "upsert") {
+      // Noch nie geteilt → einfach lokal entfernen.
+      bedarfListe = bedarfListe.filter(function (x) { return x.id !== e.id; });
+    } else {
+      // Als Lösch-Vormerkung behalten, bis der Server sie bestätigt — so
+      // taucht der Eintrag nach einem Offline-Löschen beim nächsten
+      // Abgleich nicht wieder auf.
+      e._pending = "delete";
+    }
+    bedarfSaveCache();
+    renderBedarf();
+    applyTabChrome();
+    bedarfPushEintrag(e);
+  }
+
+  // Name für "erledigt von": beim ersten Abhaken einmal fragen und merken.
+  function bedarfName() {
+    var name = "";
+    try { name = localStorage.getItem(BEDARF_NAME_KEY) || ""; } catch (e) {}
+    if (!name) {
+      name = (window.prompt("Dein Name für die Erledigt-Liste (wird auf diesem Gerät gemerkt):", "") || "").trim();
+      if (name) { try { localStorage.setItem(BEDARF_NAME_KEY, name); } catch (e) {} }
+    }
+    return name;
+  }
+
+  function bedarfErledigt(id) {
+    var e = bedarfListe.filter(function (x) { return x.id === id; })[0];
+    if (!e || e.erledigt) return;
+    e.erledigt = true;
+    e.erledigt_am = new Date().toISOString();
+    e.erledigt_von = bedarfName();
+    if (e._pending !== "upsert") e._pending = "upsert";
+    bedarfSaveCache();
+    renderBedarf();
+    applyTabChrome();
+    bedarfPushEintrag(e);
+  }
+
+  // ---- fertige Teams-Nachricht in die Zwischenablage ----
+
+  function bedarfNachricht(e) {
+    if (e.typ === "lieferschein") {
+      var wer = e.auftrag ? "Auftrag " + e.auftrag + (e.kunde ? " – " + e.kunde : "") : (e.kunde || "Auftrag");
+      return "Lieferschein bitte für " + wer + ", " + (e.menge || 0) + " Positionen, verpackt " + formatDateTime(e.erstellt_am) + ".";
+    }
+    return "Bitte nachbestellen: " + (e.menge || 1) + "x " + (e.code || "") + ".";
+  }
+
+  // Gleiches Clipboard-Muster wie beim "Was fehlt?"-Modal: navigator.clipboard
+  // mit textarea/execCommand-Fallback (läuft auch auf dem iPhone).
+  function bedarfCopyText(text) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(function () {});
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  // ---- Rendering ----
+
+  function bedarfRowHtml(e, erledigt) {
+    var typLabel = e.typ === "lieferschein" ? "📄 Lieferschein" : "🛒 Nachbestellung";
+    var typCls = e.typ === "lieferschein" ? "lieferschein" : "nachbestellung";
+    var was = e.typ === "lieferschein"
+      ? (e.auftrag ? "Auftrag " + e.auftrag : "Auftrag") + (e.kunde ? " – " + e.kunde : "")
+      : (e.menge || 1) + "x " + (e.code || "");
+    var sub;
+    if (erledigt) {
+      var uhr = new Date(e.erledigt_am);
+      sub = "erledigt " + (isNaN(uhr.getTime()) ? "" : pad2(uhr.getHours()) + ":" + pad2(uhr.getMinutes()) + " Uhr") +
+        (e.erledigt_von ? " · " + e.erledigt_von : "");
+    } else {
+      sub = formatDateTime(e.erstellt_am) + (e._pending ? " · ⏳ noch nicht geteilt" : "");
+    }
+    return '<div class="bedarf-row bedarf-typ-' + typCls + (erledigt ? " bedarf-done" : "") + '">' +
+      '<span class="bedarf-badge bb-' + typCls + '">' + typLabel + '</span>' +
+      '<div class="bedarf-main">' +
+        '<div class="bedarf-was">' + escapeHtml(was) + '</div>' +
+        '<div class="bedarf-sub">' + escapeHtml(sub) + '</div>' +
+      '</div>' +
+      (erledigt ? "" :
+        '<div class="bedarf-actions">' +
+          '<button type="button" class="btn" data-action="bedarfCopy" data-id="' + escapeHtml(e.id) + '">📋 Nachricht kopieren</button>' +
+          '<button type="button" class="btn btn-success" data-action="bedarfDone" data-id="' + escapeHtml(e.id) + '">✓ Erledigt</button>' +
+        '</div>') +
+      '</div>';
+  }
+
+  function renderBedarf() {
+    var listEl = document.getElementById("bedarfList");
+    if (!listEl) return;
+    var offene = bedarfOffene();
+    var erledigte = bedarfHeuteErledigte();
+    listEl.innerHTML = offene.length
+      ? offene.map(function (e) { return bedarfRowHtml(e, false); }).join("")
+      : '<div class="bedarf-empty">Nichts zu melden — alles erledigt. ✓</div>';
+    document.getElementById("bedarfOffenTitle").textContent = "Offen (" + offene.length + ")";
+    var doneTitle = document.getElementById("bedarfDoneTitle");
+    doneTitle.style.display = erledigte.length ? "" : "none";
+    doneTitle.textContent = "Heute erledigt (" + erledigte.length + ")";
+    document.getElementById("bedarfDoneList").innerHTML =
+      erledigte.map(function (e) { return bedarfRowHtml(e, true); }).join("");
+  }
+
+  // Klicks im Bedarf-Tab (Delegation, die Liste wird oft neu gerendert).
+  document.getElementById("bedarfSection").addEventListener("click", function (ev) {
+    var btn = ev.target.closest ? ev.target.closest("[data-action]") : null;
+    if (!btn) return;
+    var action = btn.getAttribute("data-action");
+    var id = btn.getAttribute("data-id");
+    if (action === "bedarfDone") {
+      bedarfErledigt(id);
+    } else if (action === "bedarfCopy") {
+      var e = bedarfListe.filter(function (x) { return x.id === id; })[0];
+      if (!e) return;
+      bedarfCopyText(bedarfNachricht(e));
+      // Kurze visuelle Rückmeldung, dass kopiert wurde.
+      btn.textContent = "✓ Kopiert";
+      setTimeout(function () { btn.textContent = "📋 Nachricht kopieren"; }, 1200);
+    }
+  });
+
+  // ================================================================
   // Geräte-Sync über Supabase (optional)
   // ================================================================
   //
@@ -7907,8 +8397,9 @@
   window.addEventListener("online", function () {
     if (!syncClient) return;
     // Wieder online: Remote-Stand abgleichen; dirty-Bereiche pusht der
-    // Abgleich automatisch nach.
+    // Abgleich automatisch nach. Bedarf-Liste ebenso (inkl. _pending).
     syncPullAll(false);
+    bedarfPull();
   });
   window.addEventListener("offline", function () {
     if (syncClient) setSyncStatus("offline");
@@ -7922,6 +8413,9 @@
       setSyncStatus(navigator.onLine === false ? "offline" : "busy");
       syncPullAll(true);
       syncSubscribe();
+      // Bedarf-Liste: eigener Abgleich + Realtime-Kanal (eigene Tabelle).
+      bedarfPull();
+      bedarfSubscribe();
     } catch (e) {
       syncClient = null;
       setSyncStatus("error");
@@ -7946,6 +8440,7 @@
   // ---- init ----
   function startApp() {
     loadData();
+    bedarfLoadCache();
     document.getElementById("loadingMsg").style.display = "none";
     document.getElementById("app").style.display = "block";
     // Tab-Buttons + Dashboard auf den (ggf. gespeicherten) aktiven Tab bringen.
@@ -7953,6 +8448,7 @@
     renderAuftraege();
     renderPerformance();
     renderLieferungsArchiv();
+    renderBedarf();
     render();
     updateBackupReminder();
     initSync();
