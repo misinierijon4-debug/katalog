@@ -1,0 +1,15 @@
+# Netlify-Header
+#
+# Der Service Worker darf NIE aus einem alten Cache kommen — er ist die Datei,
+# die entscheidet, wie alles andere aktualisiert wird. Kommt er veraltet, hängt
+# die installierte App auf einem alten Stand fest. Deshalb bei jedem Aufruf
+# frisch vom Server holen lassen.
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/manifest.webmanifest
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Icons ändern sich praktisch nie und dürfen ruhig eine Woche liegen bleiben.
+/icons/*
+  Cache-Control: public, max-age=604800

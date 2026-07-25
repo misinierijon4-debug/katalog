@@ -5,6 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
 <title>Lagerkarte</title>
+<!-- Installierbar als App (PWA): Manifest, Icons, Service Worker. -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#4f46e5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lagerkarte">
+<script>
+  // Service Worker registrieren — er sorgt für den Offline-Betrieb. Fehler
+  // sind bewusst folgenlos: ohne ihn läuft die Seite ganz normal online.
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      // Bei der ERSTEN Installation übernimmt der Worker die Seite ebenfalls.
+      // Ohne diese Merker-Variable würde der Reload unten dann sofort feuern —
+      // und beim nächsten Start wieder: Endlosschleife. Deshalb nur neu laden,
+      // wenn vorher schon ein Worker aktiv war, also wirklich abgelöst wurde.
+      var hatteWorker = !!navigator.serviceWorker.controller;
+      navigator.serviceWorker.register("/sw.js").then(function (reg) {
+        // Beim Start einmal nach einer neueren Version schauen. Übernimmt ein
+        // neuer Worker die Kontrolle, lädt die App einmalig neu — so ist ein
+        // frischer Netlify-Deploy sofort da statt erst beim übernächsten Start.
+        reg.update();
+        var reloading = false;
+        navigator.serviceWorker.addEventListener("controllerchange", function () {
+          if (!hatteWorker || reloading) return;
+          reloading = true;
+          window.location.reload();
+        });
+      }, function () {});
+    });
+  }
+</script>
 <script src="katalog.js"></script>
 <script>
   // Tesseract von mehreren Quellen versuchen zu laden (Firewall/CDN-Ausfall abfangen).
