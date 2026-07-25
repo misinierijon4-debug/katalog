@@ -495,7 +495,15 @@
   .performance-card { border:1px solid var(--border); background:var(--surface); border-radius:var(--radius-sm); padding:11px 12px; box-shadow:var(--shadow-sm); }
   .performance-value { display:block; font-size:22px; line-height:1.1; font-weight:850; color:var(--primary-fg); }
   .performance-label { display:block; margin-top:4px; font-size:10.5px; color:var(--text-muted); font-weight:650; }
-  .performance-timeline { display:grid; gap:8px; }
+  .performance-timeline { display:grid; gap:14px; }
+  /* Wochenblock: Kopfzeile + Wochenschnitt, darunter die einzelnen Tage. */
+  .performance-week { border:1px solid var(--border-strong); border-radius:var(--radius); background:var(--surface-2); overflow:hidden; }
+  .performance-week-head { display:flex; align-items:baseline; gap:8px; padding:9px 12px; flex-wrap:wrap; }
+  .performance-week-title { font-size:13px; font-weight:800; color:var(--primary-fg); }
+  .performance-week-range { font-size:11px; color:var(--text-muted); }
+  .performance-week-total { margin-left:auto; font-size:11px; font-weight:700; color:var(--text-muted); }
+  .performance-week-metrics { background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .performance-week-days { display:grid; gap:8px; padding:10px 12px 12px; }
   .performance-day { border:1px solid var(--border); background:var(--surface); border-radius:var(--radius-sm); overflow:hidden; }
   .performance-day-head { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 11px; background:var(--surface-2); border-bottom:1px solid var(--border); }
   .performance-date { font-size:12px; font-weight:800; }
@@ -3569,6 +3577,34 @@
     return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
   }
 
+  // Kalenderwoche (ISO 8601, Montag–Sonntag) zu einem Tagesschlüssel
+  // "YYYY-MM-DD". Der Montag dient gleichzeitig als Sortier-/Gruppenschlüssel.
+  function isoWeekInfo(dateKey) {
+    var d = new Date(dateKey + "T12:00:00");
+    var montagOffset = (d.getDay() + 6) % 7;          // 0 = Montag
+    var monday = new Date(d);
+    monday.setDate(d.getDate() - montagOffset);
+    var sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    // ISO-Wochennummer über den Donnerstag der Woche: er liegt immer im
+    // Jahr, zu dem die Woche zählt.
+    var thursday = new Date(monday);
+    thursday.setDate(monday.getDate() + 3);
+    var firstThursday = new Date(thursday.getFullYear(), 0, 4);
+    firstThursday.setDate(firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7) + 3);
+    var week = 1 + Math.round((thursday - firstThursday) / (7 * 24 * 3600 * 1000));
+    return {
+      key: monday.getFullYear() + "-" + pad2(monday.getMonth() + 1) + "-" + pad2(monday.getDate()),
+      week: week, monday: monday, sunday: sunday
+    };
+  }
+
+  function formatWeekRange(monday, sunday) {
+    var von = pad2(monday.getDate()) + "." + pad2(monday.getMonth() + 1) + ".";
+    var bis = pad2(sunday.getDate()) + "." + pad2(sunday.getMonth() + 1) + "." + sunday.getFullYear();
+    return von + " – " + bis;
+  }
+
   function formatDuration(ms) {
     if (!isFinite(ms) || ms < 0) return "–";
     var mins = Math.round(ms / 60000);
@@ -3608,7 +3644,27 @@
       timeline.innerHTML = '<div class="performance-empty">Noch keine Leistungsdaten vorhanden. Sie entstehen automatisch beim Starten, Picken und Fertigstellen von Aufträgen.</div>';
       return;
     }
-    timeline.innerHTML = keys.map(function (key) {
+
+    // Tage zu Kalenderwochen bündeln (neueste Woche oben, innerhalb der
+    // Woche neuester Tag oben — keys ist bereits absteigend sortiert).
+    var weeks = {};
+    var weekOrder = [];
+    keys.forEach(function (key) {
+      var info = isoWeekInfo(key);
+      if (!weeks[info.key]) {
+        weeks[info.key] = { info: info, dayKeys: [], picked: 0, activeDays: 0, started: [], completed: [] };
+        weekOrder.push(info.key);
+      }
+      var w = weeks[info.key];
+      var day = days[key];
+      w.dayKeys.push(key);
+      w.picked += day.picked;
+      if (day.picked > 0) w.activeDays++;
+      w.started = w.started.concat(day.started);
+      w.completed = w.completed.concat(day.completed);
+    });
+
+    function dayCard(key) {
       var day = days[key];
       var d = new Date(key + "T12:00:00");
       var title = d.toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
@@ -3621,6 +3677,31 @@
           '<div class="performance-metric"><strong>' + completed.length + '</strong><span>Erledigte Aufträge</span><div class="performance-orders">' + (completed.length ? escapeHtml(completed.join(", ")) : "–") + '</div></div>' +
           '<div class="performance-metric"><strong>' + formatDeliveryNumber(day.picked) + '</strong><span>Geklebte / abgehakte Artikel</span><div class="performance-orders">nach Auftragsmenge</div></div>' +
         '</div></article>';
+    }
+
+    timeline.innerHTML = weekOrder.map(function (wk) {
+      var w = weeks[wk];
+      var started = Array.from(new Set(w.started));
+      var completed = Array.from(new Set(w.completed));
+      // Schnitt bewusst über die Tage mit Aktivität, nicht über volle sieben
+      // Kalendertage — sonst drücken Wochenenden und freie Tage die Zahl.
+      var avgLabel = w.activeDays ? formatDeliveryNumber(w.picked / w.activeDays) : "–";
+      var avgHint = w.activeDays
+        ? "Schnitt aus " + w.activeDays + (w.activeDays === 1 ? " Tag" : " Tagen") + " mit Aktivität"
+        : "keine geklebten Artikel";
+      return '<section class="performance-week">' +
+        '<div class="performance-week-head">' +
+          '<span class="performance-week-title">KW ' + w.info.week + '</span>' +
+          '<span class="performance-week-range">' + escapeHtml(formatWeekRange(w.info.monday, w.info.sunday)) + '</span>' +
+          '<span class="performance-week-total">' + formatDeliveryNumber(w.picked) + ' Artikel gesamt</span>' +
+        '</div>' +
+        '<div class="performance-metrics performance-week-metrics">' +
+          '<div class="performance-metric"><strong>' + avgLabel + '</strong><span>Ø geklebte Artikel pro Tag</span><div class="performance-orders">' + escapeHtml(avgHint) + '</div></div>' +
+          '<div class="performance-metric"><strong>' + started.length + '</strong><span>Angefangene Aufträge</span><div class="performance-orders">' + (started.length ? escapeHtml(started.join(", ")) : "–") + '</div></div>' +
+          '<div class="performance-metric"><strong>' + completed.length + '</strong><span>Erledigte Aufträge</span><div class="performance-orders">' + (completed.length ? escapeHtml(completed.join(", ")) : "–") + '</div></div>' +
+        '</div>' +
+        '<div class="performance-week-days">' + w.dayKeys.map(dayCard).join("") + '</div>' +
+      '</section>';
     }).join("");
   }
 
