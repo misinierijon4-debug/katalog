@@ -245,20 +245,9 @@
     cursor: default;
     user-select: none;
   }
-  #stats {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-left: auto;
-    white-space: nowrap;
-    padding: 5px 10px;
-    background: var(--surface-2);
-    border-radius: 999px;
-    border: 1px solid var(--border);
-  }
   /* Dark-Mode-Schalter: ganz rechts in der Titelzeile, damit er in jedem
-     Tab erreichbar bleibt. Ohne #stats (Handy) schiebt ihn margin-left. */
-  .title-row #btnTheme { margin-left: 8px; flex: none; }
+     Tab erreichbar bleibt. */
+  .title-row #btnTheme { margin-left: auto; flex: none; }
 
   .controls-row {
     display: flex;
@@ -2036,8 +2025,6 @@
     .page { padding: 16px 16px 0; }
     .title-row { margin-bottom: 10px; }
     .title-row h1 { font-size: 18px; }
-    #stats { display: none; }
-    .title-row #btnTheme { margin-left: auto; }
     .dashboard { grid-template-columns: repeat(2, 1fr); }
     /* Nur die Header-Aktionen werden zu reinen Icon-Buttons — deren Labels
        stecken in .btn-label. Alle übrigen Text-Buttons der Seite (Prüfen,
@@ -2118,7 +2105,6 @@
         <h1>Lagerkarte</h1>
         <span class="title-sub">Hallenplan &amp; Bestand</span>
         <span id="syncStatus" class="sync-status" style="display:none;" title="">⚪</span>
-        <div id="stats"></div>
         <button id="btnTheme" class="btn btn-icon-only" title="Darstellung umschalten">
           <span class="icon icon-sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
           <span class="icon icon-moon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
@@ -4407,26 +4393,16 @@
 
   function render() {
     var term = search.trim().toLowerCase();
-    var totalItems = 0, totalQty = 0, brokenCount = 0, missingCount = 0, pendingCount = 0, emptyCount = 0;
+    var totalItems = 0, brokenCount = 0, missingCount = 0, pendingCount = 0, emptyCount = 0;
     data.categories.forEach(function (c) {
       totalItems += c.items.length;
       c.items.forEach(function (it) {
-        var q = parseFloat(it.qty);
-        if (!isNaN(q)) totalQty += q;
         if (it.broken) brokenCount++;
         if (it.missing && !it.broken) missingCount++;
         if (it.pending && !it.broken) pendingCount++;
         if (it.empty && !it.broken) emptyCount++;
       });
     });
-
-    var statsText = totalItems + " Codes";
-    if (totalQty > 0) statsText += " · Bestand " + totalQty;
-    if (brokenCount > 0) statsText += " · " + brokenCount + " nicht verwendbar";
-    if (missingCount > 0) statsText += " · " + missingCount + " fehlen";
-    if (pendingCount > 0) statsText += " · " + pendingCount + " Poster folgt";
-    if (emptyCount > 0) statsText += " · " + emptyCount + " Tafel leer";
-    document.getElementById("stats").textContent = statsText;
 
     updateDashboard({ total: totalItems, missing: missingCount, broken: brokenCount, pending: pendingCount, empty: emptyCount });
 
