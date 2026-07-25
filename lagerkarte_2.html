@@ -395,15 +395,7 @@
 
   /* ---------- Auftrags-Datenbank ---------- */
   .auftraege-section { margin-bottom: 8px; }
-  .auftraege-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-  .auftraege-header .icon { color: var(--primary); }
-  .auftraege-title { font-size: 14px; font-weight: 800; letter-spacing: 0.3px; }
+  /* .auftraege-sub dient jetzt nur noch der Meta-Zeile in den Auftragskarten. */
   .auftraege-sub { font-size: 11.5px; color: var(--text-muted); }
   .auftraege-empty {
     font-size: 12px;
@@ -1389,6 +1381,7 @@
     overflow: hidden;
     box-shadow: var(--shadow-sm);
   }
+  /* Die Kopfzeile ist der Auf-/Zuklapp-Schalter des Prüf-Bereichs. */
   .check-header {
     display: flex;
     align-items: center;
@@ -1397,10 +1390,18 @@
     background: var(--surface-2);
     color: var(--text);
     user-select: none;
+    width: 100%;
+    border: none;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
   }
   .check-title { font-size: 13px; font-weight: 800; letter-spacing: 0.4px; display: flex; align-items: center; gap: 8px; }
   .check-title .icon { color: var(--primary); }
   .check-sub { font-size: 11.5px; color: var(--text-muted); margin-left: auto; }
+  .check-chevron { color: var(--text-muted); transition: transform .15s ease; flex: none; }
+  #checkSection.collapsed .check-chevron { transform: rotate(-90deg); }
+  #checkSection.collapsed #checkBody { display: none; }
   #checkBody { padding: 16px; }
   .ocr-row { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
   /* .ocr-btn / .ocr-btn-alt only add color on top of the shared .btn family. */
@@ -2042,8 +2043,11 @@
     .tab-label-short { display: inline; }
     /* Auftrag prüfen: Kopfzeile gestapelt, Upload-Buttons und
        Prüfen/Leeren teilen sich die volle Breite. */
+    /* Umbruch: Titel + Pfeil in der ersten Zeile, Untertitel darunter. */
     .check-header { flex-wrap: wrap; }
-    .check-sub { margin-left: 0; flex: 1 1 100%; }
+    .check-title { order: 1; }
+    .check-chevron { order: 2; margin-left: auto; }
+    .check-sub { order: 3; margin-left: 0; flex: 1 1 100%; }
     .ocr-row .btn { flex: 1 1 auto; }
     .check-actions .btn { flex: 1 1 0; }
     /* Filterleiste der Kommissionierung: Suche als eigene volle Zeile,
@@ -2259,13 +2263,14 @@
     </div>
 
     <div id="checkSection" class="check-section">
-      <div class="check-header">
+      <button type="button" id="btnCheckToggle" class="check-header" aria-expanded="true" aria-controls="checkBody" title="Bereich auf- und zuklappen">
         <span class="check-title">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
           AUFTRAG PRÜFEN
         </span>
         <span class="check-sub">Auftragszeilen einfügen — Tool findet die Codes selbst</span>
-      </div>
+        <span class="icon check-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </button>
       <div id="checkBody">
         <div class="ocr-row">
           <label for="pdfFile" class="btn ocr-btn" title="Empfohlen: Text-PDF aus dem V&amp;B-System (z.B. Drucken → Als PDF speichern)">
@@ -2301,13 +2306,6 @@
     </div>
 
     <section id="auftraegeSection" class="auftraege-section" style="display:none;" aria-label="Auftrags-Verwaltung">
-      <div class="auftraege-header">
-        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg></span>
-        <span class="auftraege-title">Kommissionierung</span>
-        <span class="auftraege-sub">Nach Erfassungstag sortiert – neueste Tage oben, Tagesbereiche lassen sich auf- und zuklappen.</span>
-      </div>
-
-
       <!-- Statusfilter + Suche -->
       <div class="auftrag-filter-bar">
         <span class="auftrag-filter-label">Filter:</span>
@@ -4789,6 +4787,22 @@
     var current = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", current);
     persistKey(THEME_KEY, current);
+  });
+
+  // ---- "Auftrag prüfen" auf-/zuklappen ----
+  // Reine Anzeige-Einstellung: bleibt lokal auf dem Gerät und geht nicht in
+  // den Geräte-Sync (deshalb localStorage statt persistKey).
+  var CHECK_COLLAPSED_KEY = "lager-check-collapsed";
+
+  function setCheckCollapsed(collapsed) {
+    document.getElementById("checkSection").classList.toggle("collapsed", collapsed);
+    document.getElementById("btnCheckToggle").setAttribute("aria-expanded", collapsed ? "false" : "true");
+  }
+
+  document.getElementById("btnCheckToggle").addEventListener("click", function () {
+    var collapsed = !document.getElementById("checkSection").classList.contains("collapsed");
+    setCheckCollapsed(collapsed);
+    try { localStorage.setItem(CHECK_COLLAPSED_KEY, collapsed ? "1" : "0"); } catch (e) {}
   });
 
   document.querySelectorAll(".dash-card").forEach(function (el) {
@@ -8453,6 +8467,10 @@
     document.getElementById("app").style.display = "block";
     // Tab-Buttons + Dashboard auf den (ggf. gespeicherten) aktiven Tab bringen.
     applyTabChrome();
+    // Zuletzt gewählter Zustand des Prüf-Bereichs (Standard: aufgeklappt).
+    var checkCollapsed = null;
+    try { checkCollapsed = localStorage.getItem(CHECK_COLLAPSED_KEY); } catch (e) {}
+    setCheckCollapsed(checkCollapsed === "1");
     renderAuftraege();
     renderPerformance();
     renderLieferungsArchiv();
